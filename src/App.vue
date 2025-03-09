@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import PostCard from '@/components/PostCard.vue'
 import Card from '@/components/BaseCard.vue'
 import StackPanel from '@/components/StackPanel.vue'
+import GithubLink from '@/components/GithubLink.vue'
 
 // 定义文章类型接口
 interface Post {
@@ -57,9 +58,22 @@ const addNewPost = () => {
 for (let i = 0; i <= 8; i++) {
   addNewPost();
 }
+
 </script>
 
 <template>
+
+  <StackPanel style="position: fixed; top: 0; left: 0;" aria-orientation="horizontal">
+    <GithubLink></GithubLink>
+
+    <StackPanel style="width: auto;" orientation="horizontal">
+      <!-- <a href="">主页</a>
+      <a>主页</a>
+      <a>主页</a>
+      <a>主页</a> -->
+    </StackPanel>
+  </StackPanel>
+
   <div class="container">
     <stack-panel class="single-line">
       <h1>Welcome</h1>
