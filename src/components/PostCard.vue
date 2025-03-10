@@ -113,4 +113,20 @@ span {
 .post-grid img:hover {
   scale: 1.2;
 }
+
+.tag-button {
+  border: 0px solid;
+  border-radius: var(--tag-button-corner-radiu);
+
+  background-color: var(--default-background);
+  color: currentColor;
+  padding: 2px 16px;
+
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.tag-button:hover {
+  background-color: var(--hover-background);
+}
 </style>
