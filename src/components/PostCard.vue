@@ -67,7 +67,7 @@ const formatNumber = (num: number) => num.toLocaleString()
 
           <!-- 标签 -->
           <stack-panel style="gap: 6px; align-items: center;" orientation="horizontal">
-            <button v-for="(tag, index) in tags" :key="index" class="flat-button">
+            <button v-for="(tag, index) in tags" :key="index" class="tag-button">
               {{ tag }}
             </button>
           </stack-panel>

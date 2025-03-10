@@ -1,10 +1,12 @@
 <script setup lang="ts">
 
 import { ref } from 'vue'
+
 import PostCard from '@/components/PostCard.vue'
 import Card from '@/components/BaseCard.vue'
 import StackPanel from '@/components/StackPanel.vue'
 import GithubLink from '@/components/GithubLink.vue'
+import UserView from '@/components/UserView.vue'
 
 // 定义文章类型接口
 interface Post {
@@ -58,24 +60,28 @@ const addNewPost = () => {
 for (let i = 0; i <= 8; i++) {
   addNewPost();
 }
-
 </script>
 
 <template>
 
-  <StackPanel style="position: fixed; top: 0; left: 0;" aria-orientation="horizontal">
-    <GithubLink></GithubLink>
 
-    <StackPanel style="width: auto;" orientation="horizontal">
-      <!-- <a href="">主页</a>
+  <stack-panel style="position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+z-index: 1000; ">
+    <github-link style="height: 100%;"></github-link>
+
+    <stack-panel style="align-self: flex-end; width: auto;" orientation="horizontal">
       <a>主页</a>
       <a>主页</a>
-      <a>主页</a> -->
-    </StackPanel>
-  </StackPanel>
+      <a>主页</a>
+    </stack-panel>
+  </stack-panel>
 
   <div class="container">
-    <stack-panel class="single-line">
+
+    <stack-panel>
       <h1>Welcome</h1>
       <div class="mainGrid">
 
@@ -83,29 +89,31 @@ for (let i = 0; i <= 8; i++) {
         <stack-panel>
 
           <!-- 信息窗口 -->
-          <card>
-            <stack-panel class="userView">
-              <img class="headIcon" src="/src/assets/images/yumeka.jpg" />
-              <h2>Yumeka</h2>
-              <div class="dataSizeGrid">
-                <span>文章</span>
-                <span>分类</span>
-                <span>访问量</span>
-                <span>{{ postCount }}</span>
-                <span>{{ tagCount }}</span>
-                <span>{{ visitCount }}</span>
-              </div>
-              <button class="big-button">朋友圈</button>
-            </stack-panel>
-          </card>
+          <user-view :post-count=postCount :tag-count=tagCount :visit-count=visitCount></user-view>
 
           <!-- 搜索 -->
-          <Card>
+          <card>
             <stack-panel gap="4px">
               <h3 class="subtitle">搜索</h3>
               <input type="text" placeholder="搜索文章" />
             </stack-panel>
-          </Card>
+          </card>
+
+          <card>
+            <stack-panel gap="4px">
+              <h3 class="subtitle">This a card</h3>
+              <p>
+                Kaso sado cie asi s aodi asdj. Psan ns xsid asnd? Pxrab ascn aski.</p>
+            </stack-panel>
+          </card>
+
+          <card>
+            <stack-panel gap="4px">
+              <h3 class="subtitle">This a card</h3>
+              <p>
+                Kaso sado cie asi s aodi asdj. Psan ns xsid asnd? Pxrab ascn aski.</p>
+            </stack-panel>
+          </card>
         </stack-panel>
 
         <!-- 右侧区域 -->
@@ -166,18 +174,30 @@ for (let i = 0; i <= 8; i++) {
 </template>
 
 <style>
+/* * {
+  border: 1px solid red;
+}
+ */
+
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: '义启星空之翼', sans-serif;
+  font-size: 45pt;
+
+  height: 40vh;
+}
+
 body {
   font-family: Helvetica, Tahoma, Arial, 'Heiti SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei';
-
+  margin: 0;
   color: white;
 
   background-image: url('/src/assets/images/background.png');
   backdrop-filter: blur(30px) brightness(0.8);
   background-attachment: fixed;
-
-  margin: 0;
-  min-height: 100vh;
-  position: relative;
 }
 
 .container {
@@ -186,22 +206,15 @@ body {
 
   max-width: 1200px;
   width: 90%;
-  padding-top: 25vh;
   padding-bottom: 200px;
 
-  margin: auto;
+  margin: 0 auto;
 }
 
 .mainGrid {
   display: grid;
   grid-template-columns: 25% 75%;
   gap: 16px;
-}
-
-h1 {
-  font-family: 'CustomFont', sans-serif;
-  font-size: 45pt;
-  margin-bottom: 100px;
 }
 
 h2,
@@ -217,47 +230,45 @@ h3 {
 .post-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
   column-gap: 20px;
   row-gap: 20px;
-}
 
-.post-container .card {
-  aspect-ratio: 1/0.9;
-  padding: 0;
-  overflow: hidden;
-}
-
-@font-face {
-  font-family: "CustomFont";
-  src: url("/src/assets/fonts/义启星空之翼.ttf");
+  >.card {
+    aspect-ratio: 1/0.9;
+    padding: 0;
+    overflow: hidden;
+  }
 }
 
 .big-button {
-  padding: 8px 24px;
-  border-radius: 999px;
+  border-radius: var(--circle-radius);
   border: 0px solid;
+
+  padding: 8px 0;
   outline: none;
 }
 
-.flat-button {
+.tag-button {
   border: 0px solid;
-  border-radius: 4px;
-  padding: 2px 16px;
-  background-color: rgba(255, 255, 255, 30%);
+  border-radius: var(--tag-button-corner-radiu);
+
+  background-color: var(--default-background);
   color: currentColor;
+  padding: 2px 16px;
 
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
-.flat-button:hover {
-  background-color: rgba(255, 255, 255, 40%);
+.tag-button:hover {
+  background-color: var(--hover-background);
 }
 
 input {
-  padding: 8px 16px;
-  border-radius: 999px;
+  border-radius: var(--circle-radius);
   border: 0px solid;
+
+  padding: 8px 16px;
   outline: none;
 }
 
@@ -265,40 +276,6 @@ hr {
   border: 1px dashed rgba(255, 255, 255, 0.8);
   width: 100%;
   opacity: 80%;
-  margin-top: 0px;
-}
-
-.headIcon {
-  width: 60%;
-  border-radius: 50%;
-
-  transition: transform 0.3s ease-in-out;
-  transform: rotate(0deg);
-}
-
-.headIcon:hover {
-  transform: rotate(360deg);
-}
-
-.dataSizeGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-
-  column-gap: 16px;
-  row-gap: 16px;
-
-  align-items: center;
-  justify-items: center;
-}
-
-.userView {
-  align-items: center;
-  justify-items: center;
-  margin: 6px;
-}
-
-.userView button {
-  width: 60%;
+  margin: 0px;
 }
 </style>
