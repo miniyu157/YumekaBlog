@@ -7,6 +7,8 @@ import StackPanel from "@/components/StackPanel.vue";
 import GithubLink from "@/components/GithubLink.vue";
 import UserView from "@/components/UserView.vue";
 
+
+
 // 定义文章类型接口
 interface Post {
   id: number;
@@ -69,12 +71,12 @@ for (let i = 0; i <= 8; i++) {
     <stack-panel>
 
       <stack-panel gap="12px" class="header">
-        <h1>Welcome</h1>
+        <h1 class="unline-height">Welcome</h1>
         <stack-panel class="header-buttons" orientation="horizontal">
-          <h4>首页</h4>
-          <h4>博客</h4>
-          <h4>友站</h4>
-          <h4>关于</h4>
+          <h4 class="underline-from-center">首页</h4>
+          <h4 class="underline-from-center">博客</h4>
+          <h4 class="underline-from-center">友站</h4>
+          <h4 class="underline-from-center">关于</h4>
         </stack-panel>
       </stack-panel>
 
@@ -87,22 +89,22 @@ for (let i = 0; i <= 8; i++) {
           <!-- 搜索 -->
           <card>
             <stack-panel gap="4px">
-              <h3 class="subtitle">搜索</h3>
+              <h3 class="subtitle unline-height">搜索</h3>
               <input type="text" placeholder="搜索文章" />
             </stack-panel>
           </card>
 
           <card>
             <stack-panel gap="4px">
-              <h3>This a card</h3>
+              <h3 class="unline-height">This a card</h3>
               <p class="subtitle">Kaso sado cie asi s aodi asdj. Psan ns xsid asnd? Pxrab ascn aski.</p>
             </stack-panel>
           </card>
 
           <card>
             <stack-panel gap="4px">
-              <h3>This a card</h3>
-              <p class="subtitle">Kaso sado cie asi s aodi asdj. Psan ns xsid asnd? Pxrab ascn aski.</p>
+              <h3 class="unline-height">This a card</h3>
+              <p class="subtitle">这是一个卡片吗？哦，原来这是一个卡片！</p>
             </stack-panel>
           </card>
         </stack-panel>
@@ -136,7 +138,7 @@ for (let i = 0; i <= 8; i++) {
                   </path>
                 </g>
               </svg>
-              <h3>Yumeka</h3>
+              <h3 class="unline-height">Yumeka</h3>
             </stack-panel>
 
             <stack-panel style="width: auto" class="subtitle link-block single-line" orientation="horizontal" gap="6px">
@@ -146,7 +148,7 @@ for (let i = 0; i <= 8; i++) {
                   d="M9 20q-.475 0-.9-.213t-.7-.587l-4.5-6q-.4-.525-.4-1.2t.4-1.2l4.5-6q.275-.375.7-.587T9 4h11q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm1-7q.425 0 .713-.288T11 12t-.288-.712T10 11t-.712.288T9 12t.288.713T10 13m3.5 0q.425 0 .713-.288T14.5 12t-.288-.712T13.5 11t-.712.288T12.5 12t.288.713t.712.287m3.5 0q.425 0 .713-.288T18 12t-.288-.712T17 11t-.712.288T16 12t.288.713T17 13">
                 </path>
               </svg>
-              <h3>More</h3>
+              <h3 class="unline-height">More</h3>
             </stack-panel>
           </stack-panel>
 
@@ -165,20 +167,15 @@ for (let i = 0; i <= 8; i++) {
 <style>
 /* debug */
 
-/* * {
-  border: 1px solid red;
-} */
-
 .header {
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "义启星空之翼", sans-serif;
-  height: 40vh;
+  height: 50vh;
 
   >h1 {
     font-size: 45pt;
-    line-height: 0;
   }
 
   >.header-buttons {
@@ -194,7 +191,6 @@ for (let i = 0; i <= 8; i++) {
 }
 
 body {
-  font-family: Helvetica, Tahoma, Arial, "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei";
   margin: 0;
   color: white;
 
@@ -219,13 +215,8 @@ body {
   gap: 16px;
 }
 
-h2,
-h3 {
-  line-height: 0px;
-}
-
 ::selection {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--default-selection-background);
 }
 
 /* 文章容器样式 */
@@ -259,7 +250,7 @@ input {
 }
 
 hr {
-  border: 1px dashed rgba(255, 255, 255, 0.8);
+  border: var(--flat-card-border);
   width: 100%;
   opacity: 80%;
   margin: 0px;

@@ -22,7 +22,7 @@ defineProps({
   <card>
     <stack-panel class="userView">
       <img class="headIcon" src="/src/assets/images/yumeka.jpg" />
-      <h2>Yumeka</h2>
+      <h2 class="unline-height">Yumeka</h2>
       <div class="dataSizeGrid">
         <span>文章</span>
         <span>分类</span>

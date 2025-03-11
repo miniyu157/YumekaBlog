@@ -18,20 +18,20 @@ const hover = ref(false)
 .card {
   padding: 16px;
   border-radius: var(--card-corner-radius);
-  border: 0px solid;
-  background-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+  border: var(--default-card-border);
+  background-color: var(--default-background);
+  box-shadow: var(--default-box-shadow);
   transition: box-shadow 0.2s ease-in-out;
 }
 
 .card:hover {
-  box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--hover-box-shadow);
 }
 
 .flatCard {
   padding: 16px;
   border-radius: var(--card-corner-radius);
-  border: 1px dashed rgba(255, 255, 255, 0.8);
+  border: var(--flat-card-border);
   background-color: transparent;
 }
 </style>

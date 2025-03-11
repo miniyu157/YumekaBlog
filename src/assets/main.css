@@ -26,11 +26,59 @@
   src: url("/src/assets/fonts/义启星空之翼.ttf");
 }
 
+@font-face {
+  font-family: "TeXGyreAdventor-Regular";
+  src: url("/src/assets/fonts/texgyreadventor-regular-webfont.woff2");
+}
+
 :root {
+  /* rounded shadow style */
+
   --circle-radius: 999px;
   --card-corner-radius: 12px;
   --tag-button-corner-radiu: 4px;
 
   --default-background: rgba(255, 255, 255, 0.2);
   --hover-background: rgba(255, 255, 255, 0.4);
+  --default-selection-background: rgba(255, 255, 255, 0.3);
+
+  --default-card-border-color: rgba(255, 255, 255, 0.8);
+  --default-card-border: 0px solid var(--default-card-border-color);
+  --flat-card-border: 1px dashed var(--default-card-border-color);
+
+  --default-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+  --hover-box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.4);
+
+  /* flat style */
+
+  /* --circle-radius: 0;
+  --card-corner-radius: 0;
+  --tag-button-corner-radiu: 0;
+
+  --default-background: rgba(255, 255, 255, 0.05);
+  --hover-background: rgba(255, 255, 255, 0.4);
+  --default-selection-background: rgba(255, 255, 255, 0.3);
+  
+  --default-card-border-color :rgba(255, 255, 255, 0.6); 
+  --default-card-border: 1px solid var(--default-card-border-color);
+  --flat-card-border: 1px dashed var(--default-card-border-color);
+  
+  --default-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0);
+  --hover-box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0); */
+}
+
+button,
+input,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  font-family: "TeXGyreAdventor-Regular", "等线", sans-serif;
+}
+
+.unline-height {
+  line-height: 0;
 }
