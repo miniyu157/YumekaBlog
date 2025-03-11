@@ -16,7 +16,7 @@ const hover = ref(false)
 
 <style scoped>
 .card {
-  padding: 16px;
+  padding: 1rem;
   border-radius: var(--card-corner-radius);
   border: var(--default-card-border);
   background-color: var(--default-background);
@@ -29,7 +29,7 @@ const hover = ref(false)
 }
 
 .flatCard {
-  padding: 16px;
+  padding: 1rem;
   border-radius: var(--card-corner-radius);
   border: var(--flat-card-border);
   background-color: transparent;

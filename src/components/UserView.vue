@@ -64,7 +64,6 @@ defineProps({
 .userView {
   align-items: center;
   justify-items: center;
-  margin: 6px;
 
   >button {
     width: 60%;

@@ -1,3 +1,23 @@
+/* 以下为 debug 使用 */
+* {
+  --dash-length: 4px; /* 实线长度 */
+  --dash-gap: 2px; /* 间隔长度 */
+  --border-color: rgb(105, 105, 255);
+
+  border: 1px dashed var(--border-color);
+  border-image: repeating-linear-gradient(
+      135deg,
+      var(--border-color) 0 var(--dash-length),
+      transparent var(--dash-length) calc(var(--dash-length) + var(--dash-gap))
+    )
+    1;
+}
+
+.stack-panel {
+  border: 1px solid red;
+}
+/* 以上为 debug 使用 */
+
 .message-panel {
   margin: -5px 0px;
 }
@@ -36,11 +56,6 @@
   src: url("/src/assets/fonts/OPPO Sans 4.0.ttf");
 }
 
-/* debug */
-/* * {
-  border: 1px solid red;
-} */
-
 :root {
   /* rounded shadow style */
 
@@ -68,11 +83,11 @@
   --default-background: rgba(255, 255, 255, 0.08);
   --hover-background: rgba(255, 255, 255, 0.4);
   --default-selection-background: rgba(255, 255, 255, 0.3);
-  
-  --default-card-border-color :rgba(255, 255, 255, 0.6); 
+
+  --default-card-border-color: rgba(255, 255, 255, 0.6);
   --default-card-border: 0px solid var(--default-card-border-color);
   --flat-card-border: 1px dashed var(--default-card-border-color);
-  
+
   --default-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0);
   --hover-box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0);
 }
@@ -87,6 +102,46 @@ h6,
 p,
 span {
   font-family: "TeXGyreAdventor-Regular", "OPPO-Sans", sans-serif;
+}
+
+.flat-button {
+  border-radius: var(--circle-radius);
+  background-color: transparent;
+  border: 1px solid var(--default-card-border-color);
+  padding: 4px 16px;
+  outline: none;
+  color: currentColor;
+
+  transition: all 0.4s ease;
+
+  &:active {
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(30, 30, 30, 1);
+    transition: none;
+  }
+}
+
+.big-button {
+  border-radius: var(--circle-radius);
+  border: 0px solid;
+
+  padding: 8px 0;
+  outline: none;
+}
+
+input {
+  border-radius: var(--circle-radius);
+  border: 0px solid;
+
+  padding: 8px 16px;
+  outline: none;
+}
+
+hr {
+  border: var(--flat-card-border);
+  width: 100%;
+  opacity: 80%;
+  margin: 0px;
 }
 
 .unline-height {

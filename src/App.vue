@@ -7,8 +7,6 @@ import StackPanel from "@/components/StackPanel.vue";
 import GithubLink from "@/components/GithubLink.vue";
 import UserView from "@/components/UserView.vue";
 
-
-
 // 定义文章类型接口
 interface Post {
   id: number;
@@ -23,13 +21,14 @@ interface Post {
 const postCount = ref(11);
 const tagCount = ref(45);
 const visitCount = ref(14);
+const message = ref("欢迎来到 Yumeka!");
+const title = ref("Welcome to Yumeka");
 
-// 初始化带类型的文章数组
+
+
 const posts = ref<Post[]>([]);
-
 const tags = ref<string[]>(["new", "feature", "update", "old", "hot"]);
 
-// 添加新文章的方法
 const addNewPost = () => {
   const getRandomTags = () => {
     // 随机生成 2 或 3
@@ -61,6 +60,20 @@ const addNewPost = () => {
 for (let i = 0; i <= 8; i++) {
   addNewPost();
 }
+
+const home = () => {
+  alert("clicked home");
+};
+const blog = () => {
+  alert("clicked blog");
+};
+const friend = () => {
+  alert("clicked friend");
+};
+const about = () => {
+  alert("clicked about");
+};
+
 </script>
 
 <template>
@@ -70,15 +83,22 @@ for (let i = 0; i <= 8; i++) {
   <div class="container">
     <stack-panel>
 
-      <stack-panel gap="14px" class="header">
-        <h1 class="unline-height">Welcome</h1>
+      <!-- header -->
+      <h1 class="unline-height title">{{ title }}</h1>
+      <nav class="sticky-nav">
         <stack-panel gap="12px" class="header-buttons" orientation="horizontal">
-          <h4 class="underline-from-center">首页</h4>
-          <h4 class="underline-from-center">博客</h4>
-          <h4 class="underline-from-center">友站</h4>
-          <h4 class="underline-from-center">关于</h4>
+          <h3 @click="home" class="underline-from-center">首页</h3>
+          <h3 @click="blog" class="underline-from-center">博客</h3>
+          <h3 @click="friend" class="underline-from-center">友站</h3>
+          <h3 @click="about" class="underline-from-center">关于</h3>
         </stack-panel>
+      </nav>
+
+      <stack-panel orientation="horizontal">
+        <button class="flat-button">Debug</button>
+        <button class="flat-button">Change Style</button>
       </stack-panel>
+
 
       <div class="mainGrid">
         <!-- 左侧区域 -->
@@ -120,7 +140,7 @@ for (let i = 0; i <= 8; i++) {
                   d="M18 3a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-4.724l-4.762 2.857a1 1 0 0 1-1.508-.743L7 21v-2H6a4 4 0 0 1-3.995-3.8L2 15V7a4 4 0 0 1 4-4zm-4 9H8a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2m2-4H8a1 1 0 1 0 0 2h8a1 1 0 0 0 0-2">
                 </path>
               </svg>
-              <p>欢迎来到 Yumeka!</p>
+              <p>{{ message }}</p>
             </stack-panel>
           </card>
 
@@ -164,28 +184,48 @@ for (let i = 0; i <= 8; i++) {
   </div>
 </template>
 
+<!--设置 scoped 会导致白屏-->
 <style>
-.header {
+:root {
+  --header-gap: 24px;
+  --header-height: 40vh;
+}
+
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  padding-top: 1rem;
+}
+
+.title {
   display: flex;
-  align-items: center;
-  justify-content: center;
+
+  cursor: default;
   font-family: "义启星空之翼", sans-serif;
-  height: 50vh;
+  font-size: 45pt;
+  height: calc(var(--header-height)/2);
+  margin-bottom: var(--header-gap);
 
-  >h1 {
-    font-size: 45pt;
-  }
+  justify-content: center;
+  align-items: end;
+}
 
-  >.header-buttons {
-    align-items: center;
-    justify-content: center;
+.header-buttons {
+  position: sticky;
+
+  height: calc(var(--header-height)/2);
+
+  align-items: start;
+  justify-content: center;
+
+  >h3 {
+    opacity: 85%;
+    margin: 0;
+    font-size: 14pt;
+
     cursor: pointer;
-
-    >h4 {
-      opacity: 85%;
-      margin: 0;
-      font-size: 14pt;
-    }
   }
 }
 
@@ -194,6 +234,7 @@ body {
   color: white;
 
   background-image: url("/src/assets/images/background.png");
+  background-color: rgba(30, 30, 30, 1);
   backdrop-filter: blur(30px) brightness(0.8);
   background-attachment: fixed;
 }
@@ -210,7 +251,7 @@ body {
 
 .mainGrid {
   display: grid;
-  grid-template-columns: 25% 75%;
+  grid-template-columns: 25fr 75fr;
   gap: 16px;
   width: 100%;
 }
@@ -231,28 +272,5 @@ body {
     padding: 0;
     overflow: hidden;
   }
-}
-
-.big-button {
-  border-radius: var(--circle-radius);
-  border: 0px solid;
-
-  padding: 8px 0;
-  outline: none;
-}
-
-input {
-  border-radius: var(--circle-radius);
-  border: 0px solid;
-
-  padding: 8px 16px;
-  outline: none;
-}
-
-hr {
-  border: var(--flat-card-border);
-  width: 100%;
-  opacity: 80%;
-  margin: 0px;
 }
 </style>
