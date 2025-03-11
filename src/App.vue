@@ -70,9 +70,9 @@ for (let i = 0; i <= 8; i++) {
   <div class="container">
     <stack-panel>
 
-      <stack-panel gap="12px" class="header">
+      <stack-panel gap="14px" class="header">
         <h1 class="unline-height">Welcome</h1>
-        <stack-panel class="header-buttons" orientation="horizontal">
+        <stack-panel gap="12px" class="header-buttons" orientation="horizontal">
           <h4 class="underline-from-center">首页</h4>
           <h4 class="underline-from-center">博客</h4>
           <h4 class="underline-from-center">友站</h4>
@@ -97,14 +97,14 @@ for (let i = 0; i <= 8; i++) {
           <card>
             <stack-panel gap="4px">
               <h3 class="unline-height">This a card</h3>
-              <p class="subtitle">Kaso sado cie asi s aodi asdj. Psan ns xsid asnd? Pxrab ascn aski.</p>
+              <p class="subtitle">Zelto mqru fiep gaxo ujik. Vrinb qsot xelp? Fkraw zsmo ytix.</p>
             </stack-panel>
           </card>
 
           <card>
             <stack-panel gap="4px">
               <h3 class="unline-height">This a card</h3>
-              <p class="subtitle">这是一个卡片吗？哦，原来这是一个卡片！</p>
+              <p class="subtitle">这是一个卡片吗？哦！原来这是一个卡片。<br><br>V me 50 treat me to a KFC豪华套餐</p>
             </stack-panel>
           </card>
         </stack-panel>
@@ -165,8 +165,6 @@ for (let i = 0; i <= 8; i++) {
 </template>
 
 <style>
-/* debug */
-
 .header {
   display: flex;
   align-items: center;
@@ -185,7 +183,8 @@ for (let i = 0; i <= 8; i++) {
 
     >h4 {
       opacity: 85%;
-      margin: 0px 12px;
+      margin: 0;
+      font-size: 14pt;
     }
   }
 }
@@ -213,6 +212,7 @@ body {
   display: grid;
   grid-template-columns: 25% 75%;
   gap: 16px;
+  width: 100%;
 }
 
 ::selection {
