@@ -21,7 +21,7 @@ const hover = ref(false)
   border: var(--default-card-border);
   background-color: var(--default-background);
   box-shadow: var(--default-box-shadow);
-  transition: box-shadow 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .card:hover {

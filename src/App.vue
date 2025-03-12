@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { onMounted } from "vue";
 
 import PostCard from "@/components/PostCard.vue";
 import Card from "@/components/BaseCard.vue";
@@ -23,8 +24,6 @@ const tagCount = ref(45);
 const visitCount = ref(14);
 const message = ref("欢迎来到 Yumeka!");
 const title = ref("Welcome to Yumeka");
-
-
 
 const posts = ref<Post[]>([]);
 const tags = ref<string[]>(["new", "feature", "update", "old", "hot"]);
@@ -52,7 +51,7 @@ const addNewPost = () => {
     comments: Math.floor(Math.random() * 500),
     likes: Math.floor(Math.random() * 2000),
     tags: getRandomTags(), // 使用随机标签
-    imageUrl: `/src/assets/images/contentImages/${posts.value.length}.jpg`,
+    imageUrl: `/src/assets/images/post-images-thumbnails/${posts.value.length}.jpg`,
   });
 };
 
@@ -74,9 +73,38 @@ const about = () => {
   alert("clicked about");
 };
 
+const toggleDebug = () => {
+
+};
+
+// 定义背景图像列表
+const backgrounds = [
+  // "/src/assets/images/backgrounds/1.jpg",
+  "/src/assets/images/backgrounds/2.jpg",
+  // "/src/assets/images/backgrounds/3.jpg",
+  // "/src/assets/images/backgrounds/4.jpg"
+];
+// 随机选择一个背景图像
+const getRandomBackground = () => {
+  const randomIndex = Math.floor(Math.random() * backgrounds.length);
+  return backgrounds[randomIndex];
+};
+
+// 在组件挂载时设置背景图像
+onMounted(() => {
+  const body = document.body;
+  const randomBackground = getRandomBackground();
+  body.style.backgroundImage = `url(${randomBackground})`;
+});
 </script>
 
 <template>
+
+  <!-- <div style="display: flex; align-items: center; justify-content: center; width: 200px; height: 200px; ">
+    <div style="width: 200px;height: 200px; background-color: rgba(255, 255, 255, 0.2);backdrop-filter: blur(10px);">
+    </div>
+    <h1 style="position: absolute; ">嗯</h1>
+  </div> -->
 
   <github-link></github-link>
 
@@ -95,10 +123,9 @@ const about = () => {
       </nav>
 
       <stack-panel orientation="horizontal">
-        <button class="flat-button">Debug</button>
+        <button @click="toggleDebug" class="flat-button">Debug</button>
         <button class="flat-button">Change Style</button>
       </stack-panel>
-
 
       <div class="mainGrid">
         <!-- 左侧区域 -->
@@ -175,7 +202,7 @@ const about = () => {
           <hr />
 
           <div class="post-container">
-            <post-card v-for="post in posts" :key="post.id" :title="post.title" :heat="post.heat"
+            <post-card class="post" v-for="post in posts" :key="post.id" :title="post.title" :heat="post.heat"
               :comments="post.comments" :likes="post.likes" :tags="post.tags" :image-url="post.imageUrl" />
           </div>
         </stack-panel>
@@ -184,19 +211,15 @@ const about = () => {
   </div>
 </template>
 
-<!--设置 scoped 会导致白屏-->
-<style>
-:root {
-  --header-gap: 24px;
-  --header-height: 40vh;
-}
+<style scoped>
 
 .sticky-nav {
   position: sticky;
   top: 0;
   z-index: 999;
-
   padding-top: 1rem;
+
+  pointer-events: none;
 }
 
 .title {
@@ -206,6 +229,7 @@ const about = () => {
   font-family: "义启星空之翼", sans-serif;
   font-size: 45pt;
   height: calc(var(--header-height)/2);
+
   margin-bottom: var(--header-gap);
 
   justify-content: center;
@@ -220,23 +244,15 @@ const about = () => {
   align-items: start;
   justify-content: center;
 
+  pointer-events: none;
+
   >h3 {
+    cursor: pointer;
     opacity: 85%;
     margin: 0;
-    font-size: 14pt;
 
-    cursor: pointer;
+    pointer-events: auto;
   }
-}
-
-body {
-  margin: 0;
-  color: white;
-
-  background-image: url("/src/assets/images/background.png");
-  background-color: rgba(30, 30, 30, 1);
-  backdrop-filter: blur(30px) brightness(0.8);
-  background-attachment: fixed;
 }
 
 .container {
@@ -247,13 +263,15 @@ body {
   padding-bottom: 200px;
 
   margin: 0 auto;
+
+  --header-gap: 24px;
+  --header-height: 42vh;
 }
 
 .mainGrid {
   display: grid;
   grid-template-columns: 25fr 75fr;
   gap: 16px;
-  width: 100%;
 }
 
 ::selection {
