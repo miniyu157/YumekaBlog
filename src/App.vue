@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { onMounted } from "vue";
 
 import PostCard from "@/components/PostCard.vue";
 import Card from "@/components/BaseCard.vue";
@@ -77,34 +76,31 @@ const toggleDebug = () => {
 
 };
 
-// 定义背景图像列表
-const backgrounds = [
-  // "/src/assets/images/backgrounds/1.jpg",
-  "/src/assets/images/backgrounds/2.jpg",
-  // "/src/assets/images/backgrounds/3.jpg",
-  // "/src/assets/images/backgrounds/4.jpg"
-];
-// 随机选择一个背景图像
-const getRandomBackground = () => {
-  const randomIndex = Math.floor(Math.random() * backgrounds.length);
-  return backgrounds[randomIndex];
+async function getImageUrl(): Promise<string> {
+  try {
+    const response = await fetch('https://localhost:7163/api/BackgroundImage');
+    const data = await response.json();
+    const fullImageUrl = `https://localhost:7163${data.imageUrl}`;
+    return fullImageUrl;
+  } catch(error) {
+    alert(`无法连接到服务器\n${error}`)
+    return "/src/assets/images/yumeka.jpg";
+  }
+}
+
+const changeBackground = (bgPath: string) => {
+  document.documentElement.style.setProperty('--bg-url', `url("${bgPath}")`);
 };
 
-// 在组件挂载时设置背景图像
-onMounted(() => {
-  const body = document.body;
-  const randomBackground = getRandomBackground();
-  body.style.backgroundImage = `url(${randomBackground})`;
-});
+(async () => {
+  const imageUrl = await getImageUrl();
+  changeBackground(imageUrl);
+})();
+
+
 </script>
 
 <template>
-
-  <!-- <div style="display: flex; align-items: center; justify-content: center; width: 200px; height: 200px; ">
-    <div style="width: 200px;height: 200px; background-color: rgba(255, 255, 255, 0.2);backdrop-filter: blur(10px);">
-    </div>
-    <h1 style="position: absolute; ">嗯</h1>
-  </div> -->
 
   <github-link></github-link>
 
@@ -209,10 +205,10 @@ onMounted(() => {
       </div>
     </stack-panel>
   </div>
+
 </template>
 
 <style scoped>
-
 .sticky-nav {
   position: sticky;
   top: 0;
@@ -253,6 +249,10 @@ onMounted(() => {
 
     pointer-events: auto;
   }
+}
+
+.card {
+  backdrop-filter: blur(8px);
 }
 
 .container {

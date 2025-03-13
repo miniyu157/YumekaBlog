@@ -1,11 +1,34 @@
-# YumekaBlog
+# YumekaBlog 🍃
 
-Learn Vue3!
+Vue3 打造的轻量级个人博客，持续进化中~ ✨
 
-## Preview
+---
 
-![preview](/assets/preview.png)
+## 为啥要做这个？
 
-## Old
+🎯 ​**最初目的**  
+本来是应付前端课期末作业的小项目，结果 Vue3 用着感觉还不错，也为了以后多给自己留一条路，打算深入学习 Vue ，现在正在努力把它变成功能齐全的个人博客~
 
-![old](/assets/v1-preview.png)
+🛠️ ​**项目使用**  
+- 前端：Vue3 秒了
+- 后端：暂时用我最爱的 C# 写的 ASP.NET Core Web API，说不定哪天会换成 Node.js 或者 Go 呢 (๑•̀ㅂ•́)و✧
+
+⚠️ ​**友情提示**  
+项目启动时会请求 `http://127.0.0.1/api/BackgroundImage` 获取随机背景图，目前还没有实际的后端支持（穷），建议本地运行时随便 mock 个数据就好啦~
+
+---
+
+## 效果图 📸
+
+### 当前版本 (解决了卡片的毛玻璃效果) (V2)
+![v2](/assets/v2-preview.png)
+
+---
+
+## 以前的效果图 🕰️
+
+![v0](/assets/v0-preview.png)
+
+---
+
+正在持续迭代中... 点个Star鼓励一下呗~ 🌟
