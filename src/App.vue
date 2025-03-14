@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import axios from "axios";
+import { cssVarManager } from "./cssVarManager";
+
 
 import PostCard from "@/components/PostCard.vue";
 import Card from "@/components/BaseCard.vue";
@@ -72,18 +75,16 @@ const about = () => {
   alert("clicked about");
 };
 
-const toggleDebug = () => {
 
-};
+// 直接使用封装好的方法
+const toggleDebug = () => cssVarManager.isDebug = !cssVarManager.isDebug;
 
 async function getImageUrl(): Promise<string> {
   try {
-    const response = await fetch('https://localhost:7163/api/BackgroundImage');
-    const data = await response.json();
-    const fullImageUrl = `https://localhost:7163${data.imageUrl}`;
-    return fullImageUrl;
-  } catch(error) {
-    alert(`无法连接到服务器\n${error}`)
+    const response = await axios.get("http://localhost:5000/api/BackgroundImage");
+    const url = response.data.imageUrl;
+    return `http://localhost:5000${url}`;
+  } catch {
     return "/src/assets/images/yumeka.jpg";
   }
 }
@@ -104,11 +105,12 @@ const changeBackground = (bgPath: string) => {
 
   <github-link></github-link>
 
-  <div class="container">
+  <div id="container" class="container">
     <stack-panel>
 
       <!-- header -->
       <h1 class="unline-height title">{{ title }}</h1>
+
       <nav class="sticky-nav">
         <stack-panel gap="12px" class="header-buttons" orientation="horizontal">
           <h3 @click="home" class="underline-from-center">首页</h3>
@@ -120,7 +122,7 @@ const changeBackground = (bgPath: string) => {
 
       <stack-panel orientation="horizontal">
         <button @click="toggleDebug" class="flat-button">Debug</button>
-        <button class="flat-button">Change Style</button>
+        <button class="flat-button">Test Button</button>
       </stack-panel>
 
       <div class="mainGrid">
@@ -209,15 +211,6 @@ const changeBackground = (bgPath: string) => {
 </template>
 
 <style scoped>
-.sticky-nav {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  padding-top: 1rem;
-
-  pointer-events: none;
-}
-
 .title {
   display: flex;
 
@@ -230,29 +223,34 @@ const changeBackground = (bgPath: string) => {
 
   justify-content: center;
   align-items: end;
+
+  text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
 }
 
-.header-buttons {
+.sticky-nav {
   position: sticky;
-
-  height: calc(var(--header-height)/2);
-
-  align-items: start;
-  justify-content: center;
+  top: 0;
+  z-index: 999;
+  padding-top: 1rem;
 
   pointer-events: none;
 
-  >h3 {
-    cursor: pointer;
-    opacity: 85%;
-    margin: 0;
+  >.header-buttons {
+    position: sticky;
 
-    pointer-events: auto;
+    height: calc(var(--header-height)/2);
+
+    align-items: start;
+    justify-content: center;
+
+    >h3 {
+      cursor: pointer;
+      opacity: 85%;
+      margin: 0;
+
+      pointer-events: auto;
+    }
   }
-}
-
-.card {
-  backdrop-filter: blur(8px);
 }
 
 .container {
@@ -260,7 +258,7 @@ const changeBackground = (bgPath: string) => {
   flex-direction: column;
   max-width: 1200px;
   width: 90%;
-  padding-bottom: 200px;
+  padding-bottom: var(--header-height);
 
   margin: 0 auto;
 
