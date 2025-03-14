@@ -47,13 +47,13 @@ body::before {
   border: 2px solid white;
   background: linear-gradient(
     45deg,
-    #ffffb0b0 0% 14.2857%,
-    #fffff3b0 14.2857% 28.5714%,
-    #ffc6ffb0 28.5714% 42.8571%,
-    #ffb0ffdd 42.8571% 57.1428%,
-    #ffb0ddff 57.1428% 71.4285%,
-    #ffc6b0ff 71.4285% 85.7142%,
-    #ffffb0f3 85.7142% 100%
+    #ff7f7f 0% 14.2857%,
+    #ffec7f 14.2857% 28.5714%,
+    #a3ff7f 28.5714% 42.8571%,
+    #7fffc8 42.8571% 57.1428%,
+    #7fc8ff 57.1428% 71.4285%,
+    #a37fff 71.4285% 85.7142%,
+    #ff7fec 85.7142% 100%
   );
   border-radius: var(--circle-radius);
 }
