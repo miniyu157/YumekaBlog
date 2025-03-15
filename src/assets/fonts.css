@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "义启星空之翼";
+  src: url("/src/assets/fonts/义启星空之翼.ttf");
+}
+
+@font-face {
+  font-family: "TeXGyreAdventor-Regular";
+  src: url("/src/assets/fonts/texgyreadventor-regular-webfont.woff2");
+}
+
+@font-face {
+  font-family: "OPPO-Sans";
+  src: url("/src/assets/fonts/OPPO Sans 4.0.ttf");
+}

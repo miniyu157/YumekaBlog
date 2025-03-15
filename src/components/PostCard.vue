@@ -12,7 +12,6 @@ interface Props {
   imageUrl: string
 }
 
-// 接收 Props
 const props = defineProps<Props>()
 
 // 格式化数字显示
@@ -84,6 +83,12 @@ span {
   font-size: 9pt;
 }
 
+.card {
+  aspect-ratio: 1/0.9;
+  padding: 0;
+  overflow: hidden;
+}
+
 .post-grid {
   display: grid;
   cursor: pointer;
@@ -98,7 +103,6 @@ span {
 
 .post-item2 {
   margin: 4px 10px;
-  position: relative;
 }
 
 .post-grid img {

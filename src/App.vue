@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import axios from "axios";
 import { cssVarManager } from "./cssVarManager";
-
 
 import PostCard from "@/components/PostCard.vue";
 import Card from "@/components/BaseCard.vue";
 import StackPanel from "@/components/StackPanel.vue";
 import GithubLink from "@/components/GithubLink.vue";
 import UserView from "@/components/UserView.vue";
+import TypeHeader from "@/components/TypeHeader.vue";
+
+import axios from "axios";
 
 // 定义文章类型接口
 interface Post {
@@ -81,37 +82,38 @@ const toggleDebug = () => cssVarManager.isDebug = !cssVarManager.isDebug;
 
 async function getImageUrl(): Promise<string> {
   try {
-    const response = await axios.get("http://localhost:5000/api/BackgroundImage");
+    //const response = await axios.get("http://192.168.125.21:3000/api/random-image");
+    const response = await axios.get("http://localhost:3000/api/random-image");
     const url = response.data.imageUrl;
-    return `http://localhost:5000${url}`;
-  } catch {
+    // return `http://192.168.125.21:3000${url}`;
+    return `http://localhost:3000${url}`;
+  } catch (error) {
     return "/src/assets/images/yumeka.jpg";
   }
 }
 
-const changeBackground = (bgPath: string) => {
-  document.documentElement.style.setProperty('--bg-url', `url("${bgPath}")`);
-};
 
 (async () => {
   const imageUrl = await getImageUrl();
-  changeBackground(imageUrl);
+  cssVarManager.bgUrl = imageUrl;
 })();
 
-
+const testButton = () => {
+  document.getElementById("")
+};
 </script>
 
 <template>
 
-  <github-link></github-link>
+  <github-link />
 
-  <div id="container" class="container">
+  <div id="container">
     <stack-panel>
 
       <!-- header -->
       <h1 class="unline-height title">{{ title }}</h1>
 
-      <nav class="sticky-nav">
+      <nav id="main-nav">
         <stack-panel gap="12px" class="header-buttons" orientation="horizontal">
           <h3 @click="home" class="underline-from-center">首页</h3>
           <h3 @click="blog" class="underline-from-center">博客</h3>
@@ -122,10 +124,10 @@ const changeBackground = (bgPath: string) => {
 
       <stack-panel orientation="horizontal">
         <button @click="toggleDebug" class="flat-button">Debug</button>
-        <button class="flat-button">Test Button</button>
+        <button @click="testButton" class="flat-button">Test Button</button>
       </stack-panel>
 
-      <div class="mainGrid">
+      <div id="mainGrid">
         <!-- 左侧区域 -->
         <stack-panel>
           <!-- 信息窗口 -->
@@ -152,6 +154,13 @@ const changeBackground = (bgPath: string) => {
               <p class="subtitle">这是一个卡片吗？哦！原来这是一个卡片。<br><br>V me 50 treat me to a KFC豪华套餐</p>
             </stack-panel>
           </card>
+
+          <card>
+            <stack-panel gap="4px">
+              <h3 class="unline-height">This a card</h3>
+              <p class="subtitle">这是一个卡片吗？哦！原来这是一个卡片。<br><br>V me 50 treat me to a KFC豪华套餐</p>
+            </stack-panel>
+          </card>
         </stack-panel>
 
         <!-- 右侧区域 -->
@@ -169,40 +178,24 @@ const changeBackground = (bgPath: string) => {
             </stack-panel>
           </card>
 
-          <!--文章容器上方-->
-          <stack-panel class="single-line" orientation="horizontal">
-            <stack-panel gap="6px" class="subtitle single-line" orientation="horizontal">
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                role="img" viewBox="0 0 24 24" style="transform: rotate(180deg) translate(0px, 0px); height: 24px">
-                <g fill="none" fill-rule="evenodd">
-                  <path
-                    d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z">
-                  </path>
-                  <path fill="currentColor"
-                    d="M9 13a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2zm10 0a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2zM9 3a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm10 0a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z">
-                  </path>
-                </g>
-              </svg>
-              <h3 class="unline-height">Yumeka</h3>
-            </stack-panel>
-
-            <stack-panel style="width: auto" class="subtitle link-block single-line" orientation="horizontal" gap="6px">
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                role="img" viewBox="0 0 24 24" style="transform: rotate(180deg) translate(0px, 0px); height: 24px">
-                <path fill="currentColor"
-                  d="M9 20q-.475 0-.9-.213t-.7-.587l-4.5-6q-.4-.525-.4-1.2t.4-1.2l4.5-6q.275-.375.7-.587T9 4h11q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm1-7q.425 0 .713-.288T11 12t-.288-.712T10 11t-.712.288T9 12t.288.713T10 13m3.5 0q.425 0 .713-.288T14.5 12t-.288-.712T13.5 11t-.712.288T12.5 12t.288.713t.712.287m3.5 0q.425 0 .713-.288T18 12t-.288-.712T17 11t-.712.288T16 12t.288.713T17 13">
-                </path>
-              </svg>
-              <h3 class="unline-height">More</h3>
-            </stack-panel>
-          </stack-panel>
+          <type-header title="Yumeka" />
 
           <hr />
 
           <div class="post-container">
-            <post-card class="post" v-for="post in posts" :key="post.id" :title="post.title" :heat="post.heat"
+            <post-card v-for="post in posts" :key="post.id" :title="post.title" :heat="post.heat"
               :comments="post.comments" :likes="post.likes" :tags="post.tags" :image-url="post.imageUrl" />
           </div>
+
+          <type-header title="Other" />
+
+          <hr />
+
+          <div class="post-container">
+            <post-card class="card" v-for="post in posts" :key="post.id" :title="post.title" :heat="post.heat"
+              :comments="post.comments" :likes="post.likes" :tags="post.tags" :image-url="post.imageUrl" />
+          </div>
+
         </stack-panel>
       </div>
     </stack-panel>
@@ -211,12 +204,53 @@ const changeBackground = (bgPath: string) => {
 </template>
 
 <style scoped>
+.post-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+  row-gap: 20px;
+  transition: all 1s ease;
+}
+
+#mainGrid {
+  display: grid;
+  grid-template-columns: 25fr 75fr;
+  gap: 16px;
+}
+
+@media (max-width: 1100px) {
+  .post-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #mainGrid {
+    grid-template-columns: 31fr 69fr;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .post-container {
+    grid-template-columns: repeat(1, 1fr);
+
+    /* 此处把 PostCard 中的图像隐藏 */
+
+    >.card {
+      aspect-ratio: 1/0.5;
+    }
+  }
+
+  #mainGrid {
+    grid-template-columns: 100fr;
+  }
+}
+
 .title {
   display: flex;
 
   cursor: default;
   font-family: "义启星空之翼", sans-serif;
   font-size: 45pt;
+  min-width: 532px;
   height: calc(var(--header-height)/2);
 
   margin-bottom: var(--header-gap);
@@ -227,21 +261,23 @@ const changeBackground = (bgPath: string) => {
   text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
 }
 
-.sticky-nav {
+#main-nav {
   position: sticky;
   top: 0;
   z-index: 999;
-  padding-top: 1rem;
-
+  height: calc(var(--header-height)/2);
   pointer-events: none;
 
+  /* 使按钮的模糊宽度等于文档宽度 */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+
   >.header-buttons {
-    position: sticky;
+    /*设置此属性auto后伪元素的hover生效，但不能穿透点击了 */
+    pointer-events: auto;
 
-    height: calc(var(--header-height)/2);
-
-    align-items: start;
     justify-content: center;
+    padding: 8px;
 
     >h3 {
       cursor: pointer;
@@ -251,9 +287,34 @@ const changeBackground = (bgPath: string) => {
       pointer-events: auto;
     }
   }
+
+  >.header-buttons::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+
+    backdrop-filter: blur(10px);
+
+    mask: linear-gradient(to bottom,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.66) 66%,
+        rgba(0, 0, 0, 0) 100%);
+
+    transition: all 0.2s ease;
+  }
+
+  >.header-buttons:hover::before {
+    backdrop-filter: blur(20px) brightness(120%);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
 }
 
-.container {
+#container {
   display: flex;
   flex-direction: column;
   max-width: 1200px;
@@ -263,30 +324,6 @@ const changeBackground = (bgPath: string) => {
   margin: 0 auto;
 
   --header-gap: 24px;
-  --header-height: 42vh;
-}
-
-.mainGrid {
-  display: grid;
-  grid-template-columns: 25fr 75fr;
-  gap: 16px;
-}
-
-::selection {
-  background: var(--default-selection-background);
-}
-
-/* 文章容器样式 */
-.post-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 20px;
-  row-gap: 20px;
-
-  >.card {
-    aspect-ratio: 1/0.9;
-    padding: 0;
-    overflow: hidden;
-  }
+  --header-height: 45vh;
 }
 </style>
