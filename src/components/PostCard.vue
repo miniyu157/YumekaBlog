@@ -19,7 +19,7 @@ const formatNumber = (num: number) => num.toLocaleString()
 </script>
 
 <template>
-  <card>
+  <card class="post-card">
     <div class="post-grid">
       <div class="post-item1">
         <img :src="imageUrl" :alt="props.title" />
@@ -83,7 +83,7 @@ span {
   font-size: 9pt;
 }
 
-.card {
+.post-card {
   aspect-ratio: 1/0.9;
   padding: 0;
   overflow: hidden;
@@ -118,19 +118,4 @@ span {
   scale: 1.2;
 }
 
-.tag-button {
-  border: 0px solid;
-  border-radius: var(--tag-button-corner-radiu);
-
-  background-color: var(--default-background);
-  color: currentColor;
-  padding: 2px 16px;
-
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-}
-
-.tag-button:hover {
-  background-color: var(--hover-background);
-}
 </style>

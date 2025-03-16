@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { cssVarManager } from "./cssVarManager";
 
 import PostCard from "@/components/PostCard.vue";
 import Card from "@/components/BaseCard.vue";
+import NormalCard from "@/components/NormalCard.vue";
 import StackPanel from "@/components/StackPanel.vue";
 import GithubLink from "@/components/GithubLink.vue";
 import UserView from "@/components/UserView.vue";
@@ -33,17 +34,14 @@ const tags = ref<string[]>(["new", "feature", "update", "old", "hot"]);
 
 const addNewPost = () => {
   const getRandomTags = () => {
-    // 随机生成 2 或 3
     const count = Math.random() < 0.5 ? 2 : 3;
 
-    // 使用 Fisher-Yates 算法洗牌
     const shuffled = [...tags.value];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
-    // 取前 N 个标签
     return shuffled.slice(0, count);
   };
 
@@ -53,54 +51,65 @@ const addNewPost = () => {
     heat: Math.floor(Math.random() * 1000),
     comments: Math.floor(Math.random() * 500),
     likes: Math.floor(Math.random() * 2000),
-    tags: getRandomTags(), // 使用随机标签
+    tags: getRandomTags(),
     imageUrl: `/src/assets/images/post-images-thumbnails/${posts.value.length}.jpg`,
   });
 };
 
-// 初始化文章数据
-for (let i = 0; i <= 8; i++) {
+for (let i = 0; i <= 5; i++) {
   addNewPost();
 }
 
-const home = () => {
-  alert("clicked home");
-};
-const blog = () => {
-  alert("clicked blog");
-};
-const friend = () => {
-  alert("clicked friend");
-};
-const about = () => {
-  alert("clicked about");
-};
-
-
-// 直接使用封装好的方法
-const toggleDebug = () => cssVarManager.isDebug = !cssVarManager.isDebug;
-
 async function getImageUrl(): Promise<string> {
   try {
-    //const response = await axios.get("http://192.168.125.21:3000/api/random-image");
-    const response = await axios.get("http://localhost:3000/api/random-image");
+    const response = await axios.get("http://192.168.125.21:3000/api/random-image");
+    // const response = await axios.get("http://localhost:3000/api/random-image");
     const url = response.data.imageUrl;
-    // return `http://192.168.125.21:3000${url}`;
-    return `http://localhost:3000${url}`;
+    return `http://192.168.125.21:3000${url}`;
+    // return `http://localhost:3000${url}`;
   } catch (error) {
     return "/src/assets/images/yumeka.jpg";
   }
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-(async () => {
-  const imageUrl = await getImageUrl();
-  cssVarManager.bgUrl = imageUrl;
-})();
+const loadBgAsync = async () => {
+  const body = document.querySelector("body");
 
-const testButton = () => {
-  document.getElementById("")
+  if (body) {
+    /* 设置此项可屏蔽启动时 body 透明度 to 0 的动画 */
+    body.style.visibility = 'collapse';
+  }
+
+  try {
+    await sleep(500);
+    const url = await getImageUrl();
+    await cssVarManager.setBgUrlAsync(url);
+
+  } catch (error) {
+    console.error('Failed to load image:', error);
+
+  } finally {
+    const body = document.querySelector("body");
+
+    if (body) {
+      body.style.visibility = 'visible';
+      body.style.opacity = '100%';
+    }
+  }
 };
+
+onMounted(loadBgAsync);
+
+const testButton = async () => {
+
+};
+
+
+const blurValue = ref(50);
 </script>
 
 <template>
@@ -115,57 +124,99 @@ const testButton = () => {
 
       <nav id="main-nav">
         <stack-panel gap="12px" class="header-buttons" orientation="horizontal">
-          <h3 @click="home" class="underline-from-center">首页</h3>
-          <h3 @click="blog" class="underline-from-center">博客</h3>
-          <h3 @click="friend" class="underline-from-center">友站</h3>
-          <h3 @click="about" class="underline-from-center">关于</h3>
+          <h3 class="underline-from-center">首页</h3>
+          <h3 class="underline-from-center">博客</h3>
+          <h3 class="underline-from-center">友站</h3>
+          <h3 class="underline-from-center">关于</h3>
         </stack-panel>
       </nav>
 
       <stack-panel orientation="horizontal">
-        <button @click="toggleDebug" class="flat-button">Debug</button>
+        <button @click="cssVarManager.isDebug = !cssVarManager.isDebug;" class="flat-button">Debug</button>
         <button @click="testButton" class="flat-button">Test Button</button>
       </stack-panel>
 
       <div id="mainGrid">
         <!-- 左侧区域 -->
         <stack-panel>
-          <!-- 信息窗口 -->
           <user-view :post-count="postCount" :tag-count="tagCount" :visit-count="visitCount"></user-view>
 
-          <!-- 搜索 -->
-          <card>
-            <stack-panel gap="4px">
-              <h3 class="subtitle unline-height">搜索</h3>
-              <input type="text" placeholder="搜索文章" />
-            </stack-panel>
-          </card>
+          <normal-card title="搜索">
+            <input type="text" placeholder="搜索文章" />
+          </normal-card>
 
-          <card>
-            <stack-panel gap="4px">
-              <h3 class="unline-height">This a card</h3>
-              <p class="subtitle">Zelto mqru fiep gaxo ujik. Vrinb qsot xelp? Fkraw zsmo ytix.</p>
-            </stack-panel>
-          </card>
+          <normal-card title="设置">
+            <div class="settings">
+              <p>圆角半径</p>
+              <p>{{ blurValue }}%</p>
+              <input type="range" min="0" max="100" v-model.number="blurValue">
 
-          <card>
-            <stack-panel gap="4px">
-              <h3 class="unline-height">This a card</h3>
-              <p class="subtitle">这是一个卡片吗？哦！原来这是一个卡片。<br><br>V me 50 treat me to a KFC豪华套餐</p>
-            </stack-panel>
-          </card>
+              <p>卡片模糊 {{ blurValue }}%</p>
+              <input type="range" min="0" max="100" v-model.number="blurValue">
 
-          <card>
-            <stack-panel gap="4px">
-              <h3 class="unline-height">This a card</h3>
-              <p class="subtitle">这是一个卡片吗？哦！原来这是一个卡片。<br><br>V me 50 treat me to a KFC豪华套餐</p>
-            </stack-panel>
-          </card>
+              <p>卡片饱和度 {{ blurValue }}%</p>
+              <input type="range" min="0" max="100" v-model.number="blurValue">
+
+              <p>卡片亮度 {{ blurValue }}%</p>
+              <input type="range" min="0" max="100" v-model.number="blurValue">
+
+              <p>背景亮度{{ blurValue }}%</p>
+              <input type="range" min="0" max="100" v-model.number="blurValue">
+
+              <p>背景饱和度{{ blurValue }}%</p>
+              <input type="range" min="0" max="100" v-model.number="blurValue">
+
+              <p>背景模糊{{ blurValue }}%</p>
+              <input type="range" min="0" max="100" v-model.number="blurValue">
+            </div>
+          </normal-card>
+
+
+          <normal-card title="标签">
+            <div style="display: flex;flex-wrap: wrap; gap: 6px;">
+              <button class="tag-button">bug</button>
+              <button class="tag-button">api</button>
+              <button class="tag-button">framework</button>
+              <button class="tag-button">cloud</button>
+              <button class="tag-button">database</button>
+              <button class="tag-button">security</button>
+              <button class="tag-button">DevOps</button>
+              <button class="tag-button">microservice</button>
+              <button class="tag-button">javascript</button>
+              <button class="tag-button">python</button>
+              <button class="tag-button">health</button>
+              <button class="tag-button">travel</button>
+              <button class="tag-button">foodie</button>
+              <button class="tag-button">fitness</button>
+              <button class="tag-button">hobby</button>
+              <button class="tag-button">parenting</button>
+              <button class="tag-button">pets</button>
+              <button class="tag-button">gardening</button>
+              <button class="tag-button">cooking</button>
+              <button class="tag-button">course</button>
+              <button class="tag-button">book</button>
+              <button class="tag-button">language</button>
+              <button class="tag-button">coding</button>
+              <button class="tag-button">exam</button>
+              <button class="tag-button">thesis</button>
+              <button class="tag-button">research</button>
+              <button class="tag-button">assignment</button>
+              <button class="tag-button">skill</button>
+              <button class="tag-button">certificate</button>
+            </div>
+          </normal-card>
+
+          <normal-card title="This a card">
+            <p class="subtitle">Zelto mqru fiep gaxo ujik. Vrinb qsot xelp? Fkraw zsmo ytix.</p>
+          </normal-card>
+
+          <normal-card title="This a card">
+            <p class="subtitle">这是一个卡片吗？哦！原来这是一个卡片。<br><br>V me 50 treat me to a KFC豪华套餐</p>
+          </normal-card>
         </stack-panel>
 
         <!-- 右侧区域 -->
         <stack-panel>
-          <!-- 公告栏 -->
           <card class="messageCard" :flat="true">
             <stack-panel gap="10px" class="single-line message-panel" orientation="horizontal">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -192,7 +243,7 @@ const testButton = () => {
           <hr />
 
           <div class="post-container">
-            <post-card class="card" v-for="post in posts" :key="post.id" :title="post.title" :heat="post.heat"
+            <post-card v-for="post in posts" :key="post.id" :title="post.title" :heat="post.heat"
               :comments="post.comments" :likes="post.likes" :tags="post.tags" :image-url="post.imageUrl" />
           </div>
 
@@ -204,6 +255,39 @@ const testButton = () => {
 </template>
 
 <style scoped>
+/* 撑开 mainGrid 的第一列宽度了，改成 SettingsView 的组件 */
+.settings {
+  display: grid;
+  grid-template-columns: 3fr 30px 2fr;
+
+  grid-template-rows: none;
+
+  gap: 12px;
+
+  p {
+    margin: 0;
+  }
+
+  input {
+    padding: 0;
+  }
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  width: 90%;
+  padding-bottom: var(--header-height);
+
+  margin: 0 auto;
+
+  --header-gap: 24px;
+  --header-height: 45vh;
+
+  transition: all 1s ease;
+}
+
 .post-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -230,17 +314,28 @@ const testButton = () => {
 
 @media only screen and (max-width: 767px) {
   .post-container {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr;
+  }
 
-    /* 此处把 PostCard 中的图像隐藏 */
+  :deep(.post-card) {
+    aspect-ratio: 1/0.3;
 
-    >.card {
-      aspect-ratio: 1/0.5;
+    .post-grid {
+      grid-template-rows: none;
+      grid-template-columns: 6.2fr 3.8fr;
+
+      .post-item1 {
+        order: 2;
+      }
+
+      .post-item2 {
+        order: 1;
+      }
     }
   }
 
   #mainGrid {
-    grid-template-columns: 100fr;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -263,7 +358,7 @@ const testButton = () => {
 
 #main-nav {
   position: sticky;
-  top: 0;
+  top: 0px;
   z-index: 999;
   height: calc(var(--header-height)/2);
   pointer-events: none;
@@ -273,7 +368,7 @@ const testButton = () => {
   margin-left: calc(50% - 50vw);
 
   >.header-buttons {
-    /*设置此属性auto后伪元素的hover生效，但不能穿透点击了 */
+    /*设置此属性auto后伪元素的hover生效，但不能穿透点击了，暂时搁置 */
     pointer-events: auto;
 
     justify-content: center;
@@ -298,32 +393,29 @@ const testButton = () => {
     height: 60px;
     width: 100%;
 
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
 
     mask: linear-gradient(to bottom,
         rgba(0, 0, 0, 1) 0%,
-        rgba(0, 0, 0, 0.66) 66%,
+        rgba(0, 0, 0, 0.66) 40%,
         rgba(0, 0, 0, 0) 100%);
 
     transition: all 0.2s ease;
   }
 
+  /*
   >.header-buttons:hover::before {
     backdrop-filter: blur(20px) brightness(120%);
     background-color: rgba(0, 0, 0, 0.4);
-  }
+  } */
 }
 
-#container {
-  display: flex;
-  flex-direction: column;
-  max-width: 1200px;
-  width: 90%;
-  padding-bottom: var(--header-height);
+.header-buttons.sticky-active::before {
+  backdrop-filter: blur(10px);
+}
 
-  margin: 0 auto;
-
-  --header-gap: 24px;
-  --header-height: 45vh;
+.header-buttons.sticky-active:hover::before {
+  backdrop-filter: blur(20px) brightness(120%);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 </style>
