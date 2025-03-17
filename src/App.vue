@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { cssVarManager } from "./cssVarManager";
+import { ref, onMounted, computed } from "vue";
+import { defSettings } from "./cssVars/defSettings";
+import { useSettings } from "./cssVars/useSettings";
 
 import PostCard from "@/components/PostCard.vue";
 import Card from "@/components/BaseCard.vue";
@@ -87,7 +88,7 @@ const loadBgAsync = async () => {
   try {
     await sleep(500);
     const url = await getImageUrl();
-    await cssVarManager.setBgUrlAsync(url);
+    await defSettings.setBgUrlAsync(url);
 
   } catch (error) {
     console.error('Failed to load image:', error);
@@ -104,12 +105,6 @@ const loadBgAsync = async () => {
 
 onMounted(loadBgAsync);
 
-const testButton = async () => {
-
-};
-
-
-const blurValue = ref(50);
 </script>
 
 <template>
@@ -132,7 +127,7 @@ const blurValue = ref(50);
       </nav>
 
       <stack-panel orientation="horizontal">
-        <button @click="cssVarManager.isDebug = !cssVarManager.isDebug;" class="flat-button">Debug</button>
+        <button @click="defSettings.isDebug.value = !defSettings.isDebug.value;" class="flat-button">Debug</button>
         <button @click="testButton" class="flat-button">Test Button</button>
       </stack-panel>
 
@@ -142,37 +137,44 @@ const blurValue = ref(50);
           <user-view :post-count="postCount" :tag-count="tagCount" :visit-count="visitCount"></user-view>
 
           <normal-card title="搜索">
-            <input type="text" placeholder="搜索文章" />
+            <input style="min-width: auto;" type="text" placeholder="搜索文章" />
           </normal-card>
 
-          <normal-card title="设置">
-            <div class="settings">
-              <p>圆角半径</p>
-              <p>{{ blurValue }}%</p>
-              <input type="range" min="0" max="100" v-model.number="blurValue">
+          <normal-card class="settings" :collapsible="true" :initial-expanded="false" title="设置">
+            <stack-panel gap="12px">
+              <p class="subtitle">外观</p>
 
-              <p>卡片模糊 {{ blurValue }}%</p>
-              <input type="range" min="0" max="100" v-model.number="blurValue">
+              <div class="settings-grid">
+                <p>卡片圆角 {{ useSettings.cardCorner.value }} px</p>
+                <input type="range" min="0" max="60" v-model.number="useSettings.cardCorner.value">
 
-              <p>卡片饱和度 {{ blurValue }}%</p>
-              <input type="range" min="0" max="100" v-model.number="blurValue">
+                <p>卡片模糊 {{ useSettings.cardBlur.value }} px</p>
+                <input type="range" min="0" max="80" v-model.number="useSettings.cardBlur.value">
 
-              <p>卡片亮度 {{ blurValue }}%</p>
-              <input type="range" min="0" max="100" v-model.number="blurValue">
+                <p>卡片饱和度 {{ useSettings.cardSaturate.value }} %</p>
+                <input type="range" min="0" max="200" v-model.number="useSettings.cardSaturate.value">
 
-              <p>背景亮度{{ blurValue }}%</p>
-              <input type="range" min="0" max="100" v-model.number="blurValue">
+                <p>背景模糊 {{ blurValue }}%</p>
+                <input type="range" min="0" max="100" v-model.number="blurValue">
 
-              <p>背景饱和度{{ blurValue }}%</p>
-              <input type="range" min="0" max="100" v-model.number="blurValue">
+                <p>背景饱和度 {{ blurValue }}%</p>
+                <input type="range" min="0" max="100" v-model.number="blurValue">
 
-              <p>背景模糊{{ blurValue }}%</p>
-              <input type="range" min="0" max="100" v-model.number="blurValue">
-            </div>
+                <p>背景亮度 {{ blurValue }}%</p>
+                <input type="range" min="0" max="100" v-model.number="blurValue">
+              </div>
+
+              <stack-panel style="display: flex; justify-content: space-between;" orientation="horizontal">
+                <p class="subtitle">使用预设</p>
+                <select style="padding: 4px 8px;" class="tag-button">
+                  <option>Default - 1</option>
+                  <option>Default - 2</option>
+                </select>
+              </stack-panel>
+            </stack-panel>
           </normal-card>
 
-
-          <normal-card title="标签">
+          <normal-card :collapsible="true" :initial-expanded="false" title="标签">
             <div style="display: flex;flex-wrap: wrap; gap: 6px;">
               <button class="tag-button">bug</button>
               <button class="tag-button">api</button>
@@ -255,21 +257,25 @@ const blurValue = ref(50);
 </template>
 
 <style scoped>
-/* 撑开 mainGrid 的第一列宽度了，改成 SettingsView 的组件 */
 .settings {
-  display: grid;
-  grid-template-columns: 3fr 30px 2fr;
-
-  grid-template-rows: none;
-
-  gap: 12px;
-
   p {
     margin: 0;
   }
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 60fr) minmax(0, 40fr);
+  margin-left: 0.2em;
+  gap: 12px;
 
   input {
     padding: 0;
+  }
+
+  p {
+    margin: 0;
+    font-size: 11pt;
   }
 }
 
@@ -298,7 +304,7 @@ const blurValue = ref(50);
 
 #mainGrid {
   display: grid;
-  grid-template-columns: 25fr 75fr;
+  grid-template-columns: minmax(0, 25fr) minmax(0, 75fr);
   gap: 16px;
 }
 

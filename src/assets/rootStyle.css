@@ -1,5 +1,4 @@
 /* 以下为 debug 使用 */
-
 * {
   --dash-length: 4px;
   --dash-gap: 2px;
@@ -15,17 +14,25 @@
 .stack-panel {
   border: var(--debug-border) solid red;
 }
-
 /* 以上为 debug 使用 */
 
+
+/* 默认值在 useSettings.ts 中设置 */
+:root {
+  --card-corner-radius: ;
+  --card-blur: ;
+  --card-saturate: saturate(150%);
+}
+
+/* 默认值在 defSettings.ts 中设置 */
 :root {
   --bg-url: url();
   --debug-border: 0px;
+}
 
-  /* rounded shadow style */
-
+:root {
   --circle-radius: 999px;
-  --card-corner-radius: 12px;
+
   --tag-button-corner-radiu: 4px;
 
   --default-background: rgba(255, 255, 255, 0.1);

@@ -25,7 +25,8 @@ body::before {
 }
 
 .card {
-  backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: var(--card-blur) var(--card-saturate);
+  overflow: hidden;
 }
 
 .message-panel {
@@ -104,7 +105,8 @@ h4,
 h5,
 h6,
 p,
-span {
+span,
+label {
   font-family: "TeXGyreAdventor-Regular", "OPPO-Sans", sans-serif;
 }
 
