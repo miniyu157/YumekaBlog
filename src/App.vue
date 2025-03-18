@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { defSettings } from "./cssVars/defSettings";
-import { useSettings } from "./cssVars/useSettings";
 
 import PostCard from "@/components/PostCard.vue";
 import Card from "@/components/BaseCard.vue";
@@ -10,6 +9,7 @@ import StackPanel from "@/components/StackPanel.vue";
 import GithubLink from "@/components/GithubLink.vue";
 import UserView from "@/components/UserView.vue";
 import TypeHeader from "@/components/TypeHeader.vue";
+import SettingsView from "@/components/SettingsView.vue";
 
 import axios from "axios";
 
@@ -31,52 +31,56 @@ const message = ref("欢迎来到 Yumeka!");
 const title = ref("Welcome to Yumeka");
 
 const posts = ref<Post[]>([]);
+const posts2 = ref<Post[]>([]);
 const tags = ref<string[]>(["new", "feature", "update", "old", "hot"]);
 
-const addNewPost = () => {
-  const getRandomTags = () => {
-    const count = Math.random() < 0.5 ? 2 : 3;
+const getRandomTags = () => {
+  const count = Math.random() < 0.5 ? 2 : 3;
 
-    const shuffled = [...tags.value];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
+  const shuffled = [...tags.value];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
 
-    return shuffled.slice(0, count);
-  };
+  return shuffled.slice(0, count);
+};
 
-  posts.value.push({
-    id: posts.value.length + 1,
-    title: `This Post ${posts.value.length + 1}`,
+const addNewPost = (posts: Post[], id: number) => {
+  posts.push({
+    id: id,
+    title: `This Post ${posts.length + 1}`,
     heat: Math.floor(Math.random() * 1000),
     comments: Math.floor(Math.random() * 500),
     likes: Math.floor(Math.random() * 2000),
     tags: getRandomTags(),
-    imageUrl: `/src/assets/images/post-images-thumbnails/${posts.value.length}.jpg`,
+    imageUrl: `/src/assets/images/post-images-thumbnails/${id}.jpg`,
   });
 };
 
 for (let i = 0; i <= 5; i++) {
-  addNewPost();
+  addNewPost(posts.value, i);
+}
+
+for (let i = 6; i <= 11; i++) {
+  addNewPost(posts2.value, i);
 }
 
 async function getImageUrl(): Promise<string> {
   try {
-    const response = await axios.get("http://192.168.125.21:3000/api/random-image");
-    // const response = await axios.get("http://localhost:3000/api/random-image");
+    // const response = await axios.get("http://192.168.125.21:3000/api/random-image");
+    const response = await axios.get("http://192.168.1.16:3000/api/random-image");
     const url = response.data.imageUrl;
-    return `http://192.168.125.21:3000${url}`;
-    // return `http://localhost:3000${url}`;
+    // return `http://192.168.125.21:3000${url}`;
+    return `http://192.168.1.16:3000${url}`;
   } catch (error) {
     return "/src/assets/images/yumeka.jpg";
   }
 }
 
-function sleep(ms: number): Promise<void> {
+function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 const loadBgAsync = async () => {
   const body = document.querySelector("body");
 
@@ -86,9 +90,9 @@ const loadBgAsync = async () => {
   }
 
   try {
-    await sleep(500);
     const url = await getImageUrl();
     await defSettings.setBgUrlAsync(url);
+    await delay(500);
 
   } catch (error) {
     console.error('Failed to load image:', error);
@@ -105,6 +109,16 @@ const loadBgAsync = async () => {
 
 onMounted(loadBgAsync);
 
+const isNavBlur = ref(false);
+const scrollHandle = () => {
+  isNavBlur.value = window.scrollY > 400;
+}
+onMounted(() => {
+  window.addEventListener("scroll", scrollHandle);
+})
+onUnmounted(() => {
+  window.removeEventListener("scroll", scrollHandle);
+})
 </script>
 
 <template>
@@ -118,7 +132,7 @@ onMounted(loadBgAsync);
       <h1 class="unline-height title">{{ title }}</h1>
 
       <nav id="main-nav">
-        <stack-panel gap="12px" class="header-buttons" orientation="horizontal">
+        <stack-panel gap="12px" class="header-buttons" :class="{ 'nav-blur': isNavBlur }" orientation="horizontal">
           <h3 class="underline-from-center">首页</h3>
           <h3 class="underline-from-center">博客</h3>
           <h3 class="underline-from-center">友站</h3>
@@ -126,53 +140,21 @@ onMounted(loadBgAsync);
         </stack-panel>
       </nav>
 
-      <stack-panel orientation="horizontal">
+      <!-- <stack-panel orientation="horizontal">
         <button @click="defSettings.isDebug.value = !defSettings.isDebug.value;" class="flat-button">Debug</button>
         <button @click="testButton" class="flat-button">Test Button</button>
-      </stack-panel>
+      </stack-panel> -->
 
       <div id="mainGrid">
         <!-- 左侧区域 -->
         <stack-panel>
-          <user-view :post-count="postCount" :tag-count="tagCount" :visit-count="visitCount"></user-view>
+          <user-view :post-count="postCount" :tag-count="tagCount" :visit-count="visitCount" />
 
           <normal-card title="搜索">
             <input style="min-width: auto;" type="text" placeholder="搜索文章" />
           </normal-card>
 
-          <normal-card class="settings" :collapsible="true" :initial-expanded="false" title="设置">
-            <stack-panel gap="12px">
-              <p class="subtitle">外观</p>
-
-              <div class="settings-grid">
-                <p>卡片圆角 {{ useSettings.cardCorner.value }} px</p>
-                <input type="range" min="0" max="60" v-model.number="useSettings.cardCorner.value">
-
-                <p>卡片模糊 {{ useSettings.cardBlur.value }} px</p>
-                <input type="range" min="0" max="80" v-model.number="useSettings.cardBlur.value">
-
-                <p>卡片饱和度 {{ useSettings.cardSaturate.value }} %</p>
-                <input type="range" min="0" max="200" v-model.number="useSettings.cardSaturate.value">
-
-                <p>背景模糊 {{ blurValue }}%</p>
-                <input type="range" min="0" max="100" v-model.number="blurValue">
-
-                <p>背景饱和度 {{ blurValue }}%</p>
-                <input type="range" min="0" max="100" v-model.number="blurValue">
-
-                <p>背景亮度 {{ blurValue }}%</p>
-                <input type="range" min="0" max="100" v-model.number="blurValue">
-              </div>
-
-              <stack-panel style="display: flex; justify-content: space-between;" orientation="horizontal">
-                <p class="subtitle">使用预设</p>
-                <select style="padding: 4px 8px;" class="tag-button">
-                  <option>Default - 1</option>
-                  <option>Default - 2</option>
-                </select>
-              </stack-panel>
-            </stack-panel>
-          </normal-card>
+          <settings-view />
 
           <normal-card :collapsible="true" :initial-expanded="false" title="标签">
             <div style="display: flex;flex-wrap: wrap; gap: 6px;">
@@ -222,11 +204,13 @@ onMounted(loadBgAsync);
           <card class="messageCard" :flat="true">
             <stack-panel gap="10px" class="single-line message-panel" orientation="horizontal">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                role="img" viewBox="0 0 24 24" style="transform: rotate(0) translate(0px, 0px); height: 24px">
+                role="img" viewBox="0 0 24 24"
+                style="transform: rotate(0) translate(0px, 0px); width: 1.5em; height: 1.5em">
                 <path fill="currentColor"
                   d="M18 3a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-4.724l-4.762 2.857a1 1 0 0 1-1.508-.743L7 21v-2H6a4 4 0 0 1-3.995-3.8L2 15V7a4 4 0 0 1 4-4zm-4 9H8a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2m2-4H8a1 1 0 1 0 0 2h8a1 1 0 0 0 0-2">
                 </path>
               </svg>
+
               <p>{{ message }}</p>
             </stack-panel>
           </card>
@@ -245,7 +229,7 @@ onMounted(loadBgAsync);
           <hr />
 
           <div class="post-container">
-            <post-card v-for="post in posts" :key="post.id" :title="post.title" :heat="post.heat"
+            <post-card v-for="post in posts2" :key="post.id" :title="post.title" :heat="post.heat"
               :comments="post.comments" :likes="post.likes" :tags="post.tags" :image-url="post.imageUrl" />
           </div>
 
@@ -257,28 +241,6 @@ onMounted(loadBgAsync);
 </template>
 
 <style scoped>
-.settings {
-  p {
-    margin: 0;
-  }
-}
-
-.settings-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 60fr) minmax(0, 40fr);
-  margin-left: 0.2em;
-  gap: 12px;
-
-  input {
-    padding: 0;
-  }
-
-  p {
-    margin: 0;
-    font-size: 11pt;
-  }
-}
-
 #container {
   display: flex;
   flex-direction: column;
@@ -289,7 +251,7 @@ onMounted(loadBgAsync);
   margin: 0 auto;
 
   --header-gap: 24px;
-  --header-height: 45vh;
+  --header-height: 50vh;
 
   transition: all 1s ease;
 }
@@ -340,6 +302,10 @@ onMounted(loadBgAsync);
     }
   }
 
+  :deep(.user-view) {
+    flex-direction: row;
+  }
+
   #mainGrid {
     grid-template-columns: 1fr;
   }
@@ -350,7 +316,7 @@ onMounted(loadBgAsync);
 
   cursor: default;
   font-family: "义启星空之翼", sans-serif;
-  font-size: 45pt;
+  font-size: 50pt;
   min-width: 532px;
   height: calc(var(--header-height)/2);
 
@@ -364,7 +330,7 @@ onMounted(loadBgAsync);
 
 #main-nav {
   position: sticky;
-  top: 0px;
+  top: -1px;
   z-index: 999;
   height: calc(var(--header-height)/2);
   pointer-events: none;
@@ -399,29 +365,22 @@ onMounted(loadBgAsync);
     height: 60px;
     width: 100%;
 
-    /* backdrop-filter: blur(10px); */
-
     mask: linear-gradient(to bottom,
         rgba(0, 0, 0, 1) 0%,
         rgba(0, 0, 0, 0.66) 40%,
         rgba(0, 0, 0, 0) 100%);
 
-    transition: all 0.2s ease;
+    transition: all 0.1s ease;
   }
-
-  /*
-  >.header-buttons:hover::before {
-    backdrop-filter: blur(20px) brightness(120%);
-    background-color: rgba(0, 0, 0, 0.4);
-  } */
 }
 
-.header-buttons.sticky-active::before {
-  backdrop-filter: blur(10px);
+/* 高亮导航栏 */
+.header-buttons.nav-blur::before {
+  backdrop-filter: blur(12px);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
-.header-buttons.sticky-active:hover::before {
-  backdrop-filter: blur(20px) brightness(120%);
-  background-color: rgba(0, 0, 0, 0.4);
+.header-buttons.nav-blur:hover::before {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 </style>

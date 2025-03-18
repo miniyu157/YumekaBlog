@@ -11,6 +11,7 @@ body {
 }
 
 body::before {
+  z-index: -1;
   content: "";
   position: absolute;
   left: 0;
@@ -20,13 +21,15 @@ body::before {
   background: var(--bg-url) fixed;
   background-size: cover;
 
-  filter: brightness(0.7) saturate(0.8);
-  z-index: -1;
+  filter: var(--bg-blur) var(--bg-saturate) var(--bg-brightness);
+  transition: filter 0.5s ease;
 }
 
 .card {
-  backdrop-filter: var(--card-blur) var(--card-saturate);
   overflow: hidden;
+
+  backdrop-filter: var(--card-blur) var(--card-saturate);
+  transition: filter 0.5s ease;
 }
 
 .message-panel {
@@ -54,7 +57,7 @@ body::before {
 
 .tag-button {
   border: 0px solid;
-  border-radius: var(--tag-button-corner-radiu);
+  border-radius: var(--small-corner-radius);
 
   background-color: var(--default-background);
   color: currentColor;
@@ -71,7 +74,7 @@ body::before {
 .flat-button {
   border-radius: var(--circle-radius);
   background-color: transparent;
-  border: 1px solid var(--default-card-border-color);
+  border: 1px solid var(--default-border-color);
   padding: 4px 16px;
   outline: none;
   color: currentColor;

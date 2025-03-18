@@ -20,23 +20,47 @@ defineProps({
 
 <template>
   <card>
-    <stack-panel class="userView">
-      <img class="headIcon" src="/src/assets/images/yumeka.jpg" />
-      <h2 class="unline-height">Yumeka</h2>
-      <div class="dataSizeGrid">
-        <span>文章</span>
-        <span>分类</span>
-        <span>访问量</span>
-        <span>{{ postCount }}</span>
-        <span>{{ tagCount }}</span>
-        <span>{{ visitCount }}</span>
-      </div>
-      <button class="big-button">朋友圈</button>
-    </stack-panel>
+    <div class="user-view">
+      <stack-panel class="part-1">
+        <img class="headIcon" src="/src/assets/images/yumeka.jpg" />
+        <h2 class="unline-height">Yumeka</h2>
+      </stack-panel>
+
+      <stack-panel class="part-2">
+        <div class="dataSizeGrid">
+          <span>文章</span>
+          <span>分类</span>
+          <span>访问量</span>
+          <span>{{ postCount }}</span>
+          <span>{{ tagCount }}</span>
+          <span>{{ visitCount }}</span>
+        </div>
+        <button class="big-button">朋友圈</button>
+      </stack-panel>
+    </div>
   </card>
 </template>
 
 <style scoped>
+.user-view {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  align-items: center;
+  justify-items: center;
+}
+
+.part-1,
+.part-2 {
+  align-items: center;
+}
+
+button {
+  width: 60%;
+}
+
 .headIcon {
   width: 60%;
   border-radius: 50%;
@@ -59,14 +83,5 @@ defineProps({
 
   align-items: center;
   justify-items: center;
-}
-
-.userView {
-  align-items: center;
-  justify-items: center;
-
-  >button {
-    width: 60%;
-  }
 }
 </style>

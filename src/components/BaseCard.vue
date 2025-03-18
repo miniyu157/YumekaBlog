@@ -1,17 +1,13 @@
 <template>
-  <div :class="[props.flat ? 'flatCard' : 'card']" @mouseover="hover = true" @mouseleave="hover = false">
+  <div :class="[flat ? 'flatCard' : 'card']">
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const props = defineProps({
+defineProps({
   flat: Boolean
 })
-
-const hover = ref(false)
 </script>
 
 <style scoped>

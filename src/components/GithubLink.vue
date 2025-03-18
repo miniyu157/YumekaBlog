@@ -20,7 +20,6 @@
 }
 
 @keyframes octo-arm-shake {
-
   0%,
   100% {
     transform: rotate(0);
