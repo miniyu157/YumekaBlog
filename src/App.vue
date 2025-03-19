@@ -90,9 +90,9 @@ const title = ref("Welcome to Yumeka");
       </nav>
 
       <!-- debug button -->
-      <stack-panel orientation="horizontal">
+      <!-- <stack-panel orientation="horizontal">
         <button @click="defSettings.isDebug.value = !defSettings.isDebug.value;" class="flat-button">Debug</button>
-      </stack-panel>
+      </stack-panel> -->
 
       <!-- content -->
       <transition transition name="slide">
