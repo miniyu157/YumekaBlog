@@ -1,53 +1,37 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
-import axios from "axios";
+
 import { defSettings } from "./cssVars/defSettings";
 
 import StackPanel from "@/components/StackPanel.vue";
 import GithubLink from "@/components/GithubLink.vue";
+import { utils } from "./utils/utils.ts";
+import { imageAPI } from "./http/getImage.ts";
 
-async function getImageUrl(): Promise<string> {
-  try {
-    // const response = await axios.get("http://192.168.125.21:3000/api/random-image");
-    const response = await axios.get("http://0.0.0.0:3000/api/random-image");
-    const url = response.data.imageUrl;
-    // return `http://192.168.125.21:3000${url}`;
-    return `http://0.0.0.0:3000${url}`;
-  } catch (error) {
-    return "/src/assets/images/yumeka.jpg";
-  }
-}
+const title = ref("Welcome to Yumeka");
 
-function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 const loadBgAsync = async () => {
   const body = document.querySelector("body");
 
   if (body) {
     /* 设置此项可屏蔽启动时 body 透明度 to 0 的动画 */
     body.style.visibility = 'collapse';
-  }
 
-  try {
-    const url = await getImageUrl();
-    await defSettings.setBgUrlAsync(url);
-    await delay(500);
+    try {
+      const url = await imageAPI.getRandomImageUrl(1);
+      await defSettings.setBgUrlAsync(url);
+      await utils.delay(500);
 
-  } catch (error) {
-    console.error('Failed to load image:', error);
+    } catch (error) {
+      console.error('Failed to load image:', error);
 
-  } finally {
-    const body = document.querySelector("body");
+    } finally {
 
-    if (body) {
       body.style.visibility = 'visible';
       body.style.opacity = '100%';
     }
   }
 };
-
-onMounted(loadBgAsync);
 
 const isNavBlur = ref(false);
 const scrollHandle = () => {
@@ -60,7 +44,11 @@ onUnmounted(() => {
   window.removeEventListener("scroll", scrollHandle);
 })
 
-const title = ref("Welcome to Yumeka");
+const debug = () => {
+  defSettings.isDebug.value = !defSettings.isDebug.value;
+};
+
+onMounted(loadBgAsync);
 </script>
 
 <template>
@@ -75,31 +63,32 @@ const title = ref("Welcome to Yumeka");
       <nav id="main-nav">
         <stack-panel gap="12px" class="header-buttons" :class="{ 'nav-blur': isNavBlur }" orientation="horizontal">
           <h3 class="underline-from-center">
-            <RouterLink style="color: currentColor;text-decoration: none;" to="/">首页</RouterLink>
+            <router-link class="nav-router-link" to="/">首页</router-link>
           </h3>
           <h3 class="underline-from-center">
-            <RouterLink style="color: currentColor;text-decoration: none;" to="/">博客</RouterLink>
+            <router-link class="nav-router-link" to="/">博客</router-link>
           </h3>
           <h3 class="underline-from-center">
-            <RouterLink style="color: currentColor;text-decoration: none;" to="/">友站</RouterLink>
+            <router-link class="nav-router-link" to="/">友站</router-link>
           </h3>
           <h3 class="underline-from-center">
-            <RouterLink style="color: currentColor;text-decoration: none;" to="/about">关于</RouterLink>
+            <router-link class="nav-router-link" to="/about">关于</router-link>
           </h3>
         </stack-panel>
       </nav>
 
       <!-- debug button -->
-      <!-- <stack-panel orientation="horizontal">
-        <button @click="defSettings.isDebug.value = !defSettings.isDebug.value;" class="flat-button">Debug</button>
-      </stack-panel> -->
+      <stack-panel orientation="horizontal">
+        <button @click="debug" class="flat-button">Debug</button>
+      </stack-panel>
 
       <!-- content -->
-      <transition transition name="slide">
+      <transition name="fade-blur" mode="out-in">
         <keep-alive>
           <router-view />
         </keep-alive>
       </transition>
+
 
     </stack-panel>
   </div>
@@ -107,18 +96,18 @@ const title = ref("Welcome to Yumeka");
 </template>
 
 <style scoped>
-/* .slide-enter-active,
-.slide-leave-active {
-  transition: all 0.3s ease;
-  max-height: 1000px;
+/* #Bug 过渡时 card 的 fliter 失效 */
+.fade-blur-enter-active,
+.fade-blur-leave-active {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.slide-enter-from,
-.slide-leave-to {
+.fade-blur-enter-from,
+.fade-blur-leave-to {
+  filter: blur(10px);
   opacity: 0;
-  max-height: 0;
-  padding: 0 12px;
-} */
+  transform: scale(0.98) translateY(10px);
+}
 
 #container {
   display: flex;
@@ -151,6 +140,16 @@ const title = ref("Welcome to Yumeka");
   align-items: end;
 
   text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+}
+
+.router-link {
+  color: currentColor;
+  text-decoration: none;
+}
+
+.nav-router-link {
+  color: currentColor;
+  text-decoration: none;
 }
 
 #main-nav {

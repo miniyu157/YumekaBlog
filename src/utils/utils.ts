@@ -1,11 +1,9 @@
-const utilsModel = () => {
-  const setCssVar = (property: string, value: string) => {
+export const utils = {
+  setCssVar: (property: string, value: string) => {
     document.documentElement.style.setProperty(property, value);
-  };
+  },
 
-  return {
-    setCssVar,
-  };
+  delay: (ms: number): Promise<void> => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  },
 };
-
-export const utils = utilsModel();

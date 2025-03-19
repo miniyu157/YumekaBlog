@@ -4,7 +4,7 @@ import StackPanel from "@/components/StackPanel.vue";
 </script>
 
 <template>
-  <stack-panel gap="16px">
+  <stack-panel class="container" gap="16px">
 
     <card>
       <stack-panel gap="24px">
@@ -60,18 +60,9 @@ import StackPanel from "@/components/StackPanel.vue";
 </template>
 
 <style scoped>
-.contact-me {
-  button {
-    background: transparent;
-    border: 1px solid var(--default-border-color);
-    border-radius: 12px;
-
-    color: currentColor;
-
-    width: 40px;
-    aspect-ratio: 1;
-    font-size: 14pt;
-  }
+.container {
+  width: 80%;
+  margin: 0 auto;
 }
 
 h1,
