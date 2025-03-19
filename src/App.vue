@@ -18,7 +18,7 @@ const loadBgAsync = async () => {
     body.style.visibility = 'collapse';
 
     try {
-      const url = await imageAPI.getRandomImageUrl(1);
+      const url = await imageAPI.getRandomImageUrl(0);
       await defSettings.setBgUrlAsync(url);
       await utils.delay(500);
 

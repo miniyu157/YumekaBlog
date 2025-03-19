@@ -20,7 +20,6 @@ body::before {
   bottom: 0;
   background: var(--bg-url) fixed;
   background-size: cover;
-  background-position: center;
 
   filter: var(--bg-blur) var(--bg-saturate) var(--bg-brightness);
   transition: filter 0.5s ease;
