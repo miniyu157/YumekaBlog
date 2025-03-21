@@ -64,7 +64,7 @@ onMounted(() => {
 
 <style scoped>
 .message-panel {
-  padding: 0;
+  padding: 4px 8px;
 }
 
 .post-container {
