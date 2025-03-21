@@ -10,7 +10,7 @@
     )
     1;
 }
-.stack-panel {
+.flex-core {
   border: var(--debug-border) solid red;
 }
 

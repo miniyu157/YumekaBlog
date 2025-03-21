@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Card from "@/components/base/BaseCard.vue";
-import StackPanel from "@/components/StackPanel.vue";
+import FlexCore from "@/components/FlexCore.vue";
 
 import router from "@/router/index.ts";
 
@@ -21,14 +21,14 @@ defineProps({
 </script>
 
 <template>
-  <card>
-    <stack-panel class="root" gap="16px">
-      <stack-panel class="part-1">
+  <card class="root">
+    <flex-core gap="16px">
+      <flex-core gap="8px" horizontal-alignment="center" class="part-1">
         <img class="head-icon" src="/src/assets/images/yumeka.jpg" />
         <h2 class="unline-height">Yumeka</h2>
-      </stack-panel>
+      </flex-core>
 
-      <stack-panel class="part-2">
+      <flex-core gap="16px" horizontal-alignment="center" class="part-2">
         <div class="data-grid">
           <span>文章</span>
           <span>分类</span>
@@ -40,20 +40,19 @@ defineProps({
 
         <button @click="router.push('/home/posts');" class="flat-button friend-circle-button">全部文章</button>
 
-      </stack-panel>
-    </stack-panel>
+      </flex-core>
+    </flex-core>
   </card>
 </template>
 
 <style scoped>
+.root {
+  padding: 24px 0;
+}
+
 .friend-circle-button {
   width: 60%;
   padding: 6px 12px;
-}
-
-.part-1,
-.part-2 {
-  align-items: center;
 }
 
 .head-icon {

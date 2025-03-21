@@ -3,13 +3,13 @@ import { ref, onMounted, onUnmounted } from "vue";
 
 import { defSettings } from "./cssVars/defSettings";
 
-import StackPanel from "@/components/StackPanel.vue";
+import FlexCore from "@/components/FlexCore.vue";
 import GithubLink from "@/components/GithubLink.vue";
+import RouterViewPanel from "@/components/base/RouterViewPanel.vue";
 
 import { utils } from "./utils/utils.ts";
 import { imageAPI } from "./http/getImage.ts";
-import Home from "./components/home/Home.vue";
-import RouterViewPanel from "@/components/base/RouterViewPanel.vue";
+
 
 const title = ref("Welcome to Yumeka");
 
@@ -59,12 +59,12 @@ onMounted(loadBgAsync);
   <github-link />
 
   <div id="container">
-    <stack-panel>
+    <flex-core gap="16px">
 
       <!-- header -->
       <h1 class="unline-height title">{{ title }}</h1>
       <nav id="main-nav">
-        <stack-panel gap="12px" class="header-buttons" :class="{ 'nav-blur': isNavBlur }" orientation="horizontal">
+        <flex-core gap="12px" class="header-buttons" :class="{ 'nav-blur': isNavBlur }" orientation="row">
           <h3 class="underline-from-center">
             <router-link class="router-link" to="/">首页</router-link>
           </h3>
@@ -77,19 +77,19 @@ onMounted(loadBgAsync);
           <h3 class="underline-from-center">
             <router-link class="router-link" to="/about">关于</router-link>
           </h3>
-        </stack-panel>
+        </flex-core>
       </nav>
 
       <!-- debug button -->
-      <stack-panel orientation="horizontal">
+      <flex-core orientation="row">
         <button @click="debug" class="flat-button">Debug</button>
-      </stack-panel>
+      </flex-core>
 
       <!-- content -->
       <RouterViewPanel />
 
 
-    </stack-panel>
+    </flex-core>
   </div>
 
 </template>

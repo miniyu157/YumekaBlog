@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 
 import Card from "@/components/base/BaseCard.vue";
-import StackPanel from "@/components/StackPanel.vue";
+import FlexCore from "@/components/FlexCore.vue";
 import PostsHeader from "@/components/PostsHeader.vue";
 import PostCard from "@/components/PostCard.vue";
 
@@ -10,7 +10,7 @@ const message = ref("欢迎来到 Yumeka!");
 
 import { postApi, type Post } from "@/http/getPosts";
 
-const posts = ref < Post[] > ([]);
+const posts = ref<Post[]>([]);
 
 const fetchPosts = async () => {
   try {
@@ -30,9 +30,9 @@ onMounted(() => {
 
 </script>
 <template>
-  <stack-panel>
+  <flex-core gap="16px">
     <card class="messageCard" :flat="true">
-      <stack-panel gap="10px" class="single-line message-panel" orientation="horizontal">
+      <flex-core vertical-alignment="center" gap="10px" class="message-panel" orientation="row">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
           viewBox="0 0 24 24" style="transform: rotate(0) translate(0px, 0px); width: 1.5em; height: 1.5em">
           <path fill="currentColor"
@@ -41,7 +41,7 @@ onMounted(() => {
         </svg>
 
         <p>{{ message }}</p>
-      </stack-panel>
+      </flex-core>
     </card>
 
     <posts-header title="Yumeka" />
@@ -59,15 +59,14 @@ onMounted(() => {
 
     <h3 class="subtitle">列表 'Other' 暂无文章</h3>
 
-  </stack-panel>
+  </flex-core>
 </template>
 
 <style scoped>
 .post-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 20px;
-  row-gap: 20px;
+  gap: 16px;
   transition: all 1s ease;
 }
 

@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 
 import NormalCard from "@/components/base/NormalCard.vue";
-import StackPanel from "@/components/StackPanel.vue";
+import FlexCore from "@/components/FlexCore.vue";
 
 import UserView from "@/components/UserView.vue";
 import SearchView from "@/components/SearchView.vue";
@@ -39,7 +39,7 @@ onMounted(() => {
 <template>
   <div id="mainGrid">
     <!-- 左侧区域 -->
-    <stack-panel>
+    <flex-core gap="16px">
       <user-view :post-count="postCount" :tag-count="tagCount" :visit-count="visitCount" />
 
       <search-view />
@@ -87,7 +87,7 @@ onMounted(() => {
       <normal-card title="This a card">
         <p class="subtitle">这是一个卡片吗？哦！原来这是一个卡片。<br><br>V me 50 treat me to a KFC豪华套餐</p>
       </normal-card>
-    </stack-panel>
+    </flex-core>
 
     <!-- 右侧区域 -->
     <RouterViewPanel />

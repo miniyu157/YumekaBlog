@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import Card from "@/components/base/BaseCard.vue";
-import StackPanel from "@/components/StackPanel.vue";
+import FlexCore from "@/components/FlexCore.vue";
 
 const props = defineProps({
   title: {
@@ -31,21 +31,21 @@ const contentVisible = computed(() => !props.collapsible || isExpanded.value)
 
 <template>
   <card>
-    <stack-panel gap="4px">
-      <stack-panel class="header" orientation="horizontal" :style="{ cursor: collapsible ? 'pointer' : 'default' }"
+    <flex-core gap="4px">
+      <flex-core class="header" orientation="row" :style="{ cursor: collapsible ? 'pointer' : 'default' }"
         @click="toggleExpand">
         <h3 class="subtitle unline-height">{{ title }}</h3>
         <span v-if="collapsible" class="arrow" :class="{ 'arrow--collapsed': !isExpanded }">
           ▼
         </span>
-      </stack-panel>
+      </flex-core>
 
       <transition name="slide">
         <div v-show="contentVisible" class="content">
           <slot></slot>
         </div>
       </transition>
-    </stack-panel>
+    </flex-core>
   </card>
 </template>
 

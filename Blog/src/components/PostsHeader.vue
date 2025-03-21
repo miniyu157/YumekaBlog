@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StackPanel from "@/components/StackPanel.vue";
+import FlexCore from "@/components/FlexCore.vue";
 
 defineProps({
   title: {
@@ -10,8 +10,8 @@ defineProps({
 </script>
 
 <template>
-  <stack-panel class="single-line" orientation="horizontal">
-    <stack-panel gap="6px" class="subtitle single-line" orientation="horizontal">
+  <flex-core horizontal-alignment="space-between" orientation="row">
+    <flex-core gap="6px" vertical-alignment="center" class="subtitle" orientation="row">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
         viewBox="0 0 24 24" style="transform: rotate(180deg) translate(0px, 0px);width: 1.5em; height: 1.5em">
         <g fill="none" fill-rule="evenodd">
@@ -24,9 +24,9 @@ defineProps({
         </g>
       </svg>
       <h3 class="unline-height">{{ title }}</h3>
-    </stack-panel>
+    </flex-core>
 
-    <stack-panel style="justify-content: space-between;" class="subtitle link-block single-line" orientation="horizontal" gap="6px">
+    <flex-core vertical-alignment="center" class="subtitle link-block" orientation="row" gap="6px">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
         viewBox="0 0 24 24" style="transform: rotate(180deg) translate(0px, 0px); width: 1.5em; height: 1.5em">
         <path fill="currentColor"
@@ -34,6 +34,6 @@ defineProps({
         </path>
       </svg>
       <h3 class="unline-height">More</h3>
-    </stack-panel>
-  </stack-panel>
+    </flex-core>
+  </flex-core>
 </template>

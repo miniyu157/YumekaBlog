@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import StackPanel from '@/components/StackPanel.vue'
+import FlexCore from '@/components/FlexCore.vue'
 import Card from '@/components/base/BaseCard.vue'
 
 interface Props {
@@ -26,7 +26,7 @@ const formatNumber = (num: number) => num.toLocaleString()
       </div>
 
       <div class="post-item2">
-        <stack-panel gap="6px" class="single-line" orientation="horizontal">
+        <flex-core gap="6px" vertical-alignment="center" orientation="row">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
             role="img" viewBox="0 0 24 24"
             style="transform:rotate(180deg) translate(0px, 0px); width: 1.5em; height: 1.5em">
@@ -35,10 +35,10 @@ const formatNumber = (num: number) => num.toLocaleString()
             </path>
           </svg>
           <h3 class="unline-height">{{ title }}</h3>
-        </stack-panel>
+        </flex-core>
 
-        <stack-panel gap="6px" class="item-2-2">
-          <stack-panel orientation="horizontal" gap="4px" class="data subtitle">
+        <flex-core gap="6px" class="item-2-2">
+          <flex-core orientation="row" gap="4px" class="data subtitle">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
               role="img" viewBox="0 0 24 24"
               style="transform:rotate(0) translate(0px, 0px); width: 1.5em; height: 1.5em">
@@ -65,16 +65,16 @@ const formatNumber = (num: number) => num.toLocaleString()
               </path>
             </svg>
             <span>{{ formatNumber(likes) }} 赞</span>
-          </stack-panel>
+          </flex-core>
 
           <!-- 标签 -->
-          <stack-panel gap="6px" class="tag-panel" orientation="horizontal">
+          <flex-core gap="6px" class="tag-panel" orientation="row">
             <button v-for="(tag, index) in tags" :key="index" class="tag-button">
               {{ tag }}
             </button>
-          </stack-panel>
+          </flex-core>
 
-        </stack-panel>
+        </flex-core>
 
       </div>
     </div>

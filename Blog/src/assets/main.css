@@ -42,12 +42,15 @@ body::before {
   margin: -5px 0px;
 }
 
-.single-line {
-  align-items: center;
-}
-
 .subtitle {
   opacity: 75%;
+}
+
+hr {
+  border: var(--flat-card-border);
+  width: 100%;
+  opacity: 75%;
+  margin: 0px;
 }
 
 .link-block {
@@ -120,9 +123,3 @@ input {
   outline: none;
 }
 
-hr {
-  border: var(--flat-card-border);
-  width: 100%;
-  opacity: 80%;
-  margin: 0px;
-}

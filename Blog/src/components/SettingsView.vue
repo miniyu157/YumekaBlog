@@ -2,7 +2,7 @@
 import { useSettings } from '../cssVars/useSettings.ts';
 
 import NormalCard from "@/components/base/NormalCard.vue";
-import StackPanel from "@/components/StackPanel.vue";
+import FlexCore from "@/components/FlexCore.vue";
 
 defineProps({
   isShow: {
@@ -23,7 +23,7 @@ const presets = useSettings.presets;
 
 <template>
   <normal-card v-show="isShow" :collapsible="true" :initial-expanded="false" title="设置">
-    <stack-panel gap="12px">
+    <flex-core gap="12px">
       <p class="subtitle">外观</p>
       <div class="settings-grid">
         <p>卡片圆角 {{ useSettings.cardCorner.value }} px</p>
@@ -48,15 +48,15 @@ const presets = useSettings.presets;
         <input type="range" min="0" max="100" v-model.number="useSettings.bgBrightness.value">
       </div>
 
-      <stack-panel class="presets" orientation="horizontal">
+      <flex-core class="presets" orientation="row">
         <p class="subtitle">使用预设</p>
         <select @change="presetsSelect" style="padding: 4px 8px;" class="presets-select">
           <option v-for="preset in presets" :key="preset.name" :value="preset.name">
             {{ preset.name }}
           </option>
         </select>
-      </stack-panel>
-    </stack-panel>
+      </flex-core>
+    </flex-core>
   </normal-card>
 </template>
 

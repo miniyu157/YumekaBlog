@@ -1,40 +1,40 @@
 <script setup lang="ts">
 import Card from "@/components/base/BaseCard.vue";
-import StackPanel from "@/components/StackPanel.vue";
+import FlexCore from "@/components/FlexCore.vue";
 </script>
 
 <template>
-  <stack-panel class="container" gap="16px">
+  <flex-core class="container" gap="16px">
 
     <card>
-      <stack-panel gap="24px">
-        <stack-panel gap="4px">
+      <flex-core gap="24px">
+        <flex-core gap="4px">
           <h1>关于 Yumeka</h1>
           <p>
             Vue3 打造的轻量级个人博客, 持续进化中~ ✨
           </p>
-        </stack-panel>
+        </flex-core>
 
-        <stack-panel gap="12px">
-          <stack-panel gap="4px">
+        <flex-core gap="12px">
+          <flex-core gap="4px">
             <h3>为啥要做这个？</h3>
             <h4>🎯 ​最初目的</h4>
             <p>本来是应付前端课期末作业的小项目, 结果 Vue3 用着感觉还不错，也为了以后多给自己留一条路，打算深入学习 Vue , 现在正在努力把它变成功能齐全的个人博客~</p>
-          </stack-panel>
+          </flex-core>
 
-          <stack-panel gap="4px">
+          <flex-core gap="4px">
             <h4>🛠️ ​项目使用</h4>
             <p>前端: Vue3 秒了</p>
             <p>后端: 一开始用我最爱的 C# 写的 ASP.NET Core Web API, 现在已经换成了 Node.js (๑•̀ㅂ•́)و✧</p>
-          </stack-panel>
-        </stack-panel>
-      </stack-panel>
+          </flex-core>
+        </flex-core>
+      </flex-core>
     </card>
 
     <card>
-      <stack-panel gap="24px">
+      <flex-core gap="24px">
         <h1>联系我</h1>
-        <stack-panel orientation="horzonial">
+        <flex-core orientation="horzonial">
           <a href="https://space.bilibili.com/1650726013">
             <img src="https://img.shields.io/badge/Bilibili-KlxPiao-ff6699?logo=bilibili" alt="Bilibili:KlxPiao">
           </a>
@@ -52,11 +52,11 @@ import StackPanel from "@/components/StackPanel.vue";
               src="https://img.shields.io/badge/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90-e60026?logo=youtube-music"
               alt="Music 163">
           </a>
-        </stack-panel>
-      </stack-panel>
+        </flex-core>
+      </flex-core>
     </card>
 
-  </stack-panel>
+  </flex-core>
 </template>
 
 <style scoped>
