@@ -1,0 +1,18 @@
+
+GET http://localhost:3000/api/random-image HTTP/1.1
+
+###
+
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+  "title": {{$randomInt 900 1000}},
+  "imageUrl": "http://localhost:3000/images/www.dmoe.cc_6dzxk11mxx_thumbnail.jpg",
+  "content": "文章正文文章正文文章正文",
+
+  "heat": "114514",
+  "comments": "114514",
+  "likes": "114514",
+  "tags": ["Test", "Http", "Post"]
+}

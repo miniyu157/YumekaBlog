@@ -1,0 +1,68 @@
+* {
+  --dash-length: 4px;
+  --dash-gap: 2px;
+  --border-color: rgb(105, 105, 255);
+  border: var(--debug-border) dashed var(--border-color);
+  border-image: repeating-linear-gradient(
+      135deg,
+      var(--border-color) 0 var(--dash-length),
+      transparent var(--dash-length) calc(var(--dash-length) + var(--dash-gap))
+    )
+    1;
+}
+.stack-panel {
+  border: var(--debug-border) solid red;
+}
+
+:root {
+  /* 默认值在 useSettings.ts 中设置 */
+  --card-corner-radius: ;
+  --card-blur: ;
+  --card-saturate: ;
+  --card-shadow: ;
+  --card-hover-shadow: ;
+  --bg-blur: ;
+  --bg-brightness: ;
+
+  /* 默认值在 defSettings.ts 中设置 */
+  --bg-url: ;
+  --debug-border: ;
+
+  /* 其他样式 */
+  --circle-radius: 999px;
+  --small-corner-radius: 4px;
+
+  --default-background: rgba(255, 255, 255, 0.1);
+  --hover-background: rgba(255, 255, 255, 0.3);
+  --default-selection-background: rgba(255, 255, 255, 0.3);
+
+  --default-border-color: rgba(255, 255, 255, 0.8);
+  --default-card-border: 0px solid var(--default-border-color);
+  --flat-card-border: 1px dashed var(--default-border-color);
+
+  --default-box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, var(--card-shadow));
+  --hover-box-shadow: 0px 3px 12px 6px rgba(0, 0, 0, var(--card-hover-shadow));
+}
+
+::selection {
+  background: var(--default-selection-background);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+
+  border-radius: var(--circle-radius);
+  background-color: rgb(255, 255, 255);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    45deg,
+    hsl(194, 100%, 80%) 0% 25%,
+    hsl(194, 100%, 60%) 25% 50%,
+    hsl(194, 100%, 80%) 50% 75%,
+    hsl(194, 100%, 60%) 75% 100%
+  );
+  border-radius: var(--circle-radius);
+}
