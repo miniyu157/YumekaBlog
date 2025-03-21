@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 <template>
   <flex-core gap="16px">
-    <card class="messageCard" :flat="true">
+    <card class="message-panel" :flat="true">
       <flex-core vertical-alignment="center" gap="10px" class="message-panel" orientation="row">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
           viewBox="0 0 24 24" style="transform: rotate(0) translate(0px, 0px); width: 1.5em; height: 1.5em">
@@ -63,6 +63,10 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.message-panel {
+  padding: 0;
+}
+
 .post-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -38,10 +38,6 @@ body::before {
   transition: filter 0.5s ease;
 }
 
-.message-panel {
-  margin: -5px 0px;
-}
-
 .subtitle {
   opacity: 75%;
 }

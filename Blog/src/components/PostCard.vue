@@ -19,14 +19,17 @@ const formatNumber = (num: number) => num.toLocaleString()
 </script>
 
 <template>
-  <card class="post-card">
+  <card class="root">
     <div class="post-grid">
-      <div class="post-item1">
+
+      <div class="item-0">
         <img :src="imageUrl" :alt="props.title" />
       </div>
 
-      <div class="post-item2">
-        <flex-core gap="6px" vertical-alignment="center" orientation="row">
+      <flex-core class="item-1" vertical-alignment="space-between">
+
+        <!-- 标题 -->
+        <flex-core vertical-alignment="center" gap="6px" orientation="row">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
             role="img" viewBox="0 0 24 24"
             style="transform:rotate(180deg) translate(0px, 0px); width: 1.5em; height: 1.5em">
@@ -34,10 +37,12 @@ const formatNumber = (num: number) => num.toLocaleString()
               d="M19 21H5q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21M6 14h12v-2H6zm0 3h12v-1.5H6z">
             </path>
           </svg>
-          <h3 class="unline-height">{{ title }}</h3>
+          <h3 class="post-title unline-height">{{ title }}</h3>
         </flex-core>
 
-        <flex-core gap="6px" class="item-2-2">
+        <!-- 信息 -->
+        <flex-core gap="4px">
+
           <flex-core orientation="row" gap="4px" class="data subtitle">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
               role="img" viewBox="0 0 24 24"
@@ -68,7 +73,7 @@ const formatNumber = (num: number) => num.toLocaleString()
           </flex-core>
 
           <!-- 标签 -->
-          <flex-core gap="6px" class="tag-panel" orientation="row">
+          <flex-core gap="8px" orientation="row">
             <button v-for="(tag, index) in tags" :key="index" class="tag-button">
               {{ tag }}
             </button>
@@ -76,26 +81,13 @@ const formatNumber = (num: number) => num.toLocaleString()
 
         </flex-core>
 
-      </div>
+      </flex-core>
     </div>
   </card>
 </template>
 
 <style scoped>
-span {
-  font-size: 0.9em;
-}
-
-.data {
-  font-size: 10pt;
-  align-items: center;
-}
-
-.tag-panel {
-  align-items: center;
-}
-
-.post-card {
+.root {
   aspect-ratio: 1/0.9;
   padding: 0;
   overflow: hidden;
@@ -104,34 +96,42 @@ span {
 .post-grid {
   display: grid;
   cursor: pointer;
-  grid-template-rows: 55% 45%;
+  grid-template-rows: 55fr 45fr;
 
   height: 100%;
 }
 
-.post-item1 {
+.item-0 {
   overflow: hidden;
+
+  img {
+    scale: 1;
+    transition: scale 0.5s ease-in-out;
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  img:hover {
+    scale: 1.2;
+  }
 }
 
-.post-item2 {
-  margin: 4px 10px;
-}
+.item-1 {
+  margin: 8px;
 
-.item-2-2 {
-  position: absolute;
-  bottom: 10px;
-}
+  .post-title {
+    margin: 0;
+  }
 
-img {
-  scale: 1;
-  transition: scale 0.5s ease-in-out;
+  .data {
+    font-size: 10pt;
+    align-items: center;
 
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-img:hover {
-  scale: 1.2;
+    span {
+      font-size: 0.9em;
+    }
+  }
 }
 </style>

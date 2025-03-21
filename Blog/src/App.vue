@@ -59,6 +59,7 @@ onMounted(loadBgAsync);
   <github-link />
 
   <div id="container">
+
     <flex-core gap="16px">
 
       <!-- header -->
@@ -87,7 +88,6 @@ onMounted(loadBgAsync);
 
       <!-- content -->
       <RouterViewPanel />
-
 
     </flex-core>
   </div>
