@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSettings } from '../cssVars/useSettings.ts';
 
-import NormalCard from "@/components/NormalCard.vue";
+import NormalCard from "@/components/base/NormalCard.vue";
 import StackPanel from "@/components/StackPanel.vue";
 
 defineProps({

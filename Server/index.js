@@ -111,10 +111,10 @@ app.get("/api/posts", async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 10;
     limit = Math.min(limit, 100); // 防止过大请求
-    
+
     // 排序参数（-表示倒序）
     const sortBy = req.query.sort || '-createdAt';
-    
+
     // 过滤参数（示例：按标签过滤）
     const filters = {};
     if (req.query.tags) {
@@ -140,8 +140,8 @@ app.get("/api/posts", async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(500).json({ 
-      error: error.message || "Failed to fetch posts" 
+    res.status(500).json({
+      error: error.message || "Failed to fetch posts"
     });
   }
 });

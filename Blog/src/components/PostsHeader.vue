@@ -26,7 +26,7 @@ defineProps({
       <h3 class="unline-height">{{ title }}</h3>
     </stack-panel>
 
-    <stack-panel style="width: auto" class="subtitle link-block single-line" orientation="horizontal" gap="6px">
+    <stack-panel style="justify-content: space-between;" class="subtitle link-block single-line" orientation="horizontal" gap="6px">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
         viewBox="0 0 24 24" style="transform: rotate(180deg) translate(0px, 0px); width: 1.5em; height: 1.5em">
         <path fill="currentColor"

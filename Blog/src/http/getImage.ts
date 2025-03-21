@@ -10,7 +10,7 @@ const randomImageModel = () => {
   const randomImageApis: RandomImageApi[] = [
     {
       name: "localhost",
-      api: "http://localhost:3000/api/random-image",
+      api: "http://0.0.0.0:3000/api/random-image",
       key: "imageUrl",
     },
     {

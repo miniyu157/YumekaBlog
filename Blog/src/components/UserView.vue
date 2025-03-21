@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import Card from '@/components/BaseCard.vue'
-import StackPanel from '@/components/StackPanel.vue'
+import Card from "@/components/base/BaseCard.vue";
+import StackPanel from "@/components/StackPanel.vue";
+
+import router from "@/router/index.ts";
 
 defineProps({
   postCount: {
@@ -20,7 +22,7 @@ defineProps({
 
 <template>
   <card>
-    <stack-panel gap="16px">
+    <stack-panel class="root" gap="16px">
       <stack-panel class="part-1">
         <img class="head-icon" src="/src/assets/images/yumeka.jpg" />
         <h2 class="unline-height">Yumeka</h2>
@@ -35,7 +37,9 @@ defineProps({
           <span>{{ tagCount }}</span>
           <span>{{ visitCount }}</span>
         </div>
-        <button class="flat-button friend-circle-button">全部文章</button>
+
+        <button @click="router.push('/home/posts');" class="flat-button friend-circle-button">全部文章</button>
+
       </stack-panel>
     </stack-panel>
   </card>

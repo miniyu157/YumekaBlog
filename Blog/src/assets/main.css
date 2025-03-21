@@ -25,6 +25,12 @@ body::before {
   transition: filter 0.5s ease;
 }
 
+
+.router-link {
+  color: currentColor;
+  text-decoration: none;
+}
+
 .card {
   overflow: hidden;
 

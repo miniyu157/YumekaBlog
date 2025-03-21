@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import StackPanel from '@/components/StackPanel.vue'
-import Card from '@/components/BaseCard.vue'
+import Card from '@/components/base/BaseCard.vue'
 
 interface Props {
   title: string
@@ -83,7 +83,7 @@ const formatNumber = (num: number) => num.toLocaleString()
 
 <style scoped>
 span {
-  font-size: 9pt;
+  font-size: 0.9em;
 }
 
 .data {

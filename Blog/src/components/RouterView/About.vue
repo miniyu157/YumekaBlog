@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Card from "@/components/BaseCard.vue";
+import Card from "@/components/base/BaseCard.vue";
 import StackPanel from "@/components/StackPanel.vue";
 </script>
 
