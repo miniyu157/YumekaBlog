@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 
 import { defSettings } from "./cssVars/defSettings";
 
-import FlexCore from "@/components/FlexCore.vue";
+import FlexCore from "@/components/base/FlexCore.vue";
 import GithubLink from "@/components/GithubLink.vue";
 import RouterViewPanel from "@/components/base/RouterViewPanel.vue";
 

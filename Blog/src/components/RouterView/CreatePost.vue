@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import FlexCore from '@/components/FlexCore.vue';
-import Card from '../base/BaseCard.vue';
+import FlexCore from '@/components/base/FlexCore.vue';
+import Card from '@/components/base/BaseCard.vue';
 
 import { ref } from 'vue';
 
@@ -34,14 +34,15 @@ const postContent = ref();
         </FlexCore>
       </Card>
 
-      <Card>
+      <Card class="main-grid-item2">
         <FlexCore gap="8px">
-          <h3>标签</h3>
-          <FlexCore horizontal-alignment="space-between" orientation="row" gap="16px">
-            <input placeholder="在此输入标签" class="title-input normal-input" v-model="postTitle">
-
-            <button class="small-button">添加</button>
+          <FlexCore orientation="row" horizontal-alignment="space-between">
+            <h3>标签</h3>
+            <button class="small-button">+</button>
           </FlexCore>
+
+
+          <p class="subtitle">暂无标签</p>
         </FlexCore>
       </Card>
 
@@ -58,6 +59,10 @@ $corner-radius: 8px;
   display: grid;
   grid-template-columns: 7fr 3fr;
   gap: 16px;
+}
+
+.main-grid-item2 {
+  min-width: 200px;
 }
 
 h3,
@@ -94,5 +99,9 @@ img {
 
 .content-input {
   height: 80vh;
+}
+
+button {
+  font-size: 0.9em;
 }
 </style>

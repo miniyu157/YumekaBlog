@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 
 import NormalCard from "@/components/base/NormalCard.vue";
-import FlexCore from "@/components/FlexCore.vue";
+import FlexCore from "@/components/base/FlexCore.vue";
 
 import UserView from "@/components/UserView.vue";
 import SearchView from "@/components/SearchView.vue";

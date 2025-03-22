@@ -2,9 +2,10 @@
 import { ref, onMounted } from "vue";
 
 import Card from "@/components/base/BaseCard.vue";
-import FlexCore from "@/components/FlexCore.vue";
+import FlexCore from "@/components/base/FlexCore.vue";
 import PostsHeader from "@/components/PostsHeader.vue";
 import PostCard from "@/components/PostCard.vue";
+import SvgView from "@/components/base/SvgView.vue";
 
 const message = ref("欢迎来到 Yumeka!");
 
@@ -37,12 +38,7 @@ const emptyTipShow = ref(false);
   <flex-core gap="16px">
     <card class="message-panel" :flat="true">
       <flex-core vertical-alignment="center" gap="10px" class="message-panel" orientation="row">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-          viewBox="0 0 24 24" style="transform: rotate(0) translate(0px, 0px); width: 1.5em; height: 1.5em">
-          <path fill="currentColor"
-            d="M18 3a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-4.724l-4.762 2.857a1 1 0 0 1-1.508-.743L7 21v-2H6a4 4 0 0 1-3.995-3.8L2 15V7a4 4 0 0 1 4-4zm-4 9H8a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2m2-4H8a1 1 0 1 0 0 2h8a1 1 0 0 0 0-2">
-          </path>
-        </svg>
+        <svg-view name="comments" />
 
         <p>{{ message }}</p>
       </flex-core>
