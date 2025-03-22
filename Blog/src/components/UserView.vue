@@ -21,14 +21,14 @@ defineProps({
 </script>
 
 <template>
-  <card class="root">
-    <flex-core gap="16px">
-      <flex-core gap="8px" horizontal-alignment="center" class="part-1">
+  <Card class="root">
+    <FlexCore gap="16px">
+      <FlexCore gap="8px" horizontal-alignment="center" class="part-1">
         <img class="head-icon" src="/src/assets/images/yumeka.jpg" />
         <h2 class="unline-height">Yumeka</h2>
-      </flex-core>
+      </FlexCore>
 
-      <flex-core gap="16px" horizontal-alignment="center" class="part-2">
+      <FlexCore gap="16px" horizontal-alignment="center" class="part-2">
         <div class="data-grid">
           <span>文章</span>
           <span>分类</span>
@@ -40,9 +40,9 @@ defineProps({
 
         <button @click="router.push('/home/posts');" class="flat-button friend-circle-button">全部文章</button>
 
-      </flex-core>
-    </flex-core>
-  </card>
+      </FlexCore>
+    </FlexCore>
+  </Card>
 </template>
 
 <style scoped>

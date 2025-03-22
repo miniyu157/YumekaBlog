@@ -25,47 +25,47 @@ const formatNumber = (num: number) => {
 </script>
 
 <template>
-  <card class="root">
+  <Card class="root">
     <div class="post-grid">
 
       <div class="item-0">
         <img :src="imageUrl" :alt="props.title" />
       </div>
 
-      <flex-core class="item-1" vertical-alignment="space-between">
+      <FlexCore class="item-1" vertical-alignment="space-between">
 
         <!-- 标题 -->
-        <flex-core vertical-alignment="center" gap="6px" orientation="row">
-          <svg-view :rotate="180" name="post" />
+        <FlexCore vertical-alignment="center" gap="6px" orientation="row">
+          <SvgView :rotate="180" name="post" />
           <h3 class="post-title unline-height">{{ title }}</h3>
-        </flex-core>
+        </FlexCore>
 
         <!-- 信息 -->
-        <flex-core gap="4px">
+        <FlexCore gap="4px">
 
-          <flex-core orientation="row" gap="4px" class="data subtitle">
-            <svg-view name="heat" />
+          <FlexCore orientation="row" gap="4px" class="data subtitle">
+            <SvgView name="heat" />
             <span>{{ formatNumber(heat) }} 热度</span>
 
-            <svg-view name="comments" />
+            <SvgView name="comments" />
             <span>{{ formatNumber(comments) }} 评论</span>
 
-            <svg-view name="likes" />
+            <SvgView name="likes" />
             <span>{{ formatNumber(likes) }} 赞</span>
-          </flex-core>
+          </FlexCore>
 
           <!-- 标签 -->
-          <flex-core gap="8px" orientation="row">
+          <FlexCore gap="8px" orientation="row">
             <button v-for="(tag, index) in tags" :key="index" class="small-button">
               {{ tag }}
             </button>
-          </flex-core>
+          </FlexCore>
 
-        </flex-core>
+        </FlexCore>
 
-      </flex-core>
+      </FlexCore>
     </div>
-  </card>
+  </Card>
 </template>
 
 <style scoped>

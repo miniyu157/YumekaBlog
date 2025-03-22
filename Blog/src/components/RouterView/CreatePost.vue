@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import FlexCore from '@/components/base/FlexCore.vue';
 import Card from '@/components/base/BaseCard.vue';
+import SvgView from '@/components/base/SvgView.vue';
 
 import { ref } from 'vue';
 
@@ -38,9 +39,16 @@ const postContent = ref();
         <FlexCore gap="8px">
           <FlexCore orientation="row" horizontal-alignment="space-between">
             <h3>标签</h3>
-            <button class="small-button">+</button>
+            <FlexCore orientation="row" gap="8px">
+              <input>
+              <button class="small-button">
+                <SvgView name="plus"></SvgView>
+              </button>
+              <button class="small-button">
+                <SvgView name="minus"></SvgView>
+              </button>
+            </FlexCore>
           </FlexCore>
-
 
           <p class="subtitle">暂无标签</p>
         </FlexCore>
@@ -62,7 +70,7 @@ $corner-radius: 8px;
 }
 
 .main-grid-item2 {
-  min-width: 200px;
+  min-width: 150px;
 }
 
 h3,
@@ -103,5 +111,9 @@ img {
 
 button {
   font-size: 0.9em;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -38,25 +38,26 @@ onMounted(() => {
 </script>
 
 <template>
+
   <div id="mainGrid">
     <!-- 左侧区域 -->
-    <flex-core gap="16px">
-      <user-view :post-count="postCount" :tag-count="tagCount" :visit-count="visitCount" />
+    <FlexCore gap="16px">
+      <UserView :post-count="postCount" :tag-count="tagCount" :visit-count="visitCount" />
 
-      <search-view />
+      <SearchView />
 
-      <settings-view />
+      <SettingsView />
 
-      <tag-box />
+      <TagBox />
 
-      <normal-card title="This a card">
+      <NormalCard title="This a card">
         <p class="subtitle">Zelto mqru fiep gaxo ujik. Vrinb qsot xelp? Fkraw zsmo ytix.</p>
-      </normal-card>
+      </NormalCard>
 
-      <normal-card title="This a card">
+      <NormalCard title="This a card">
         <p class="subtitle">这是一个卡片吗？哦！原来这是一个卡片。<br><br>V me 50 treat me to a KFC豪华套餐</p>
-      </normal-card>
-    </flex-core>
+      </NormalCard>
+    </FlexCore>
 
     <!-- 右侧区域 -->
     <RouterViewPanel />

@@ -111,6 +111,24 @@ textarea {
   font-family: "TeXGyreAdventor-Regular", "OPPO-Sans", sans-serif;
 }
 
+.normal-input {
+  border-radius: var(--normal-corner-radius);
+  background-color: transparent;
+  border: 1px solid var(--default-border-color);
+  padding: 4px 8px;
+  outline: none;
+  color: currentColor;
+
+  flex-grow: 1;
+  /* 占满剩余空间 */
+
+  font-size: 12pt;
+}
+.normal-input::placeholder{
+  color: currentColor;
+  opacity: 66%;
+}
+
 /* input {
   border-radius: var(--circle-radius);
   border: 0px solid;

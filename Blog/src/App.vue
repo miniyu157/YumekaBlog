@@ -36,6 +36,7 @@ const loadBgAsync = async () => {
     }
   }
 };
+onMounted(loadBgAsync);
 
 const isNavBlur = ref(false);
 const scrollHandle = () => {
@@ -52,21 +53,20 @@ const debug = () => {
   defSettings.isDebug.value = !defSettings.isDebug.value;
 };
 
-onMounted(loadBgAsync);
 </script>
 
 <template>
 
-  <github-link />
+  <GithubLink />
 
   <div id="container">
 
-    <flex-core gap="16px">
+    <FlexCore gap="16px">
 
       <!-- header -->
       <h1 class="unline-height title">{{ title }}</h1>
       <nav id="main-nav">
-        <flex-core gap="12px" class="header-buttons" :class="{ 'nav-blur': isNavBlur }" orientation="row">
+        <FlexCore gap="12px" class="header-buttons" :class="{ 'nav-blur': isNavBlur }" orientation="row">
           <h3 class="underline-from-center">
             <router-link class="router-link" to="/">首页</router-link>
           </h3>
@@ -79,19 +79,19 @@ onMounted(loadBgAsync);
           <h3 class="underline-from-center">
             <router-link class="router-link" to="/about">关于</router-link>
           </h3>
-        </flex-core>
+        </FlexCore>
       </nav>
 
       <!-- debug button -->
-      <flex-core gap="16px" orientation="row">
+      <FlexCore gap="16px" orientation="row">
         <button @click="debug" class="flat-button">Debug</button>
         <button @click="router.push('/create-post');" class="flat-button">Create Post</button>
-      </flex-core>
+      </FlexCore>
 
       <!-- content -->
       <RouterViewPanel />
 
-    </flex-core>
+    </FlexCore>
   </div>
 
 </template>

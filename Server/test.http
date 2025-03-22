@@ -7,6 +7,10 @@ GET http://localhost:3000/api/posts HTTP/1.1
 
 ###
 
+GET http://localhost:3000/api/tags HTTP/1.1
+
+###
+
 POST http://localhost:3000/api/posts
 Content-Type: application/json
 
@@ -15,8 +19,8 @@ Content-Type: application/json
   "imageUrl": "http://localhost:3000/images/www.dmoe.cc_6dzxk11mxx_thumbnail.jpg",
   "content": "文章正文文章正文文章正文",
 
-  "heat": "1145",
-  "comments": "1411",
-  "likes": "4514",
-  "tags": ["C#", "Web", "AI"]
+  "heat": "0",
+  "comments": "0",
+  "likes": "0",
+  "tags": []
 }

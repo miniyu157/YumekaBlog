@@ -53,7 +53,6 @@ app.use(
   express.static(path.join(__dirname, "public", "postimages"))
 );
 
-// 随机图片接口
 app.get("/api/random-image", (req, res) => {
   try {
     const imageDir = path.join(__dirname, "public", "backgrounds");
@@ -73,12 +72,10 @@ app.get("/api/random-image", (req, res) => {
   }
 });
 
-// 新增文章创建接口
 app.post("/api/posts", async (req, res) => {
   try {
     const { title, imageUrl, content, heat, comments, likes, tags } = req.body;
 
-    // 创建新文章
     const newPost = new PostModel({
       title,
       imageUrl,
@@ -98,12 +95,6 @@ app.post("/api/posts", async (req, res) => {
     });
   }
 });
-
-// # 获取第一页，每页20条，按热度排序
-// GET /api/posts?page=1&limit=20&sort=-heat
-
-// # 过滤包含"tech"或"guide"标签的文章
-// GET /api/posts?tags=tech,guide
 
 app.get("/api/posts", async (req, res) => {
   try {
@@ -142,6 +133,28 @@ app.get("/api/posts", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       error: error.message || "Failed to fetch posts"
+    });
+  }
+});
+
+app.get("/api/tags", async (req, res) => {
+  try {
+    // 使用Mongoose的distinct方法获取所有唯一标签
+    const tags = await PostModel.distinct("tags");
+
+    // 过滤掉可能存在的空值（如果有的话）
+    const filteredTags = tags.filter(tag => tag && tag.trim() !== '');
+
+    res.status(200).json({
+      success: true,
+      count: filteredTags.length,
+      tags: filteredTags
+    });
+  } catch (error) {
+    console.error("Error fetching tags:", error);
+    res.status(500).json({
+      success: false,
+      error: "Failed to fetch tags"
     });
   }
 });

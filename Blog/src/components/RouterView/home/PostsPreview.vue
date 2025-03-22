@@ -35,37 +35,37 @@ onMounted(async () => {
 const emptyTipShow = ref(false);
 </script>
 <template>
-  <flex-core gap="16px">
-    <card class="message-panel" :flat="true">
-      <flex-core vertical-alignment="center" gap="10px" class="message-panel" orientation="row">
-        <svg-view name="comments" />
+  <FlexCore gap="16px">
+    <Card class="message-panel" :flat="true">
+      <FlexCore vertical-alignment="center" gap="10px" class="message-panel" orientation="row">
+        <SvgView name="comments" />
 
         <p>{{ message }}</p>
-      </flex-core>
-    </card>
+      </FlexCore>
+    </Card>
 
-    <posts-header title="Yumeka" />
+    <PostsHeader title="Yumeka" />
 
     <hr />
 
     <h3 v-show="emptyTipShow" class="subtitle">列表 'Yumeka' 暂无文章</h3>
 
     <div class="post-container">
-      <post-card v-for="post in posts" :key="post._id" :title="post.title" :image-url="post.imageUrl" :heat="post.heat"
+      <PostCard v-for="post in posts" :key="post._id" :title="post.title" :image-url="post.imageUrl" :heat="post.heat"
         :comments="post.comments" :likes="post.likes" :tags="post.tags" />
     </div>
 
-    <posts-header title="Other" />
+    <PostsHeader title="Other" />
 
     <hr />
 
     <h3 class="subtitle">列表 'Other' 暂无文章</h3>
 
     <div class="post-container">
-      <post-card v-for="post in otherPosts" :key="post._id" :title="post.title" :image-url="post.imageUrl"
+      <PostCard v-for="post in otherPosts" :key="post._id" :title="post.title" :image-url="post.imageUrl"
         :heat="post.heat" :comments="post.comments" :likes="post.likes" :tags="post.tags" />
     </div>
-  </flex-core>
+  </FlexCore>
 </template>
 
 <style scoped>

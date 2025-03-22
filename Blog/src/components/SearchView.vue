@@ -11,9 +11,9 @@ const handleSearch = () => {
 </script>
 
 <template>
-  <normal-card title="搜索">
-    <input v-model="inputText" type="text" @keyup.enter="handleSearch" placeholder="搜索文章" />
-  </normal-card>
+  <NormalCard title="搜索">
+    <input v-model="inputText" class="normal-input" type="text" @keyup.enter="handleSearch" placeholder="搜索文章" />
+  </NormalCard>
 </template>
 
 <style scoped>

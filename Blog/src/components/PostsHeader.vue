@@ -11,15 +11,15 @@ defineProps({
 </script>
 
 <template>
-  <flex-core horizontal-alignment="space-between" orientation="row">
-    <flex-core vertical-alignment="center" class="subtitle" orientation="row" gap="6px">
-      <svg-view name="grid" />
+  <FlexCore horizontal-alignment="space-between" orientation="row">
+    <FlexCore vertical-alignment="center" class="subtitle" orientation="row" gap="6px">
+      <SvgView name="grid" />
       <h3 class="unline-height">{{ title }}</h3>
-    </flex-core>
+    </FlexCore>
 
-    <flex-core vertical-alignment="center" class="subtitle link-block" orientation="row" gap="6px">
-      <svg-view rotate="180deg" name="more" />
+    <FlexCore vertical-alignment="center" class="subtitle link-block" orientation="row" gap="6px">
+      <SvgView rotate="180deg" name="more" />
       <h3 class="unline-height">More</h3>
-    </flex-core>
-  </flex-core>
+    </FlexCore>
+  </FlexCore>
 </template>

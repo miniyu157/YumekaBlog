@@ -30,23 +30,23 @@ const contentVisible = computed(() => !props.collapsible || isExpanded.value)
 </script>
 
 <template>
-  <card>
-    <flex-core gap="4px">
-      <flex-core class="header" orientation="row" :style="{ cursor: collapsible ? 'pointer' : 'default' }"
+  <Card>
+    <FlexCore gap="4px">
+      <FlexCore class="header" orientation="row" :style="{ cursor: collapsible ? 'pointer' : 'default' }"
         @click="toggleExpand">
         <h3 class="subtitle unline-height">{{ title }}</h3>
         <span v-if="collapsible" class="arrow" :class="{ 'arrow--collapsed': !isExpanded }">
           ▼
         </span>
-      </flex-core>
+      </FlexCore>
 
       <transition name="slide">
         <div v-show="contentVisible" class="content">
           <slot></slot>
         </div>
       </transition>
-    </flex-core>
-  </card>
+    </FlexCore>
+  </Card>
 </template>
 
 <style scoped>
