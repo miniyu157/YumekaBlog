@@ -1,40 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 import NormalCard from "@/components/base/NormalCard.vue";
 import FlexCore from "@/components/base/FlexCore.vue";
-
 import UserView from "@/components/UserView.vue";
 import SearchView from "@/components/SearchView.vue";
 import SettingsView from "@/components/SettingsView.vue";
-
+import TagBox from "@/components/TagBox.vue";
 import RouterViewPanel from "@/components/base/RouterViewPanel.vue";
 
 const postCount = ref(11);
 const tagCount = ref(45);
 const visitCount = ref(14);
-
-import { postApi, type Post } from "@/http/getPosts";
-import TagBox from "@/components/TagBox.vue";
-
-const posts = ref<Post[]>([]);
-
-const fetchPosts = async () => {
-  try {
-    const { data } = await postApi.getPosts({
-      limit: 6,
-      sort: '-createdAt' // 按最新排序
-    });
-    posts.value = data;
-  } catch (error) {
-    console.error('获取文章失败:', error);
-  }
-};
-
-onMounted(() => {
-  fetchPosts();
-});
-
 </script>
 
 <template>

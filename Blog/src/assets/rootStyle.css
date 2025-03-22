@@ -27,6 +27,7 @@
   /* 默认值在 defSettings.ts 中设置 */
   --bg-url: ;
   --debug-border: ;
+  --mask-opacity: ;
 
   /* 其他样式 */
   --circle-radius: 999px;

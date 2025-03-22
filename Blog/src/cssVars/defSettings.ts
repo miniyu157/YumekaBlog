@@ -3,10 +3,12 @@ import { utils } from "../utils/utils.ts";
 
 const defSettingsModel = () => {
   const isDebug = ref(false);
-  const bgUrl = ref("url()");
+  const bgUrl = ref("/src/assets/images/yumeka.jpg");
+  const maskOpacity = ref<Number>(100);
 
   watchEffect(() => utils.setCssVar("--debug-border", isDebug.value ? "1px" : "0px"));
   watchEffect(() => utils.setCssVar("--bg-url", `url("${bgUrl.value}")`));
+  watchEffect(() => utils.setCssVar("--mask-opacity", `${maskOpacity.value}%`));
 
   const setBgUrlAsync = async (value: string) => {
     const newUrl = value;
@@ -24,6 +26,8 @@ const defSettingsModel = () => {
   return {
     isDebug,
     bgUrl,
+    maskOpacity,
+
     setBgUrlAsync,
   };
 };

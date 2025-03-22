@@ -1,38 +1,68 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import { tagsApi } from '@/http/getTags';
+
 import NormalCard from '@/components/base/NormalCard.vue';
+import SvgView from '@/components/base/SvgView.vue';
+import FlexCore from '@/components/base/FlexCore.vue';
 
 const tags = ref<string[]>([]);
 
-// const generateRandomTag = (): string => {
-//   //字母库
-//   const letters = 'abcdefghijklmnopqrstuvwxyz';
+const tip = ref("正在加载...");
+const tipShow = computed(() => tip.value !== "");
 
-//   // 随机生成长度（4/5/6/7）
-//   const length = 4 + Math.floor(Math.random() * 4);
+const getTags = async () => {
+  try {
+    const tagsResponse = await tagsApi.getTags();
+    tags.value = tagsResponse.tags;
 
-//   // 生成随机字母组合
-//   let tag = '';
-//   for (let i = 0; i < length; i++) {
-//     tag += letters[Math.floor(Math.random() * letters.length)];
-//   }
+    tip.value = tags.value.length == 0 ? "暂无标签" : "";
 
-//   return tag;
-// };
+  } catch (error) {
+    tip.value = "获取标签列表失败";
+  }
+};
 
-// onMounted(() => {
-//   for (let i = 1; i <= 30; i++) {
-//     tags.value.push(generateRandomTag());
-//   }
-// })
+onMounted(() => {
+  getTags();
+});
+
 </script>
 
 <template>
   <NormalCard :collapsible="true" :initial-expanded="false" title="标签">
-    <div style="display: flex;flex-wrap: wrap; gap: 6px;">
+    <div class="tag-panel">
 
       <button class="small-button" v-for="tag in tags">{{ tag }}</button>
+
+      <FlexCore gap="16px" v-show="tipShow">
+        <FlexCore vertical-alignment="center" gap="4px" orientation="row">
+          <SvgView size="1em" name="error" />
+          <p>{{ tip }}</p>
+        </FlexCore>
+
+      </FlexCore>
 
     </div>
   </NormalCard>
 </template>
+
+<style scoped>
+.tip {
+  font-size: 0.9em;
+}
+
+.tag-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  flex-grow: 1;
+}
+</style>

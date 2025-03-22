@@ -27,8 +27,6 @@ const randomImageModel = () => {
 
   async function getRandomImageUrl(apiIndex: number): Promise<string> {
     const api = randomImageApis[apiIndex];
-
-    const DEFAULT_IMAGE = "/src/assets/images/yumeka.jpg";
     const API_ENDPOINT = api.api;
     const RESPONSE_KEY = api.key;
 
@@ -44,13 +42,13 @@ const randomImageModel = () => {
         const baseUrl = new URL(API_ENDPOINT);
         const fullUrl = new URL(url, baseUrl.origin);
 
-        return fullUrl.protocol.startsWith("http") ? fullUrl.href : DEFAULT_IMAGE;
+        return fullUrl.protocol.startsWith("http") ? fullUrl.href : "";
       } catch (e) {
-        return DEFAULT_IMAGE;
+        return "";
       }
     } catch (error) {
       console.error("Image URL fetch failed:", error);
-      return DEFAULT_IMAGE;
+      return "";
     }
   }
 

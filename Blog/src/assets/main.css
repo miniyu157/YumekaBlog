@@ -4,9 +4,7 @@ body {
 
   backdrop-filter: brightness(0); /* 删掉此属性会出现 bug */
   background-attachment: fixed;
-  opacity: 0;
   margin: 0;
-
   transition: opacity 1s ease;
 }
 
@@ -22,7 +20,22 @@ body::before {
   background-size: cover;
 
   filter: var(--bg-blur) var(--bg-saturate) var(--bg-brightness);
-  transition: filter 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+body::after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  background: black;
+
+  opacity: var(--mask-opacity);
+  transition: opacity 1s ease;
 }
 
 .router-link {
@@ -124,7 +137,7 @@ textarea {
 
   font-size: 12pt;
 }
-.normal-input::placeholder{
+.normal-input::placeholder {
   color: currentColor;
   opacity: 66%;
 }

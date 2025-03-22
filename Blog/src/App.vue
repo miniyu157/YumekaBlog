@@ -18,9 +18,6 @@ const loadBgAsync = async () => {
   const body = document.querySelector("body");
 
   if (body) {
-    /* 设置此项可屏蔽启动时 body 透明度 to 0 的动画 */
-    body.style.visibility = 'collapse';
-
     try {
       const url = await imageAPI.getRandomImageUrl(0);
       await defSettings.setBgUrlAsync(url);
@@ -30,12 +27,11 @@ const loadBgAsync = async () => {
       console.error('Failed to load image:', error);
 
     } finally {
-
-      body.style.visibility = 'visible';
-      body.style.opacity = '100%';
+      defSettings.maskOpacity.value = 0;
     }
   }
 };
+
 onMounted(loadBgAsync);
 
 const isNavBlur = ref(false);

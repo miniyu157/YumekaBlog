@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watchEffect, computed } from "vue";
 
 import Card from "@/components/base/BaseCard.vue";
 import FlexCore from "@/components/base/FlexCore.vue";
@@ -12,7 +12,8 @@ const message = ref("欢迎来到 Yumeka!");
 import { postApi, type Post } from "@/http/getPosts";
 
 const posts = ref<Post[]>([]);
-const otherPosts = ref<Post[]>([]);
+const tip = ref("正在加载...");
+const tipShow = computed(() => tip.value !== "");
 
 const fetchPosts = async () => {
   try {
@@ -22,17 +23,17 @@ const fetchPosts = async () => {
     });
     posts.value = data;
 
-    emptyTipShow.value = posts.value.length == 0;
+    tip.value = posts.value.length == 0 ? "列表 'Yumeka' 暂无文章" : "";
+
   } catch (error) {
-    console.error('获取文章失败:', error);
+    tip.value = "获取文章失败";
   }
 };
 
-onMounted(async () => {
+onMounted(() => {
   fetchPosts();
 });
 
-const emptyTipShow = ref(false);
 </script>
 <template>
   <FlexCore gap="16px">
@@ -45,26 +46,20 @@ const emptyTipShow = ref(false);
     </Card>
 
     <PostsHeader title="Yumeka" />
-
     <hr />
-
-    <h3 v-show="emptyTipShow" class="subtitle">列表 'Yumeka' 暂无文章</h3>
-
+    <h3 v-show="tipShow" class="subtitle">{{ tip }}</h3>
     <div class="post-container">
       <PostCard v-for="post in posts" :key="post._id" :title="post.title" :image-url="post.imageUrl" :heat="post.heat"
         :comments="post.comments" :likes="post.likes" :tags="post.tags" />
     </div>
 
     <PostsHeader title="Other" />
-
     <hr />
-
-    <h3 class="subtitle">列表 'Other' 暂无文章</h3>
-
-    <div class="post-container">
+    <h3 class="subtitle">列表 'Other' 暂未开放</h3>
+    <!-- <div class="post-container">
       <PostCard v-for="post in otherPosts" :key="post._id" :title="post.title" :image-url="post.imageUrl"
         :heat="post.heat" :comments="post.comments" :likes="post.likes" :tags="post.tags" />
-    </div>
+    </div> -->
   </FlexCore>
 </template>
 
