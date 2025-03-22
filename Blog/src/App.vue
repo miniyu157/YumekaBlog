@@ -10,6 +10,7 @@ import RouterViewPanel from "@/components/base/RouterViewPanel.vue";
 import { utils } from "./utils/utils.ts";
 import { imageAPI } from "./http/getImage.ts";
 
+import router from "@/router/index.ts";
 
 const title = ref("Welcome to Yumeka");
 
@@ -82,8 +83,9 @@ onMounted(loadBgAsync);
       </nav>
 
       <!-- debug button -->
-      <flex-core orientation="row">
+      <flex-core gap="16px" orientation="row">
         <button @click="debug" class="flat-button">Debug</button>
+        <button @click="router.push('/create-post');" class="flat-button">Create Post</button>
       </flex-core>
 
       <!-- content -->

@@ -15,7 +15,12 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const formatNumber = (num: number) => num.toLocaleString()
+const formatNumber = (num: number) => {
+  if (num >= 1000) {
+    return `${(num / 1000).toFixed(1)}k`.replace(/\.0k$/, 'k');
+  }
+  return num.toLocaleString();
+};
 </script>
 
 <template>
@@ -74,7 +79,7 @@ const formatNumber = (num: number) => num.toLocaleString()
 
           <!-- 标签 -->
           <flex-core gap="8px" orientation="row">
-            <button v-for="(tag, index) in tags" :key="index" class="tag-button">
+            <button v-for="(tag, index) in tags" :key="index" class="small-button">
               {{ tag }}
             </button>
           </flex-core>

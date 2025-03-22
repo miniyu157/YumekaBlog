@@ -11,6 +11,7 @@ const message = ref("欢迎来到 Yumeka!");
 import { postApi, type Post } from "@/http/getPosts";
 
 const posts = ref<Post[]>([]);
+const otherPosts = ref<Post[]>([]);
 
 const fetchPosts = async () => {
   try {
@@ -19,15 +20,18 @@ const fetchPosts = async () => {
       sort: '-createdAt' // 按最新排序
     });
     posts.value = data;
+
+    emptyTipShow.value = posts.value.length == 0;
   } catch (error) {
     console.error('获取文章失败:', error);
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
   fetchPosts();
 });
 
+const emptyTipShow = ref(false);
 </script>
 <template>
   <flex-core gap="16px">
@@ -48,6 +52,8 @@ onMounted(() => {
 
     <hr />
 
+    <h3 v-show="emptyTipShow" class="subtitle">列表 'Yumeka' 暂无文章</h3>
+
     <div class="post-container">
       <post-card v-for="post in posts" :key="post._id" :title="post.title" :image-url="post.imageUrl" :heat="post.heat"
         :comments="post.comments" :likes="post.likes" :tags="post.tags" />
@@ -59,6 +65,10 @@ onMounted(() => {
 
     <h3 class="subtitle">列表 'Other' 暂无文章</h3>
 
+    <div class="post-container">
+      <post-card v-for="post in otherPosts" :key="post._id" :title="post.title" :image-url="post.imageUrl"
+        :heat="post.heat" :comments="post.comments" :likes="post.likes" :tags="post.tags" />
+    </div>
   </flex-core>
 </template>
 

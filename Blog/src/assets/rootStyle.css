@@ -33,6 +33,7 @@
   --small-corner-radius: 4px;
 
   --default-background: rgba(255, 255, 255, 0.1);
+  --button-background: rgba(255, 255, 255, 0.15);
   --hover-background: rgba(255, 255, 255, 0.3);
   --default-selection-background: rgba(255, 255, 255, 0.3);
 

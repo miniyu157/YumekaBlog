@@ -25,7 +25,6 @@ body::before {
   transition: filter 0.5s ease;
 }
 
-
 .router-link {
   color: currentColor;
   text-decoration: none;
@@ -60,11 +59,11 @@ hr {
   opacity: 1;
 }
 
-.tag-button {
+.small-button {
   border: 0px solid;
   border-radius: var(--small-corner-radius);
 
-  background-color: var(--default-background);
+  background-color: var(--button-background);
   color: currentColor;
   padding: 2px 16px;
 
@@ -72,7 +71,7 @@ hr {
   cursor: pointer;
 }
 
-.tag-button:hover {
+.small-button:hover {
   background-color: var(--hover-background);
 }
 
@@ -107,15 +106,15 @@ h5,
 h6,
 p,
 span,
-label {
+label,
+textarea {
   font-family: "TeXGyreAdventor-Regular", "OPPO-Sans", sans-serif;
 }
 
-input {
+/* input {
   border-radius: var(--circle-radius);
   border: 0px solid;
 
   padding: 8px 16px;
   outline: none;
-}
-
+} */

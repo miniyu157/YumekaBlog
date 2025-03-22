@@ -1,0 +1,98 @@
+<script setup lang="ts">
+import FlexCore from '@/components/FlexCore.vue';
+import Card from '../base/BaseCard.vue';
+
+import { ref } from 'vue';
+
+const postTitle = ref();
+const postContent = ref();
+
+</script>
+
+<template>
+  <div class="main-grid">
+    <Card>
+      <FlexCore vertical-alignment="center" gap="16px">
+        <input placeholder="在此输入文章标题" class="title-input normal-input" v-model="postTitle">
+        <textarea placeholder="在此输入文章内容" class="content-input normal-input" v-model="postContent"></textarea>
+      </FlexCore>
+    </Card>
+
+    <FlexCore gap="16px">
+
+      <Card>
+        <FlexCore gap="8px">
+          <FlexCore horizontal-alignment="space-between" orientation="row" gap="16px">
+            <h3>文章封面</h3>
+            <button class="flat-button">本地上传/外部链接</button>
+          </FlexCore>
+          <img>
+          <FlexCore horizontal-alignment="space-between" orientation="row" gap="16px">
+            <p>未选择图像</p>
+            <button class="small-button">点击上传</button>
+          </FlexCore>
+        </FlexCore>
+      </Card>
+
+      <Card>
+        <FlexCore gap="8px">
+          <h3>标签</h3>
+          <FlexCore horizontal-alignment="space-between" orientation="row" gap="16px">
+            <input placeholder="在此输入标签" class="title-input normal-input" v-model="postTitle">
+
+            <button class="small-button">添加</button>
+          </FlexCore>
+        </FlexCore>
+      </Card>
+
+    </FlexCore>
+
+  </div>
+
+</template>
+
+<style scoped lang="scss">
+$corner-radius: 8px;
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: 16px;
+}
+
+h3,
+p {
+  margin: 0;
+  flex-shrink: 0;
+  /* 防止被压缩 */
+}
+
+img {
+  border-radius: $corner-radius;
+  border: 1px solid var(--default-border-color);
+  aspect-ratio: 16 / 9;
+}
+
+.normal-input {
+  border-radius: $corner-radius;
+  background-color: transparent;
+  border: 1px solid var(--default-border-color);
+  padding: 4px 8px;
+  outline: none;
+  color: currentColor;
+
+  flex-grow: 1;
+  /* 占满剩余空间 */
+
+  font-size: 12pt;
+}
+
+.normal-input::placeholder {
+  color: currentColor;
+  opacity: 66%;
+}
+
+.content-input {
+  height: 80vh;
+}
+</style>

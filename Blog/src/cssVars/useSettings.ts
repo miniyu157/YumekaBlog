@@ -74,6 +74,16 @@ const useSettingsModel = () => {
       bgBrightness: 40,
     },
     {
+      name: "Cyber Neon Flat",
+      cardCorner: 8,
+      cardBlur: 16,
+      cardSaturate: 200,
+      cardShadow: 0,
+      bgBlur: 30,
+      bgSaturate: 180,
+      bgBrightness: 40,
+    },
+    {
       name: "Vintage Polaroid",
       cardCorner: 24,
       cardBlur: 6,

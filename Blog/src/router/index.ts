@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import About from "@/components/routerView/About.vue";
-import Home from "@/components/home/Home.vue";
-import PostList from "@/components/home/PostList.vue";
-import PostsPreview from "@/components/home/PostsPreview.vue";
+import Home from "@/components/routerView/home/Home.vue";
+import PostList from "@/components/routerView/home/PostList.vue";
+import PostsPreview from "@/components/routerView/home/PostsPreview.vue";
+import CreatePost from "@/components/routerView/CreatePost.vue";
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: "/about",
     name: "About",
     component: About,
+  },
+  {
+    path: "/create-post",
+    name: "CreatePost",
+    component: CreatePost,
   },
 ];
 
