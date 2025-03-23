@@ -10,6 +10,17 @@ import { tagsApi } from '@/http/getTags';
 import { computed, onMounted, ref, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+/*
+            ██████╗ ██╗   ██╗ ██████╗
+            ██╔══██╗██║   ██║██╔════╝
+            ██████╔╝██║   ██║██║  ███╗
+            ██╔══██╗██║   ██║██║   ██║
+            ██████╔╝╚██████╔╝╚██████╔╝
+            ╚═════╝  ╚═════╝  ╚═════╝
+             分页按钮点击就会一闪一闪
+      路由切换动画时，card 的 backdrop-filter 失效
+*/
+
 const route = useRoute();
 const router = useRouter();
 
