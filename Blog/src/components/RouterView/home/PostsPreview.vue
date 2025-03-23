@@ -49,8 +49,8 @@ onMounted(() => {
     <hr />
     <h3 v-show="tipShow" class="subtitle">{{ tip }}</h3>
     <div class="post-container">
-      <PostCard v-for="post in posts" :key="post._id" :title="post.title" :image-url="post.imageUrl" :heat="post.heat"
-        :comments="post.comments" :likes="post.likes" :tags="post.tags" />
+      <PostCard v-for="post in posts" :key="post._id" :title="post.title" :image-url="post.imageUrl" :content="post.content" :heat="post.heat"
+        :comments="post.comments" :likes="post.likes" :tags="post.tags" :created-at="post.createdAt"/>
     </div>
 
     <PostsHeader title="Other" />

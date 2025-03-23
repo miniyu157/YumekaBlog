@@ -5,12 +5,13 @@ export interface Post {
   _id: string;
   title: string;
   imageUrl: string;
+  content: string;
   heat: number;
   comments: number;
   likes: number;
   tags: string[];
-  createdAt: string;  // 根据需求可选保留
-  updatedAt: string;  // 根据需求可选保留
+  createdAt: string; // 根据需求可选保留
+  updatedAt: string; // 根据需求可选保留
 }
 
 // 分页响应结构
@@ -46,28 +47,27 @@ const getPostsModel = () => {
       const processedParams: Record<string, any> = {
         page: params.page || 1,
         limit: Math.min(params.limit || 10, 100),
-      }
+      };
 
-      if (params.sort) processedParams.sort = params.sort
-      if (params.tags?.length) processedParams.tags = params.tags.join(',')
+      if (params.sort) processedParams.sort = params.sort;
+      if (params.tags?.length) processedParams.tags = params.tags.join(",");
 
-      const response = await axios.get<ApiResponse>('http://0.0.0.0:3000/api/posts', {
+      const response = await axios.get<ApiResponse>("http://0.0.0.0:3000/api/posts", {
         params: processedParams,
-        paramsSerializer: { indexes: null } // 处理数组参数为 tags=a,b,c
-      })
+        paramsSerializer: { indexes: null }, // 处理数组参数为 tags=a,b,c
+      });
 
-      return response.data
+      return response.data;
     } catch (error) {
-      const axiosError = error as AxiosError<{ error?: string }>
+      const axiosError = error as AxiosError<{ error?: string }>;
       throw new Error(
-        axiosError.response?.data?.error ||
-        "Failed to fetch posts due to network error"
-      )
+        axiosError.response?.data?.error || "Failed to fetch posts due to network error"
+      );
     }
-  }
+  };
 
-  return { getPosts }
-}
+  return { getPosts };
+};
 
 // 导出 API 实例
-export const postApi = getPostsModel()
+export const postApi = getPostsModel();

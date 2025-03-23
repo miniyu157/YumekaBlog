@@ -13,7 +13,7 @@ const props = defineProps({
 const svgMeta = computed(() => {
   const meta = svgData[props.name];
   if (!meta) console.warn(`SVG "${props.name}" not found`);
-  return meta || { viewBox: "0 0 24 24", path: "" };
+  return meta || { viewBox: "0 0 24 24", path: [] };
 });
 
 const transformStyle = computed(() => ({
@@ -22,8 +22,8 @@ const transformStyle = computed(() => ({
 </script>
 
 <template>
-  <svg v-if="svgMeta.viewBox && svgMeta.path" xmlns="http://www.w3.org/2000/svg" :viewBox="svgMeta.viewBox"
+  <svg v-if="svgMeta.viewBox && svgMeta.path.length" xmlns="http://www.w3.org/2000/svg" :viewBox="svgMeta.viewBox"
     :style="transformStyle" :width="size" :height="size">
-    <path :fill="fill" :d="svgMeta.path" />
+    <path v-for="(path, index) in svgMeta.path" :key="index" :fill="fill" :d="path" />
   </svg>
 </template>

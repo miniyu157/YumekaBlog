@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 
 import { defSettings } from "./cssVars/defSettings";
 
@@ -49,6 +49,12 @@ const debug = () => {
   defSettings.isDebug.value = !defSettings.isDebug.value;
 };
 
+import { useRouter, useRoute } from "vue-router";
+
+// 过滤需要展示的导航路由（排除重定向和子路由）
+const navRoutes = useRouter().options.routes.filter(
+  (r) => r.name
+);
 </script>
 
 <template>
@@ -83,6 +89,12 @@ const debug = () => {
         <button @click="debug" class="flat-button">Debug</button>
         <button @click="router.push('/create-post');" class="flat-button">Create Post</button>
       </FlexCore>
+      <FlexCore orientation="row">
+        <button v-for="item in navRoutes" :key="item.path" @click="router.push(item.path)"
+          :class="{ active: useRoute().path.startsWith(item.path) }">
+          {{ item.name }}
+        </button>
+      </FlexCore>
 
       <!-- content -->
       <RouterViewPanel />
@@ -93,6 +105,11 @@ const debug = () => {
 </template>
 
 <style scoped>
+.active {
+  background-color: #3498db;
+  color: white;
+}
+
 #container {
   display: flex;
   flex-direction: column;

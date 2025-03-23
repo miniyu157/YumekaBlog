@@ -38,7 +38,7 @@ defineProps({
           <span>{{ visitCount }}</span>
         </div>
 
-        <button @click="router.push('/home/posts');" class="flat-button friend-circle-button">全部文章</button>
+        <button @click="router.push('/posts');" class="flat-button friend-circle-button">全部文章</button>
 
       </FlexCore>
     </FlexCore>

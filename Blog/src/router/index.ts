@@ -21,11 +21,6 @@ const routes = [
         name: "PostsPreview",
         component: PostsPreview,
       },
-      {
-        path: "posts",
-        name: "Posts",
-        component: PostList,
-      },
     ],
   },
   {
@@ -37,6 +32,11 @@ const routes = [
     path: "/create-post",
     name: "CreatePost",
     component: CreatePost,
+  },
+  {
+    path: "/posts",
+    name: "Posts",
+    component: PostList,
   },
 ];
 
