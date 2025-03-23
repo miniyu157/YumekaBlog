@@ -45,7 +45,7 @@ onMounted(() => {
       </FlexCore>
     </Card>
 
-    <PostsHeader title="Yumeka" />
+    <PostsHeader title="Yumeka" router-link="/posts"/>
     <hr />
     <h3 v-show="tipShow" class="subtitle">{{ tip }}</h3>
     <div class="post-container">

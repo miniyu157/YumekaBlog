@@ -107,8 +107,15 @@ const toggleTagFilter = (tag: string) => {
 }
 
 .content {
-  height: 45%;
-  margin: 0;
+  line-height: 1.5em;
+  min-height: 3em;
+  max-height: 6em;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 
 .root {
@@ -126,7 +133,7 @@ const toggleTagFilter = (tag: string) => {
 }
 
 .root.big-mode {
-  aspect-ratio: 1 / 0.35;
+  aspect-ratio: 1 / 0.4;
 
   .post-grid {
     display: grid;
