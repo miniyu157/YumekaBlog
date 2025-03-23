@@ -49,17 +49,13 @@ onMounted(() => {
     <hr />
     <h3 v-show="tipShow" class="subtitle">{{ tip }}</h3>
     <div class="post-container">
-      <PostCard v-for="post in posts" :key="post._id" :title="post.title" :image-url="post.imageUrl" :content="post.content" :heat="post.heat"
-        :comments="post.comments" :likes="post.likes" :tags="post.tags" :created-at="post.createdAt"/>
+      <PostCard v-for="post in posts" v-bind="post"/>
     </div>
 
     <PostsHeader title="Other" />
     <hr />
     <h3 class="subtitle">列表 'Other' 暂未开放</h3>
-    <!-- <div class="post-container">
-      <PostCard v-for="post in otherPosts" :key="post._id" :title="post.title" :image-url="post.imageUrl"
-        :heat="post.heat" :comments="post.comments" :likes="post.likes" :tags="post.tags" />
-    </div> -->
+
   </FlexCore>
 </template>
 

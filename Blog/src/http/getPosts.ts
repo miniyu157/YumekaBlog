@@ -15,7 +15,7 @@ export interface Post {
 }
 
 // 分页响应结构
-interface Pagination {
+export interface Pagination {
   page: number;
   limit: number;
   total: number;
@@ -23,13 +23,13 @@ interface Pagination {
 }
 
 // 完整 API 响应结构
-interface ApiResponse {
+export interface PostApiResponse {
   data: Post[];
   pagination: Pagination;
 }
 
 // 请求参数类型
-interface GetPostsParams {
+export interface GetPostsParams {
   page?: number;
   limit?: number;
   sort?: string;
@@ -42,7 +42,7 @@ const getPostsModel = () => {
    * 获取文章列表
    * @param params 请求参数：分页、排序、过滤
    */
-  const getPosts = async (params: GetPostsParams = {}): Promise<ApiResponse> => {
+  const getPosts = async (params: GetPostsParams = {}): Promise<PostApiResponse> => {
     try {
       // 处理请求参数（过滤未定义值）
       const processedParams: Record<string, any> = {
@@ -54,7 +54,7 @@ const getPostsModel = () => {
       if (params.tags?.length) processedParams.tags = params.tags.join(",");
       if (params.search) processedParams.search = params.search;
 
-      const response = await axios.get<ApiResponse>("http://0.0.0.0:3000/api/posts", {
+      const response = await axios.get<PostApiResponse>("http://0.0.0.0:3000/api/posts", {
         params: processedParams,
         paramsSerializer: { indexes: null }, // 处理数组参数为 tags=a,b,c
       });

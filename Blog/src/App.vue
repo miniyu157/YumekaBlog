@@ -45,12 +45,9 @@ onUnmounted(() => {
   window.removeEventListener("scroll", scrollHandle);
 })
 
-import { useRouter, useRoute } from "vue-router";
-
-// 过滤需要展示的导航路由（排除重定向和子路由）
-const navRoutes = useRouter().options.routes.filter(
-  (r) => r.name
-);
+const debug = () => {
+  defSettings.isDebug.value = !defSettings.isDebug.value;
+};
 </script>
 
 <template>
@@ -82,8 +79,7 @@ const navRoutes = useRouter().options.routes.filter(
 
       <!-- debug button -->
       <FlexCore gap="16px" orientation="row">
-        <button @click="defSettings.isDebug.value = !defSettings.isDebug.value" class="flat-button">Debug</button>
-        <!-- <button @click="router.push('/create-post');" class="flat-button">Create Post</button> -->
+        <button @click="debug" class="flat-button">Debug</button>
       </FlexCore>
 
       <!-- content -->
