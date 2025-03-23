@@ -5,6 +5,7 @@ import { tagsApi } from '@/http/getTags';
 import NormalCard from '@/components/base/NormalCard.vue';
 import SvgView from '@/components/base/SvgView.vue';
 import FlexCore from '@/components/base/FlexCore.vue';
+import router from '@/router';
 
 const tags = ref<string[]>([]);
 
@@ -23,6 +24,18 @@ const getTags = async () => {
   }
 };
 
+const toggleTagFilter = (tag: string) => {
+  router.push({
+    path: "/posts",
+    query: {
+      page: 1,
+      limit: 6,
+      sort: "-heat",
+      tags: [tag],
+    }
+  });
+};
+
 onMounted(() => {
   getTags();
 });
@@ -33,7 +46,7 @@ onMounted(() => {
   <NormalCard :collapsible="true" :initial-expanded="false" title="标签">
     <div class="tag-panel">
 
-      <button class="small-button" v-for="tag in tags">{{ tag }}</button>
+      <button @click="toggleTagFilter(tag);" class="small-button" v-for="tag in tags">{{ tag }}</button>
 
       <FlexCore gap="16px" v-show="tipShow">
         <FlexCore vertical-alignment="center" gap="4px" orientation="row">

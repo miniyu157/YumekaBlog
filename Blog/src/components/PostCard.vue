@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 
 import FlexCore from '@/components/base/FlexCore.vue';
 import Card from '@/components/base/BaseCard.vue';
 import SvgView from '@/components/base/SvgView.vue';
+import router from '@/router';
 
 interface Props {
   title: string;
@@ -31,6 +33,19 @@ const formatNumber = (num: number) => {
   }
   return num.toLocaleString();
 };
+
+const toggleTagFilter = (tag: string) => {
+  router.push({
+    path: "/posts",
+    query: {
+      page: 1,
+      limit: 6,
+      sort: "-heat",
+      tags: [tag],
+    }
+  });
+};
+
 </script>
 
 <template>
@@ -71,7 +86,7 @@ const formatNumber = (num: number) => {
 
         <!-- 标签 -->
         <FlexCore gap="8px" orientation="row">
-          <button v-for="(tag, index) in tags" :key="index" class="small-button">
+          <button @click="toggleTagFilter(tag);" v-for="(tag, index) in tags" :key="index" class="small-button">
             {{ tag }}
           </button>
         </FlexCore>

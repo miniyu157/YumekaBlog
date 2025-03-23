@@ -105,6 +105,23 @@ hr {
   }
 }
 
+.normal-flat-button {
+  border-radius: var(--normal-corner-radius);
+  background-color: transparent;
+  border: 1px solid var(--default-border-color);
+  padding: 4px 16px;
+  outline: none;
+  color: currentColor;
+
+  transition: all 0.4s ease;
+
+  &:active {
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(30, 30, 30, 1);
+    transition: none;
+  }
+}
+
 .unline-height {
   line-height: 0;
 }
@@ -141,11 +158,3 @@ textarea {
   color: currentColor;
   opacity: 66%;
 }
-
-/* input {
-  border-radius: var(--circle-radius);
-  border: 0px solid;
-
-  padding: 8px 16px;
-  outline: none;
-} */

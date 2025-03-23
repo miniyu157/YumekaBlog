@@ -106,10 +106,15 @@ app.get("/api/posts", async (req, res) => {
     // 排序参数（-表示倒序）
     const sortBy = req.query.sort || '-createdAt';
 
-    // 过滤参数（示例：按标签过滤）
+    // 过滤参数
     const filters = {};
+    // 按标签过滤
     if (req.query.tags) {
       filters.tags = { $in: req.query.tags.split(',') };
+    }
+    // 按标题过滤（新增部分）
+    if (req.query.search) {
+      filters.title = { $regex: req.query.search, $options: 'i' }; // 不区分大小写的模糊匹配
     }
 
     // 数据库查询

@@ -34,7 +34,7 @@ import FlexCore from "@/components/base/FlexCore.vue";
     <Card>
       <FlexCore gap="24px">
         <h1>联系我</h1>
-        <FlexCore gap="12px" orientation="horzonial">
+        <FlexCore gap="6px" orientation="horzonial">
           <a href="https://space.bilibili.com/1650726013">
             <img src="https://img.shields.io/badge/Bilibili-KlxPiao-ff6699?logo=bilibili" alt="Bilibili:KlxPiao">
           </a>
@@ -61,8 +61,7 @@ import FlexCore from "@/components/base/FlexCore.vue";
 
 <style scoped>
 .container {
-  width: 80%;
-  margin: 0 auto;
+  margin: 0;
 }
 
 h1,

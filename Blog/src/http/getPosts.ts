@@ -34,6 +34,7 @@ interface GetPostsParams {
   limit?: number;
   sort?: string;
   tags?: string[];
+  search?: string;
 }
 
 const getPostsModel = () => {
@@ -51,6 +52,7 @@ const getPostsModel = () => {
 
       if (params.sort) processedParams.sort = params.sort;
       if (params.tags?.length) processedParams.tags = params.tags.join(",");
+      if (params.search) processedParams.search = params.search;
 
       const response = await axios.get<ApiResponse>("http://0.0.0.0:3000/api/posts", {
         params: processedParams,

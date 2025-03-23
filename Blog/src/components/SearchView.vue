@@ -1,11 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import NormalCard from './base/NormalCard.vue';
+import NormalCard from '@/components/base/NormalCard.vue';
+import router from '@/router';
 
 const inputText = ref();
 
+const toggleSearchFilter = (search: string) => {
+  router.push({
+    path: "/posts",
+    query: {
+      page: 1,
+      limit: 6,
+      sort: "-heat",
+      search: [search],
+    }
+  });
+};
+
 const handleSearch = () => {
-  alert(inputText.value);
+  toggleSearchFilter(inputText.value);
 };
 
 </script>

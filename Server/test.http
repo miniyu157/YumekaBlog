@@ -3,7 +3,7 @@ GET http://localhost:3000/api/random-image HTTP/1.1
 
 ###
 
-GET http://localhost:3000/api/posts HTTP/1.1
+GET http://localhost:3000/api/posts?tags=AI,Web HTTP/1.1
 
 ###
 

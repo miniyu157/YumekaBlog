@@ -12,7 +12,7 @@ const routes = [
   },
   {
     path: "/home",
-    name: "Home",
+    name: "主页",
     component: Home,
     children: [
       // Home 默认子路由
@@ -25,17 +25,17 @@ const routes = [
   },
   {
     path: "/about",
-    name: "About",
+    name: "关于",
     component: About,
   },
   {
     path: "/create-post",
-    name: "CreatePost",
+    name: "创建文章",
     component: CreatePost,
   },
   {
     path: "/posts",
-    name: "Posts",
+    name: "文章列表",
     component: PostList,
   },
 ];

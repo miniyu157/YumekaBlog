@@ -45,10 +45,6 @@ onUnmounted(() => {
   window.removeEventListener("scroll", scrollHandle);
 })
 
-const debug = () => {
-  defSettings.isDebug.value = !defSettings.isDebug.value;
-};
-
 import { useRouter, useRoute } from "vue-router";
 
 // 过滤需要展示的导航路由（排除重定向和子路由）
@@ -86,14 +82,8 @@ const navRoutes = useRouter().options.routes.filter(
 
       <!-- debug button -->
       <FlexCore gap="16px" orientation="row">
-        <button @click="debug" class="flat-button">Debug</button>
-        <button @click="router.push('/create-post');" class="flat-button">Create Post</button>
-      </FlexCore>
-      <FlexCore orientation="row">
-        <button v-for="item in navRoutes" :key="item.path" @click="router.push(item.path)"
-          :class="{ active: useRoute().path.startsWith(item.path) }">
-          {{ item.name }}
-        </button>
+        <button @click="defSettings.isDebug.value = !defSettings.isDebug.value" class="flat-button">Debug</button>
+        <!-- <button @click="router.push('/create-post');" class="flat-button">Create Post</button> -->
       </FlexCore>
 
       <!-- content -->
@@ -105,11 +95,6 @@ const navRoutes = useRouter().options.routes.filter(
 </template>
 
 <style scoped>
-.active {
-  background-color: #3498db;
-  color: white;
-}
-
 #container {
   display: flex;
   flex-direction: column;
@@ -156,7 +141,7 @@ const navRoutes = useRouter().options.routes.filter(
 
   >.header-buttons {
     /*设置此属性auto后伪元素的hover生效，但不能穿透点击了，暂时搁置 */
-    pointer-events: auto;
+    pointer-events: none;
 
     justify-content: center;
     padding: 8px;
