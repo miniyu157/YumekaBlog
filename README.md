@@ -18,14 +18,20 @@ Vue3 打造的轻量级个人博客，持续进化中~ ✨
 
 ## 效果图 📸
 
-### 当前版本 (解决了卡片的毛玻璃效果) (V2)
-![v2](/assets/v2-preview.png)
+### 当前
+![current](/assets/preview_1.png)
+![current](/assets/preview_2.png)
+![current](/assets/preview_3.png)
+![current](/assets/preview_4.png)
+![current](/assets/preview_5.png)
 
 ---
 
 ## 以前的效果图 🕰️
 
-![v0](/assets/v0-preview.png)
+![old](/assets/old_v2.png)
+![old](/assets/old_v1.png)
+![old](/assets/old_v0.png)
 
 ---
 
