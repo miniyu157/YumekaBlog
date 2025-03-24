@@ -24,8 +24,9 @@ import FlexCore from "@/components/base/FlexCore.vue";
 
           <FlexCore gap="4px">
             <h4>🛠️ ​项目使用</h4>
-            <p>前端: Vue3 秒了</p>
-            <p>后端: 一开始用我最爱的 C# 写的 ASP.NET Core Web API, 现在已经换成了 Node.js (๑•̀ㅂ•́)و✧</p>
+            <p>前端: <a href="https://vuejs.org/">Vue3</a> 秒了</p>
+            <p>后端: 一开始用我最爱的 C# 写的 ASP.NET Core Web API, 现在已经换成了 <a href="https://nodejs.org/">Node.js</a> (๑•̀ㅂ•́)و✧</p>
+            <p>数据库: <a href="https://www.mongodb.com/">MongoDB</a></p>
           </FlexCore>
         </FlexCore>
       </FlexCore>
@@ -72,5 +73,9 @@ h5,
 h6,
 p {
   margin: 0;
+}
+
+a {
+  color: rgb(158, 249, 255);
 }
 </style>

@@ -4,7 +4,7 @@ import FlexCore from '@/components/base/FlexCore.vue';
 import SvgView from '@/components/base/SvgView.vue';
 import PostCard from '@/components/PostCard.vue';
 
-import { postApi, type GetPostsParams, type Pagination, type Post, type PostApiResponse } from "@/http/getPosts";
+import { postApi, type PostApiResponse } from "@/http/getPosts";
 import { tagsApi } from '@/http/getTags';
 
 import { computed, onMounted, ref, watchEffect } from 'vue';
@@ -18,7 +18,8 @@ import { useRoute, useRouter } from 'vue-router';
             ██████╔╝╚██████╔╝╚██████╔╝
             ╚═════╝  ╚═════╝  ╚═════╝
              分页按钮点击就会一闪一闪
-      路由切换动画时，card 的 backdrop-filter 失效
+      路由切换动画时, card 的 backdrop-filter 失效
+          PostList.vue 有很多 bug , 需要重写
 */
 
 const route = useRoute();
@@ -57,8 +58,7 @@ const fetchPosts = async () => {
   try {
     tip.value = "正在加载...";
 
-    const params = route.query; // 请求参数为当前页面参数
-    const postResponse = await postApi.getPosts(params);
+    const postResponse = await postApi.getPosts(getPostsParams());
 
     postApiResponse.value = postResponse;
 
@@ -238,6 +238,13 @@ const obj = {
                   <p>点赞</p>
                 </FlexCore>
               </button>
+              <button @click="setSortField('createdAt')" :class="{ active: getCurrentSort().field === 'createdAt' }"
+                class="filter-button normal-flat-button">
+                <FlexCore gap="4px" orientation="row">
+                  <SvgView name="time"></SvgView>
+                  <p>时间</p>
+                </FlexCore>
+              </button>
 
               <div style="margin: 4px 0; width: 1px;background-color: currentColor;"></div>
 
@@ -311,12 +318,6 @@ p {
   gap: 16px;
 }
 
-.option-container {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-}
-
 .tag-panel {
   display: flex;
   flex-wrap: wrap;
@@ -334,7 +335,6 @@ p {
     transition: none;
   }
 }
-
 
 .filter-button {
   border: 1px dashed white;
@@ -354,6 +354,13 @@ p {
 
 .tip-text {
   text-align: center;
+}
+
+
+.option-container {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
 }
 
 @media (max-width: 1200px) {

@@ -1,7 +1,7 @@
 <template>
   <a href="https://github.com/miniyu157/YumekaBlog" class="github-corner" title="Fork me on GitHub" target="_target">
     <svg fill="rgba(255,255,255,0.1)" width="80" height="80" viewBox="0 0 250 250"
-      style="color:#fff; z-index: 999; position: sticky; top: 0; border: 0; left: 0; transform: scale(-1, 1);"
+      style="color:#fff; z-index: 999; position: fixed; top: 0; border: 0; left: 0; transform: scale(-1, 1);"
       aria-hidden="true">
       <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
       <path

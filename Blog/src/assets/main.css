@@ -1,6 +1,5 @@
 body {
   color: white;
-  overflow-x: hidden; /* 防止元素出格 */
 
   backdrop-filter: brightness(0); /* 删掉此属性会出现 bug */
   background-attachment: fixed;
