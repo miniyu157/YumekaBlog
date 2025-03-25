@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useSettings } from '../cssVars/useSettings.ts';
 
-import NormalCard from "@/components/base/NormalCard.vue";
-import FlexCore from "@/components/base/FlexCore.vue";
+import NormalCard from "@/components/common/NormalCard.vue";
+import FlexCore from "@/components/common/FlexCore.vue";
 
 defineProps({
   isShow: {

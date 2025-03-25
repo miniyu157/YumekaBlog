@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import Card from "@/components/base/BaseCard.vue";
-import FlexCore from "@/components/base/FlexCore.vue";
+import Card from './BaseCard.vue';
+import FlexCore from './FlexCore.vue';
 
 const props = defineProps({
   title: {

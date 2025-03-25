@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import NormalCard from '@/components/base/NormalCard.vue';
+import NormalCard from '@/components/common/NormalCard.vue';
 import router from '@/router';
 
 const inputText = ref();

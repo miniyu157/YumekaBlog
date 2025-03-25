@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect, computed } from "vue";
 
-import Card from "@/components/base/BaseCard.vue";
-import FlexCore from "@/components/base/FlexCore.vue";
+import Card from "@/components/common/BaseCard.vue";
+import FlexCore from "@/components/common/FlexCore.vue";
 import PostsHeader from "@/components/PostsHeader.vue";
 import PostCard from "@/components/PostCard.vue";
-import SvgView from "@/components/base/SvgView.vue";
+import SvgView from "@/components/common/SvgView.vue";
 
 const message = ref("欢迎来到 Yumeka!");
 

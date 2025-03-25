@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import NormalCard from "@/components/base/NormalCard.vue";
-import FlexCore from "@/components/base/FlexCore.vue";
+import NormalCard from "@/components/common/NormalCard.vue";
+import FlexCore from "@/components/common/FlexCore.vue";
 import UserView from "@/components/UserView.vue";
 import SearchView from "@/components/SearchView.vue";
 import SettingsView from "@/components/SettingsView.vue";
 import TagBox from "@/components/TagBox.vue";
-import RouterViewPanel from "@/components/base/RouterViewPanel.vue";
+import RouterViewPanel from "@/components/common/RouterViewPanel.vue";
 
-const postCount = ref(11);
-const tagCount = ref(45);
-const visitCount = ref(14);
 </script>
 
 <template>
@@ -19,7 +16,7 @@ const visitCount = ref(14);
   <div id="mainGrid">
     <!-- 左侧区域 -->
     <FlexCore gap="16px">
-      <UserView :post-count="postCount" :tag-count="tagCount" :visit-count="visitCount" />
+      <UserView />
 
       <SearchView />
 

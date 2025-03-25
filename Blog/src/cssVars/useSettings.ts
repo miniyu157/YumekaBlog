@@ -1,4 +1,4 @@
-import { ref, watchEffect } from "vue";
+import { ref, watch, watchEffect } from "vue";
 import { utils } from "../utils/utils.ts";
 
 const useSettingsModel = () => {
@@ -10,16 +10,22 @@ const useSettingsModel = () => {
   const bgSaturate = ref(80);
   const bgBrightness = ref(70);
 
-  watchEffect(() => utils.setCssVar("--card-corner-radius", `${cardCorner.value}px`));
-  watchEffect(() => utils.setCssVar("--card-blur", `blur(${cardBlur.value}px)`));
-  watchEffect(() => utils.setCssVar("--card-saturate", `saturate(${cardSaturate.value}%)`));
-  watchEffect(() => {
+  const updateCssVars = () => {
+    utils.setCssVar("--card-corner-radius", `${cardCorner.value}px`);
+    utils.setCssVar("--card-blur", `blur(${cardBlur.value}px)`);
+    utils.setCssVar("--card-saturate", `saturate(${cardSaturate.value}%)`);
     utils.setCssVar("--card-shadow", `${cardShadow.value}`);
     utils.setCssVar("--card-hover-shadow", `${cardShadow.value + 0.1}`);
-  });
-  watchEffect(() => utils.setCssVar("--bg-blur", `blur(${bgBlur.value}px)`));
-  watchEffect(() => utils.setCssVar("--bg-saturate", `saturate(${bgSaturate.value}%)`));
-  watchEffect(() => utils.setCssVar("--bg-brightness", `brightness(${bgBrightness.value}%)`));
+    utils.setCssVar("--bg-blur", `blur(${bgBlur.value}px)`);
+    utils.setCssVar("--bg-saturate", `saturate(${bgSaturate.value}%)`);
+    utils.setCssVar("--bg-brightness", `brightness(${bgBrightness.value}%)`);
+  };
+
+  watch(
+    [cardCorner, cardBlur, cardSaturate, cardShadow, bgBlur, bgSaturate, bgBrightness],
+    updateCssVars,
+    { immediate: true }
+  );
 
   type Preset = {
     name: string;

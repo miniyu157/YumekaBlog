@@ -1,23 +1,12 @@
 <script setup lang="ts">
-import Card from "@/components/base/BaseCard.vue";
-import FlexCore from "@/components/base/FlexCore.vue";
+import Card from "@/components/common/BaseCard.vue";
+import FlexCore from "@/components/common/FlexCore.vue";
+import { ref } from "vue";
 
-import router from "@/router/index.ts";
+const postCount = ref(11);
+const tagCount = ref(45);
+const visitCount = ref(14);
 
-defineProps({
-  postCount: {
-    type: Number,
-    default: 0
-  },
-  tagCount: {
-    type: Number,
-    default: 0
-  },
-  visitCount: {
-    type: Number,
-    default: 0
-  }
-})
 </script>
 
 <template>
@@ -38,7 +27,7 @@ defineProps({
           <span>{{ visitCount }}</span>
         </div>
 
-        <button @click="router.push('/posts');" class="flat-button friend-circle-button">全部文章</button>
+        <button @click="$router.push('posts')" class="flat-button friend-circle-button">全部文章</button>
 
       </FlexCore>
     </FlexCore>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import FlexCore from '@/components/base/FlexCore.vue';
-import Card from '@/components/base/BaseCard.vue';
-import SvgView from '@/components/base/SvgView.vue';
+import FlexCore from '@/components/common/FlexCore.vue';
+import Card from '@/components/common/BaseCard.vue';
+import SvgView from '@/components/common/SvgView.vue';
 import router from '@/router';
 
 interface Props {

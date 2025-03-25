@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import FlexCore from "@/components/base/FlexCore.vue";
-import SvgView from "@/components/base/SvgView.vue";
-import router from "@/router";
+import FlexCore from "@/components/common/FlexCore.vue";
+import SvgView from "@/components/common/SvgView.vue";
 
 defineProps({
   title: {
@@ -22,7 +21,7 @@ defineProps({
       <h3 class="unline-height">{{ title }}</h3>
     </FlexCore>
 
-    <FlexCore v-on:click="router.push(routerLink);" vertical-alignment="center" class="subtitle link-block more-button"
+    <FlexCore v-on:click="$router.push(routerLink);" vertical-alignment="center" class="subtitle link-block more-button"
       orientation="row" gap="6px">
       <SvgView rotate="180deg" name="more" />
       <h3 class="unline-height">More</h3>

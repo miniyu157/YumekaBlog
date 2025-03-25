@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Card from "@/components/base/BaseCard.vue";
-import FlexCore from "@/components/base/FlexCore.vue";
+import Card from "@/components/common/BaseCard.vue";
+import FlexCore from "@/components/common/FlexCore.vue";
 </script>
 
 <template>

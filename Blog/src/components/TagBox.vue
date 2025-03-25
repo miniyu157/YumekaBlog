@@ -2,9 +2,9 @@
 import { ref, onMounted, computed } from 'vue';
 import { tagsApi } from '@/http/getTags';
 
-import NormalCard from '@/components/base/NormalCard.vue';
-import SvgView from '@/components/base/SvgView.vue';
-import FlexCore from '@/components/base/FlexCore.vue';
+import NormalCard from '@/components/common/NormalCard.vue';
+import SvgView from '@/components/common/SvgView.vue';
+import FlexCore from '@/components/common/FlexCore.vue';
 import router from '@/router';
 
 const tags = ref<string[]>([]);
