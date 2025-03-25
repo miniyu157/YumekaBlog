@@ -12,3 +12,8 @@
   font-family: "OPPO-Sans";
   src: url("/src/assets/fonts/OPPO Sans 4.0.ttf");
 }
+
+@font-face {
+  font-family: "Pacifico";
+  src: url("/src/assets/fonts/Pacifico.ttf");
+}

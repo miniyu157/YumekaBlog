@@ -1,4 +1,4 @@
-# YumekaBlog 🍃
+# Yumeka の 小窝 🍃
 
 Vue3 打造的轻量级个人博客，持续进化中~ ✨
 

@@ -4,12 +4,12 @@ import FlexCore from "@/components/common/FlexCore.vue";
 </script>
 
 <template>
-  <FlexCore class="container" gap="16px">
 
+  <FlexCore class="container" gap="16px">
     <Card>
       <FlexCore gap="24px">
         <FlexCore gap="4px">
-          <h1>关于 Yumeka</h1>
+          <h1>关于 Yumeka の 小窝</h1>
           <p>
             Vue3 打造的轻量级个人博客, 持续进化中~ ✨
           </p>
@@ -69,7 +69,7 @@ import FlexCore from "@/components/common/FlexCore.vue";
 
 <style scoped>
 .container {
-  margin: 0;
+  backdrop-filter: var(--card-blur) var(--card-saturate);
 }
 
 h1,

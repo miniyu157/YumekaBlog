@@ -6,7 +6,7 @@ import RouterViewPanel from '@/components/common/RouterViewPanel.vue';
 
 import { defSettings } from '@/cssVars/defSettings';
 
-const title = ref("Welcome to Yumeka");
+const title = ref("Yumeka の 小窝");
 
 const isNavBlur = ref(false);
 const scrollHandle = () => {

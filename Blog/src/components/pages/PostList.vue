@@ -10,12 +10,6 @@ import { tagsApi } from '@/http/getTags';
 import { computed, onMounted, ref, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-// 分页按钮点击就会一闪一闪
-// 路由切换动画时, card 的 backdrop-filter 失效
-// PostList.vue 有很多 bug , 需要重写
-// routerlink 指向不存在的页面时，点击它会跳转到空白页面，手动刷新才显示 404
-// 404 页面有很多冗余属性
-
 const route = useRoute();
 const router = useRouter();
 

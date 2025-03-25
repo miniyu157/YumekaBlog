@@ -17,6 +17,9 @@ defineProps({
   border: var(--default-card-border);
   background-color: var(--card-background);
   box-shadow: var(--default-box-shadow);
+
+  backdrop-filter: var(--card-blur) var(--card-saturate);
+
   transition: box-shadow 0.2s ease-in-out;
 }
 

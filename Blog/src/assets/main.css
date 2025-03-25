@@ -1,7 +1,7 @@
 body {
   color: white;
 
-  backdrop-filter: brightness(0); /* 删掉此属性会出现 bug */
+  backdrop-filter: blur(); /* 删掉此属性会出现 bug */
   background-attachment: fixed;
   margin: 0;
   transition: opacity 1s ease;
@@ -41,13 +41,6 @@ body::after {
 .router-link {
   color: currentColor;
   text-decoration: none;
-}
-
-.card {
-  overflow: hidden;
-
-  backdrop-filter: var(--card-blur) var(--card-saturate);
-  transition: filter 0.5s ease;
 }
 
 .subtitle {
