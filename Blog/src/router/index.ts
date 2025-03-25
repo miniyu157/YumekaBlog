@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import About from "@/components/routerView/About.vue";
 import Home from "@/components/routerView/home/Home.vue";
-import PostList from "@/components/routerView/home/PostList.vue";
+import PostList from "@/components/routerView/PostList.vue";
 import PostsPreview from "@/components/routerView/home/PostsPreview.vue";
 import CreatePost from "@/components/routerView/CreatePost.vue";
+import NotFound from "@/components/routerView/NotFound.vue";
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: "/posts",
     name: "文章列表",
     component: PostList,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: NotFound,
   },
 ];
 

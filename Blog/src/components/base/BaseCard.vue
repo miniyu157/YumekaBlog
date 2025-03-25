@@ -15,7 +15,7 @@ defineProps({
   padding: 1rem;
   border-radius: var(--card-corner-radius);
   border: var(--default-card-border);
-  background-color: var(--default-background);
+  background-color: var(--card-background);
   box-shadow: var(--default-box-shadow);
   transition: box-shadow 0.2s ease-in-out;
 }

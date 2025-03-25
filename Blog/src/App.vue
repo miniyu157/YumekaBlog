@@ -17,7 +17,7 @@ const loadBgAsync = async () => {
 
   if (body) {
     try {
-      const url = await imageAPI.getRandomImageUrl(0);
+      const url = await imageAPI.getRandomImageUrl(1);
       await defSettings.setBgUrlAsync(url);
       await utils.delay(500);
 

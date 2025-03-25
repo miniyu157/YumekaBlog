@@ -43,19 +43,16 @@ app.use(
 
 app.use(express.json());
 
-app.use(
-  "/images",
-  express.static(path.join(__dirname, "public", "backgrounds"))
-);
+app.use("/images", express.static(path.join(__dirname, "public", "postimages")));
 
-app.use(
-  "/images",
-  express.static(path.join(__dirname, "public", "postimages"))
-);
+app.use("/images", express.static(path.join(__dirname, "public", "backgrounds_pixiv")));
+
+app.use("/images", express.static(path.join(__dirname, "public", "backgrounds_bigknight53")));
 
 app.get("/api/random-image", (req, res) => {
   try {
-    const imageDir = path.join(__dirname, "public", "backgrounds");
+    const source = req.query.source || "pixiv";
+    const imageDir = path.join(__dirname, "public", `backgrounds_${source}`);
     const files = fs.readdirSync(imageDir);
 
     if (files.length === 0) {
@@ -104,17 +101,17 @@ app.get("/api/posts", async (req, res) => {
     limit = Math.min(limit, 100); // 防止过大请求
 
     // 排序参数（-表示倒序）
-    const sortBy = req.query.sort || '-createdAt';
+    const sortBy = req.query.sort || "-createdAt";
 
     // 过滤参数
     const filters = {};
     // 按标签过滤
     if (req.query.tags) {
-      filters.tags = { $in: req.query.tags.split(',') };
+      filters.tags = { $in: req.query.tags.split(",") };
     }
-    // 按标题过滤（新增部分）
+    // 按标题过滤
     if (req.query.search) {
-      filters.title = { $regex: req.query.search, $options: 'i' }; // 不区分大小写的模糊匹配
+      filters.title = { $regex: req.query.search, $options: "i" }; // 不区分大小写的模糊匹配
     }
 
     // 数据库查询
@@ -123,7 +120,7 @@ app.get("/api/posts", async (req, res) => {
         .skip((page - 1) * limit)
         .limit(limit)
         .sort(sortBy),
-      PostModel.countDocuments(filters)
+      PostModel.countDocuments(filters),
     ]);
 
     res.status(200).json({
@@ -132,34 +129,34 @@ app.get("/api/posts", async (req, res) => {
         page,
         limit,
         total,
-        totalPages: Math.ceil(total / limit)
-      }
+        totalPages: Math.ceil(total / limit),
+      },
     });
   } catch (error) {
     res.status(500).json({
-      error: error.message || "Failed to fetch posts"
+      error: error.message || "Failed to fetch posts",
     });
   }
 });
 
 app.get("/api/tags", async (req, res) => {
   try {
-    // 使用Mongoose的distinct方法获取所有唯一标签
+    // 使用 Mongoose 的 distinct 方法获取所有唯一标签
     const tags = await PostModel.distinct("tags");
 
     // 过滤掉可能存在的空值（如果有的话）
-    const filteredTags = tags.filter(tag => tag && tag.trim() !== '');
+    const filteredTags = tags.filter((tag) => tag && tag.trim() !== "");
 
     res.status(200).json({
       success: true,
       count: filteredTags.length,
-      tags: filteredTags
+      tags: filteredTags,
     });
   } catch (error) {
     console.error("Error fetching tags:", error);
     res.status(500).json({
       success: false,
-      error: "Failed to fetch tags"
+      error: "Failed to fetch tags",
     });
   }
 });

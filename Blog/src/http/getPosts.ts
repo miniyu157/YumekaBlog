@@ -54,7 +54,7 @@ const getPostsModel = () => {
       if (params.tags?.length) processedParams.tags = params.tags.join(",");
       if (params.search) processedParams.search = params.search;
 
-      const response = await axios.get<PostApiResponse>("http://0.0.0.0:3000/api/posts", {
+      const response = await axios.get<PostApiResponse>("http://localhost:3000/api/posts", {
         params: processedParams,
         paramsSerializer: { indexes: null }, // 处理数组参数为 tags=a,b,c
       });

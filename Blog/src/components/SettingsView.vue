@@ -85,7 +85,7 @@ p {
 
 .presets-select {
   border-radius: var(--small-corner-radius);
-  background-color: var(--default-background);
+  background-color: var(--card-background);
   color: currentColor;
 }
 

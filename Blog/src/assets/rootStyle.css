@@ -20,7 +20,7 @@
   --card-blur: ;
   --card-saturate: ;
   --card-shadow: ;
-  --card-hover-shadow: ;
+  --card-hover-shadow: ; /* 此变量由 --card-hover-shadow 计算而来 */
   --bg-blur: ;
   --bg-brightness: ;
 
@@ -34,7 +34,7 @@
   --small-corner-radius: 4px;
   --normal-corner-radius: 8px;
 
-  --default-background: rgba(255, 255, 255, 0.1);
+  --card-background: rgba(255, 255, 255, 0.1);
   --button-background: rgba(255, 255, 255, 0.15);
   --hover-background: rgba(255, 255, 255, 0.3);
   --default-selection-background: rgba(255, 255, 255, 0.3);

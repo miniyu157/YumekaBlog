@@ -1,5 +1,9 @@
 
 GET http://localhost:3000/api/random-image HTTP/1.1
+###
+GET http://localhost:3000/api/random-image?source=pixiv HTTP/1.1
+###
+GET http://localhost:3000/api/random-image?source=bigknight53 HTTP/1.1
 
 ###
 

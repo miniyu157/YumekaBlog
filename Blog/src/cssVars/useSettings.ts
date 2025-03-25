@@ -44,6 +44,16 @@ const useSettingsModel = () => {
       bgBrightness: 70,
     },
     {
+      name: "Matte Foundation Flat",
+      cardCorner: 8,
+      cardBlur: 16,
+      cardSaturate: 150,
+      cardShadow: 0,
+      bgBlur: 0,
+      bgSaturate: 80,
+      bgBrightness: 70,
+    },
+    {
       name: "Frosted Glass",
       cardCorner: 16,
       cardBlur: 24,

@@ -10,18 +10,13 @@ const randomImageModel = () => {
   const randomImageApis: RandomImageApi[] = [
     {
       name: "localhost",
-      api: "http://0.0.0.0:3000/api/random-image",
+      api: "http://localhost:3000/api/random-image?source=pixiv",
       key: "imageUrl",
     },
     {
-      name: "localhost-2",
-      api: "http://192.168.125.21:3000/api/random-image",
+      name: "localhost",
+      api: "http://localhost:3000/api/random-image?source=bigknight53",
       key: "imageUrl",
-    },
-    {
-      name: "api.vvhan.com",
-      api: "https://api.vvhan.com/api/wallpaper/views?type=json",
-      key: "url",
     },
   ];
 
