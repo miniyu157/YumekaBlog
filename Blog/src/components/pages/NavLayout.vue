@@ -31,10 +31,10 @@ const debug = () => {
   <nav id="main-nav">
     <FlexCore gap="12px" class="header-buttons" :class="{ 'nav-blur': isNavBlur }" orientation="row">
       <h3 class="underline-from-center">
-        <RouterLink class="router-link" to="/">首页</RouterLink>
+        <RouterLink class="router-link" to="/home">首页</RouterLink>
       </h3>
       <h3 class="underline-from-center">
-        <RouterLink class="router-link" to="/files">文件</RouterLink>
+        <RouterLink class="router-link" to="/blog">博客</RouterLink>
       </h3>
       <h3 class="underline-from-center">
         <RouterLink class="router-link" to="/friend">友站</RouterLink>

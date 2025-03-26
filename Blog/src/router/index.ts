@@ -1,24 +1,25 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
 import About from "@/components/pages/About.vue";
-import Home from "@/components/pages/Home.vue";
+import TwoColumnLayout from "@/components/pages/TwoColumnLayout.vue";
 import PostList from "@/components/pages/PostList.vue";
 import PostsPreview from "@/components/pages/PostsPreview.vue";
 import CreatePost from "@/components/pages/CreatePost.vue";
 import NotFound from "@/components/pages/NotFound.vue";
-import Main from "@/components/pages/Main.vue";
+import NavLayout from "@/components/pages/NavLayout.vue";
+import Home from "@/components/pages/Home.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    component: Main,
+    component: NavLayout,
     children: [
       {
         path: "",
-        redirect: "/home",
+        redirect: "/blog",
       },
       {
-        path: "home",
-        component: Home,
+        path: "blog",
+        component: TwoColumnLayout,
         children: [
           {
             path: "",
@@ -39,6 +40,10 @@ const routes: Array<RouteRecordRaw> = [
         component: CreatePost,
       },
     ],
+  },
+  {
+    path: "/home",
+    component:Home,
   },
   {
     path: "/:pathMatch(.*)*",

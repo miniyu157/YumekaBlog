@@ -174,7 +174,7 @@ const obj = {
 </script>
 
 <template>
-  <FlexCore class="root" gap="16px">
+  <FlexCore class="container" gap="16px">
     <div class="content-grid">
       <Card class="grid-item-1">
         <FlexCore gap="12px">
