@@ -72,4 +72,4 @@ const getPostsModel = () => {
 };
 
 // 导出 API 实例
-export const postApi = getPostsModel();
+export const postsApi = getPostsModel();

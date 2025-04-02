@@ -25,42 +25,44 @@ const debug = () => {
 </script>
 
 <template>
-  <!-- header -->
-  <h1 class="unline-height title">{{ title }}</h1>
+  <div>
+    <!-- header -->
+    <h1 class="unline-height title">{{ title }}</h1>
 
-  <nav id="main-nav">
-    <FlexCore gap="12px" class="header-buttons" :class="{ 'nav-blur': isNavBlur }" orientation="row">
-      <h3 class="underline-from-center">
-        <RouterLink class="router-link" to="/home">首页</RouterLink>
-      </h3>
-      <h3 class="underline-from-center">
-        <RouterLink class="router-link" to="/blog">博客</RouterLink>
-      </h3>
-      <h3 class="underline-from-center">
-        <RouterLink class="router-link" to="/friend">友站</RouterLink>
-      </h3>
-      <h3 class="underline-from-center">
-        <RouterLink class="router-link" to="/about">关于</RouterLink>
-      </h3>
-    </FlexCore>
-  </nav>
+    <nav id="main-nav">
+      <FlexCore gap="12px" class="header-buttons" :class="{ 'nav-blur': isNavBlur }" orientation="row">
+        <h3 class="underline-from-center">
+          <RouterLink class="router-link" to="/home">首页</RouterLink>
+        </h3>
+        <h3 class="underline-from-center">
+          <RouterLink class="router-link" to="/blog">博客</RouterLink>
+        </h3>
+        <h3 class="underline-from-center">
+          <RouterLink class="router-link" to="/friend">友站</RouterLink>
+        </h3>
+        <h3 class="underline-from-center">
+          <RouterLink class="router-link" to="/about">关于</RouterLink>
+        </h3>
+      </FlexCore>
+    </nav>
 
-  <FlexCore class="content" gap="16px">
-    <!-- debug button -->
-    <!-- <FlexCore gap="16px" orientation="row">
+    <FlexCore class="content" gap="16px">
+      <!-- debug button -->
+      <FlexCore gap="16px" orientation="row">
         <button @click="debug" class="flat-button">Debug</button>
-      </FlexCore> -->
+      </FlexCore>
 
-    <!-- content -->
-    <RouterViewPanel />
+      <!-- content -->
+      <RouterViewPanel />
 
-  </FlexCore>
+    </FlexCore>
+  </div>
+
 </template>
 
 <style scoped lang="scss">
 $header-height: 55vh;
 $header-gap: 36px;
-
 
 .content {
   max-width: 1200px;

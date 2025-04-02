@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
 import NormalCard from "@/components/common/NormalCard.vue";
 import FlexCore from "@/components/common/FlexCore.vue";
 import UserView from "@/components/UserView.vue";
@@ -8,7 +6,6 @@ import SearchView from "@/components/SearchView.vue";
 import SettingsView from "@/components/SettingsView.vue";
 import TagBox from "@/components/TagBox.vue";
 import RouterViewPanel from "@/components/common/RouterViewPanel.vue";
-
 </script>
 
 <template>
@@ -25,11 +22,11 @@ import RouterViewPanel from "@/components/common/RouterViewPanel.vue";
       <TagBox />
 
       <NormalCard title="This a card">
-        <p class="subtitle">Zelto mqru fiep gaxo ujik. Vrinb qsot xelp? Fkraw zsmo ytix.</p>
+        <p>Id commodo proident incididunt ut do fugiat id in nulla sint veniam in quis.</p>
       </NormalCard>
 
       <NormalCard title="This a card">
-        <p class="subtitle">这是一个卡片吗？哦！原来这是一个卡片。<br><br>V me 50 treat me to a KFC豪华套餐</p>
+        <p>Velit exercitation ipsum occaecat anim quis pariatur adipisicing proident aute sit voluptate laborum aliquip.</p>
       </NormalCard>
     </FlexCore>
 

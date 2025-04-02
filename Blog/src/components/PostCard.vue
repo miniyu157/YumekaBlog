@@ -7,6 +7,7 @@ import SvgView from '@/components/common/SvgView.vue';
 import router from '@/router';
 
 interface Props {
+  _id: string;
   title: string;
   imageUrl: string;
   content: string;
@@ -16,7 +17,8 @@ interface Props {
   likes: number;
   tags: string[];
 
-  createdAt: string;
+  createdAt: string; // 根据需求可选保留
+  updatedAt: string; // 根据需求可选保留
 
   displayMode?: "big" | "small";
   reverse?: boolean;
@@ -36,7 +38,7 @@ const formatNumber = (num: number) => {
 
 const toggleTagFilter = (tag: string) => {
   router.push({
-    path: "/posts",
+    path: "/postlist",
     query: {
       page: 1,
       limit: 6,
@@ -49,7 +51,8 @@ const toggleTagFilter = (tag: string) => {
 </script>
 
 <template>
-  <Card class="root" :class="[props.displayMode === 'big' ? 'big-mode' : 'small-mode']">
+  <Card @click="router.push(`/blog/postview?id=${props._id}`);" class="root"
+    :class="[props.displayMode === 'big' ? 'big-mode' : 'small-mode']">
     <div class="post-grid">
 
       <div class="item-0" :class="{ 'reverse': props.reverse }">

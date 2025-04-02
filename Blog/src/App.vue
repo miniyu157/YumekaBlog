@@ -33,15 +33,14 @@ import RouterViewPanel from '@/components/common/RouterViewPanel.vue';
  *
  *      以下是当前的 bug
  * 路由切换动画时, 组件根元素如果没有应用 backdrop-fliter, 那么所有子 Card 的 backdrop-fliter 在路由切换动画进行时, 效果失效
- * 启动时路由切换动画失效 (启动动画)
- * RouterLink 指向不存在的页面时，点击它会跳转到空白的页面，手动刷新才显示 404
- * 404 组件有很多冗余属性, 因为它是 AI 生成的
- * PostList.vue 中, 分页按钮点击就会一闪一闪
+ * 每个路由第一次加载的时候是没有动画的 (如果为 NavLayout.vue 添加了根元素，现在所有切换都有动画了，包括导航栏)
+ * 路由切换时, 在 url 不同的情况下, 就不使用同一个缓存, 即使他们都包含相同的子组件 (SettingsView.vue)
+ * 路由切换后, 导航栏效果失效, 滚动页面后恢复
  * PostList.vue 中, 切换标签时 url 显示类似 tags=Tag1&tags=Tag2, 我需要的是 tags=Tag1,Tag2
  * PostList.vue 中, 每次切换标签时 tagTipShow 都会闪烁
  * PostList.vue 中, 每次刷新数据时 tipShow 都会闪烁
- *
- * 单独写一个主页，博客在 /blog, 至于已有的 main.vue 和 home.vue, 换个名字吧
+ * PostCard.vue 中, 单击标签按钮也会跳转至文章详情
+ * RouterViewPanel.vue 中, 如果使用 <keep-alive>, 那么路由将不会在有退出动画
 */
 
 const loadBgAsync = async () => {
@@ -78,16 +77,16 @@ onUnmounted(() => {
 
 <template>
 
-  <GithubLink />
+  <div class="container">
+    <GithubLink />
 
-  <div id="container">
     <RouterViewPanel />
   </div>
 
 </template>
 
-<style scoped lang="scss">
-#container {
+<style scoped>
+.container {
   display: flex;
   flex-direction: column;
 }

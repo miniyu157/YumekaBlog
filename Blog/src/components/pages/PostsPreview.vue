@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watchEffect, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 import Card from "@/components/common/BaseCard.vue";
 import FlexCore from "@/components/common/FlexCore.vue";
@@ -9,7 +9,7 @@ import SvgView from "@/components/common/SvgView.vue";
 
 const message = ref("欢迎来到 Yumeka!");
 
-import { postApi, type Post } from "@/http/getPosts";
+import { postsApi, type Post } from "@/http/getPosts";
 
 const posts = ref<Post[]>([]);
 const tip = ref("正在加载...");
@@ -17,7 +17,7 @@ const tipShow = computed(() => tip.value !== "");
 
 const fetchPosts = async () => {
   try {
-    const { data } = await postApi.getPosts({
+    const { data } = await postsApi.getPosts({
       limit: 6,
       sort: '-createdAt' // 按最新排序
     });
@@ -45,7 +45,7 @@ onMounted(() => {
       </FlexCore>
     </Card>
 
-    <PostsHeader title="Yumeka" router-link="/posts"/>
+    <PostsHeader title="Yumeka" router-link="/postlist"/>
     <hr />
     <h3 v-show="tipShow" class="subtitle">{{ tip }}</h3>
     <div class="post-container">

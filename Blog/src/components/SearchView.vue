@@ -7,7 +7,7 @@ const inputText = ref();
 
 const toggleSearchFilter = (search: string) => {
   router.push({
-    path: "/posts",
+    path: "/postlist",
     query: {
       page: 1,
       limit: 6,

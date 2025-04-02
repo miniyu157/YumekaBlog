@@ -27,7 +27,7 @@ const visitCount = ref(14);
           <span>{{ visitCount }}</span>
         </div>
 
-        <button @click="$router.push('posts')" class="flat-button friend-circle-button">全部文章</button>
+        <button @click="$router.push('/postlist')" class="flat-button friend-circle-button">全部文章</button>
 
       </FlexCore>
     </FlexCore>

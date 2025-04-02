@@ -7,6 +7,7 @@ import CreatePost from "@/components/pages/CreatePost.vue";
 import NotFound from "@/components/pages/NotFound.vue";
 import NavLayout from "@/components/pages/NavLayout.vue";
 import Home from "@/components/pages/Home.vue";
+import PostView from "@/components/pages/PostView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,6 +26,10 @@ const routes: Array<RouteRecordRaw> = [
             path: "",
             component: PostsPreview,
           },
+          {
+            path: "postview",
+            component: PostView,
+          },
         ],
       },
       {
@@ -32,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
         component: About,
       },
       {
-        path: "posts",
+        path: "postlist",
         component: PostList,
       },
       {
@@ -43,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/home",
-    component:Home,
+    component: Home,
   },
   {
     path: "/:pathMatch(.*)*",

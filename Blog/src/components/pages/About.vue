@@ -31,9 +31,11 @@ import FlexCore from "@/components/common/FlexCore.vue";
 
           <FlexCore gap="4px">
             <h4>🔗 链接</h4>
-            <a href="https://vuejs.org/">Vue.js</a>
-            <a href="https://nodejs.org/">Node.js</a>
-            <a href="https://www.mongodb.com/">MongoDB</a>
+            <FlexCore orientation="row" gap="8px">
+              <a href="https://vuejs.org/">Vue.js</a>
+              <a href="https://nodejs.org/">Node.js</a>
+              <a href="https://www.mongodb.com/">MongoDB</a>
+            </FlexCore>
           </FlexCore>
         </FlexCore>
       </FlexCore>
@@ -68,10 +70,6 @@ import FlexCore from "@/components/common/FlexCore.vue";
 </template>
 
 <style scoped>
-.container {
-  backdrop-filter: var(--card-blur) var(--card-saturate);
-}
-
 h1,
 h2,
 h3,

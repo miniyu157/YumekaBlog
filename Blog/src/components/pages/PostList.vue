@@ -4,7 +4,7 @@ import FlexCore from '@/components/common/FlexCore.vue';
 import SvgView from '@/components/common/SvgView.vue';
 import PostCard from '@/components/PostCard.vue';
 
-import { postApi, type PostApiResponse } from "@/http/getPosts";
+import { postsApi, type PostApiResponse } from "@/http/getPosts";
 import { tagsApi } from '@/http/getTags';
 
 import { computed, onMounted, ref, watchEffect } from 'vue';
@@ -46,7 +46,7 @@ const fetchPosts = async () => {
   try {
     tip.value = "正在加载...";
 
-    const postResponse = await postApi.getPosts(getPostsParams());
+    const postResponse = await postsApi.getPosts(getPostsParams());
 
     postApiResponse.value = postResponse;
 
@@ -350,7 +350,7 @@ p {
   gap: 12px;
 }
 
-@media (max-width: 1200px) {
+/* @media (max-width: 1200px) {
   .content-grid {
     display: grid;
     grid-template-columns: 7fr 3fr;
@@ -374,5 +374,5 @@ p {
   .grid-item-2 {
     order: 1;
   }
-}
+} */
 </style>

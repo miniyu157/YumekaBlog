@@ -26,7 +26,7 @@ const getTags = async () => {
 
 const toggleTagFilter = (tag: string) => {
   router.push({
-    path: "/posts",
+    path: "/postlist",
     query: {
       page: 1,
       limit: 6,

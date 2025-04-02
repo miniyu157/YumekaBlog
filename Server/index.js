@@ -69,7 +69,7 @@ app.get("/api/random-image", (req, res) => {
   }
 });
 
-app.post("/api/posts", async (req, res) => {
+app.post("/api/create", async (req, res) => {
   try {
     const { title, imageUrl, content, heat, comments, likes, tags } = req.body;
 
@@ -135,6 +135,35 @@ app.get("/api/posts", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       error: error.message || "Failed to fetch posts",
+    });
+  }
+});
+
+app.get("/api/posts/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 验证ID格式有效性
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    // 数据库查询（包含错误自动捕获）
+    const post = await PostModel.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    // 保持与列表接口一致的响应格式
+    res.status(200).json({
+      data: post
+    });
+
+  } catch (error) {
+    // 处理意外错误
+    res.status(500).json({
+      error: error.message || "Failed to fetch post",
     });
   }
 });
