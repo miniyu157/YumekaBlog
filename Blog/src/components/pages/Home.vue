@@ -65,25 +65,25 @@ const setActiveText = (newText: string) => {
             <SvgView name="blog" />
             <p>博客</p>
           </div>
-          <div @click="$router.push('/blog');" class="link card">
-            <SvgView name="blog" />
-            <p>博客</p>
+          <div @click="$router.push('/lab');" class="link card">
+            <SvgView name="lab" />
+            <p>开发中...</p>
           </div>
-          <div @click="$router.push('/blog');" class="link card">
-            <SvgView name="blog" />
-            <p>博客</p>
+          <div @click="$router.push('/lab');" class="link card">
+            <SvgView name="lab" />
+            <p>开发中...</p>
           </div>
-          <div @click="$router.push('/blog');" class="link card">
-            <SvgView name="blog" />
-            <p>博客</p>
+          <div @click="$router.push('/lab');" class="link card">
+            <SvgView name="lab" />
+            <p>开发中...</p>
           </div>
-          <div @click="$router.push('/blog');" class="link card">
-            <SvgView name="blog" />
-            <p>博客</p>
+          <div @click="$router.push('/lab');" class="link card">
+            <SvgView name="lab" />
+            <p>开发中...</p>
           </div>
-          <div @click="$router.push('/blog');" class="link card">
-            <SvgView name="blog" />
-            <p>博客</p>
+          <div @click="$router.push('/lab');" class="link card">
+            <SvgView name="lab" />
+            <p>开发中...</p>
           </div>
         </div>
       </FlexCore>

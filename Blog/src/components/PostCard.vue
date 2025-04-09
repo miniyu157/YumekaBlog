@@ -121,6 +121,19 @@ const toggleTagFilter = (tag: string) => {
   -webkit-box-orient: vertical;
 }
 
+
+.post-title {
+    margin: 0;
+
+    line-height: 1.5em;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+
 .root {
   aspect-ratio: 1/0.9;
   padding: 0;
@@ -178,10 +191,6 @@ const toggleTagFilter = (tag: string) => {
 
 .item-1 {
   margin: 8px;
-
-  .post-title {
-    margin: 0;
-  }
 
   .data {
     font-size: 10pt;

@@ -19,7 +19,7 @@ import FlexCore from '../common/FlexCore.vue';
       <p class="path-tip">你想去「{{ $route.path }}」星球吗？</p>
       <p class="hint">这里只有软fufu的兔兔和棉花云哦～</p>
 
-      <RouterLink class="go-home" to="/">
+      <RouterLink class="go-home" to="/home">
         <span class="btn-inner">带兔兔回家🎀</span>
       </RouterLink>
     </div>

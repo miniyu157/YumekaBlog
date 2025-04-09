@@ -52,7 +52,7 @@ onMounted(() => {
       <PostCard v-for="post in posts" v-bind="post"/>
     </div>
 
-    <PostsHeader title="Other" />
+    <PostsHeader title="Other" router-link="/otherpostlist"/>
     <hr />
     <h3 class="subtitle">列表 'Other' 暂未开放</h3>
 

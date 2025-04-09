@@ -3,8 +3,8 @@ POST http://localhost:3000/api/create
 Content-Type: application/json
 
 {
-  "title": {{$randomInt 0 999999999}},
-  "imageUrl": "http://localhost:3000/images/www.dmoe.cc_6dzxk11mxx_thumbnail.jpg",
+  "title": "title",
+  "imageUrl": "https://picsum.photos/400/300",
   "content": "文章正文文章正文文章正文",
 
   "heat": "0",
@@ -13,6 +13,7 @@ Content-Type: application/json
   "tags": []
 }
 
+###
 GET http://localhost:3000/api/random-image HTTP/1.1
 ###
 GET http://localhost:3000/api/random-image?source=pixiv HTTP/1.1
