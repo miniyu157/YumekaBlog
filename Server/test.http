@@ -26,7 +26,7 @@ GET http://localhost:3000/api/posts?tags=AI,Web HTTP/1.1
 
 ###
 
-GET http://localhost:3000/api/post?id=67deab3b37687ff831517fa6 HTTP/1.1
+GET http://localhost:3000/api/posts/67f4943b4b1cc548ca614b1e HTTP/1.1
 
 ###
 

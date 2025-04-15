@@ -43,8 +43,6 @@ app.use(
 
 app.use(express.json());
 
-app.use("/images", express.static(path.join(__dirname, "public", "postimages")));
-
 app.use("/images", express.static(path.join(__dirname, "public", "backgrounds_pixiv")));
 
 app.use("/images", express.static(path.join(__dirname, "public", "backgrounds_bigknight53")));
@@ -141,32 +139,36 @@ app.get("/api/posts", async (req, res) => {
 
 app.get("/api/posts/:id", async (req, res) => {
   try {
-    const { id } = req.params;
+      // 从 URL 参数中获取帖子 ID
+      const postId = req.params.id;
 
-    // 验证ID格式有效性
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({ error: "Post not found" });
-    }
+      // 使用 Mongoose 的 findById 方法查找帖子
+      // .select('-__v') 是可选的，用于从结果中排除 Mongoose 的版本键
+      const post = await PostModel.findById(postId).select('-__v');
 
-    // 数据库查询（包含错误自动捕获）
-    const post = await PostModel.findById(id);
+      // 如果找不到帖子，返回 404 Not Found
+      if (!post) {
+          return res.status(404).json({ message: "Post not found" });
+      }
 
-    if (!post) {
-      return res.status(404).json({ error: "Post not found" });
-    }
-
-    // 保持与列表接口一致的响应格式
-    res.status(200).json({
-      data: post
-    });
+      // 如果找到帖子，返回 200 OK 和帖子数据
+      res.status(200).json(post);
 
   } catch (error) {
-    // 处理意外错误
-    res.status(500).json({
-      error: error.message || "Failed to fetch post",
-    });
+      console.error("Error fetching post by ID:", error);
+
+      // 如果 ID 格式无效 (例如，不是有效的 ObjectId)，Mongoose 会抛出 CastError
+      if (error.name === 'CastError') {
+          return res.status(400).json({ message: "Invalid post ID format" });
+      }
+
+      // 其他服务器错误，返回 500 Internal Server Error
+      res.status(500).json({
+          error: error.message || "Failed to fetch post",
+      });
   }
 });
+
 
 app.get("/api/tags", async (req, res) => {
   try {
