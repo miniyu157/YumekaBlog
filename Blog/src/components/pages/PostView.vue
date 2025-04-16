@@ -116,7 +116,8 @@ function formatDate(isoString: string) {
           @error="($event.target as HTMLImageElement).src = 'https://placehold.co/600x400/eee/ccc?text=Image+Not+Found'" />
 
         <div class="post-meta">
-          <h1 class="meta-title">{{ post.title }}</h1>
+          <!-- <h1 class="meta-title">{{ post.title }}</h1> -->
+          <h1 class="meta-title">川父法。委答离察乱内</h1>
 
           <FlexCore orientation="row" gap="16px" class="meta-detail">
             <span>发布于: {{ formatDate(post.createdAt) }}</span>
@@ -131,8 +132,20 @@ function formatDate(isoString: string) {
       </div>
 
       <FlexCore gap="8px" class="post-content-container">
-        <div class="post-body" v-html="post.content"></div>
+        <!-- <div class="post-body" v-html="post.content"></div> -->
 
+        <h2>如材门段岩了。煤死调，渐短衣反，坐批斯史春。</h2>
+        <p>
+          如材门段岩了。煤死调，渐短衣反，坐批斯史春。迫断怀满叶鱼！跟得触成，细些色今装，预背坏流甲球。乡夫听日宜，政命话，压务作部。村消过体太许。整兰人表杆千。胞之缩免。织确买，草饭济随效！很顺督其静换，顶热代何样。鲁换吗田，九马入。林负怀策。川父法。委答离察乱内。备降医，谈适奏。地频帮威今？无做共当混，众织标听易。北抓入刚联。既奏杀服。段充於示，之印巴，罗增政器宪攻。另世李利掌。四棉继前，致倒仅，给怎席。深罪稳花燃其。否促度，促格凯语神，料稳村复棉？宗虽均夜职。标青讨大。
+        </p>
+        <h2>怎喜硫酸以误。具月似略！</h2>
+        <p>
+          成夫值足产措。二华手说，村你移编染。怎喜硫酸以误。具月似略！术黄既引？李阻块烈未！续得减。钟回水测。总顾措景，它宁概织。输皮得绝抓够。欢产去！况伯果。理绿太。再命院护失洲？庆近急完号，文带阻村，座端统洲。降员比就否球。开历往径那化？协哥益，零布金。入层族另超，日点阳交变管，留认江调事打。差位斯细。材升保变。示套油。再述结。范怎游也。敌笔坚士！让散搞晚。已烧流取钢，元植玉。烈板参振大马。担资跑黑普，各例内音谁维。纸突呢。哪拿负红除，城季争绍容训。作研为穿苦於，激社菜克。普照单却亚，己态级范。洲露脸答迫者。生里足激。
+        </p>
+        <h2>读评称，发之千损用形。</h2>
+        <p>
+          独顶真供肉。永增城了跳。除校久东鸡停。希厂身己，战保乡掌，本站四夫民皇。输静皮集。织那乐缩斗。进扬特困误新。展但试。球损表想，元病反措席，单等知！杂既住。为命管。固优出好。改念呼吗从。分给孙端，且例学，兴多长宣凯科。井困沉即足车，宪身早。处至微久严测。多四眼迫举千。北请玉复章，益衣集里扩倒，清钢烟液。决向院穿。整富盐础。读评称，发之千损用形。朝措晶七近前，尽洋卫车，爱皇庆鲜答。解响满高盟烧，船权聚井题，差晚拉。靠爱液末聚改。层久人督。混翻少夫。抓析黑成。在贵械程翻。
+        </p>
         <div v-if="post.tags && post.tags.length > 0" class="post-tags">
           <strong>标签:</strong>
           <span @click="toggleTagFilter(tag);" v-for="tag in post.tags" :key="tag" class="small-button">{{ tag }}</span>
@@ -149,6 +162,22 @@ function formatDate(isoString: string) {
 .root {
   padding: 0;
   overflow: hidden;
+
+  align-self: start;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 2em;
+  margin: 0;
+}
+
+p {
+  font-size: 1.1em;
 }
 
 .post-content-container {
@@ -157,7 +186,9 @@ function formatDate(isoString: string) {
 
 .post-tags {
   display: flex;
-  gap: 8px;
+  gap: 12px;
+
+  margin-bottom: 16px;
 }
 
 .post-image-container {
@@ -168,6 +199,21 @@ function formatDate(isoString: string) {
       opacity: 1;
     }
   }
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%; // 控制渐变高度
+    background: linear-gradient(to top,
+        rgba(0, 0, 0, 0.8) 20%, // 底部不透明度
+        rgba(0, 0, 0, 0.4) 60%,
+        transparent 100% // 顶部完全透明
+      );
+    pointer-events: none; // 防止遮挡交互
+  }
 }
 
 .meta-detail {
@@ -177,7 +223,7 @@ function formatDate(isoString: string) {
 
 .post-image {
   width: 100%;
-  aspect-ratio: 1/0.4;
+  aspect-ratio: 1/0.35;
   object-fit: cover;
   display: block; // 消除图片底部间隙
 }

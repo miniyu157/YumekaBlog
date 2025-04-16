@@ -43,7 +43,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NormalCard :collapsible="true" :initial-expanded="false" title="标签">
+  <NormalCard :collapsible="true" :initial-expanded="true" title="标签">
     <div class="tag-panel">
 
       <button @click="toggleTagFilter(tag);" class="small-button" v-for="tag in tags">{{ tag }}</button>
