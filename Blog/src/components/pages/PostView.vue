@@ -152,7 +152,6 @@ function formatDate(isoString: string) {
         </div>
       </FlexCore>
 
-
     </article>
 
   </BaseCard>
@@ -232,8 +231,6 @@ p {
   font-size: 48pt;
   margin: 0;
 }
-
-
 
 .post-meta {
   position: absolute;

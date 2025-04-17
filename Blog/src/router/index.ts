@@ -8,6 +8,7 @@ import NotFound from "@/components/pages/NotFound.vue";
 import NavLayout from "@/components/pages/NavLayout.vue";
 import Home from "@/components/pages/Home.vue";
 import PostView from "@/components/pages/PostView.vue";
+import Friend from "@/components/pages/Friend.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -29,6 +30,10 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: "postview",
             component: PostView,
+          },
+          {
+            path: "/friend",
+            component: Friend,
           },
         ],
       },
