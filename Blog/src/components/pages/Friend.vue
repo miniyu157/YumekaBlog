@@ -1,42 +1,41 @@
+怎么添加链接卡片的加载动画
 <script setup lang="ts">
-import LinkCard from '../LinkCard.vue';
+import { ref, onMounted } from 'vue';
+import LinkCard from '@/components/LinkCard.vue';
+import type { LinkInfo } from '@/utils/types';
+import { getLinkInfos } from '@/http/getLinkInfos';
 
-interface LinkInfo {
-    title?: string;
-    subtitle?: string;
-    link?: string;
-    image?: string;
-}
+const links = ref<LinkInfo[]>([]);
+const tip = ref('正在加载列表...');
 
-const links: LinkInfo[] = [
-    {
-        title: "SlimeNull",
-        subtitle: "为了更好的开源世界~",
-        link: "https://slimenull.com/",
-        image: "/src/assets/images/friend/slimenull_blog.png"
-    },
-    {
-        title: "鸽子窝",
-        subtitle: "咕咕咕~",
-        image: "/src/assets/images/friend/gezi_blog.png"
-    },
-    {
-        title: "風雪城",
-        subtitle: "浩繁星空下的一场稚嫩的梦~",
-        link: "https://chyk.ink/",
-        image: "/src/assets/images/friend/chykink_blog.png"
-    },
-    {},
-    {},
-    {}
-];
+onMounted(async () => {
+    try {
+        const data = await getLinkInfos();
+
+        if (data.length === 0) {
+            tip.value = '列表为空';
+            return;
+        }
+
+        links.value = data.map(link => ({
+            ...link,
+            image: `http://localhost:3000${link.image}`
+        }));
+
+        tip.value = '';
+    } catch (error: any) {
+        console.error(error.message);
+        tip.value = '列表加载失败';
+    }
+});
 </script>
 
 <template>
     <div class="container">
+        <h1 v-if="tip.length != 0" class="tip">{{ tip }}</h1>
+
         <div class="main-grid">
-            <LinkCard v-for="(linkInfo, index) in links" :key="index" :title="linkInfo.title"
-                :subtitle="linkInfo.subtitle" :link="linkInfo.link" :image="linkInfo.image" />
+            <LinkCard v-for="(linkInfo, index) in links" :key="index" v-bind="linkInfo" />
         </div>
     </div>
 </template>
@@ -46,5 +45,9 @@ const links: LinkInfo[] = [
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+}
+
+.tip {
+    text-align: center;
 }
 </style>

@@ -48,6 +48,17 @@ const toggleTagFilter = (tag: string) => {
   });
 };
 
+function formatDate(isoString: string) {
+  const date = new Date(isoString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+  return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+}
+
 </script>
 
 <template>
@@ -63,8 +74,7 @@ const toggleTagFilter = (tag: string) => {
 
         <!-- 时间日期 -->
         <FlexCore class="data-time" vertical-alignment="center" orientation="row" gap="4px">
-          <SvgView translate="0.25em, 0.25em" name="date" />
-          <p>发布于 {{ createdAt }}</p>
+          <p>发布于 {{ formatDate(createdAt) }}</p>
         </FlexCore>
 
         <!-- 标题 -->
@@ -123,16 +133,16 @@ const toggleTagFilter = (tag: string) => {
 
 
 .post-title {
-    margin: 0;
+  margin: 0;
 
-    line-height: 1.5em;
+  line-height: 1.5em;
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 1;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-  }
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
 
 .root {
   aspect-ratio: 1/0.9;

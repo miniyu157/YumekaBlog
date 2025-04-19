@@ -8,6 +8,7 @@ import PostModel from "./models/postModel.js";
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import linkInfoModel from "./models/linkInfoModel.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -46,6 +47,8 @@ app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "public", "backgrounds_pixiv")));
 
 app.use("/images", express.static(path.join(__dirname, "public", "backgrounds_bigknight53")));
+
+app.use("/images", express.static(path.join(__dirname, "public", "friend")));
 
 app.get("/api/random-image", (req, res) => {
   try {
@@ -87,6 +90,18 @@ app.post("/api/create", async (req, res) => {
     console.error("Error creating post:", error);
     res.status(400).json({
       error: error.message || "Failed to create post",
+    });
+  }
+});
+
+app.get("/api/getlinkinfos", async (req, res) => {
+  try {
+    const links = await linkInfoModel.find().lean();
+    res.status(200).json(links);
+  } catch (error) {
+    console.error("Error fetching links:", error);
+    res.status(500).json({
+      error: error.message || "Failed to fetch friend links",
     });
   }
 });
@@ -139,36 +154,34 @@ app.get("/api/posts", async (req, res) => {
 
 app.get("/api/posts/:id", async (req, res) => {
   try {
-      // 从 URL 参数中获取帖子 ID
-      const postId = req.params.id;
+    // 从 URL 参数中获取帖子 ID
+    const postId = req.params.id;
 
-      // 使用 Mongoose 的 findById 方法查找帖子
-      // .select('-__v') 是可选的，用于从结果中排除 Mongoose 的版本键
-      const post = await PostModel.findById(postId).select('-__v');
+    // 使用 Mongoose 的 findById 方法查找帖子
+    // .select('-__v') 是可选的，用于从结果中排除 Mongoose 的版本键
+    const post = await PostModel.findById(postId).select("-__v");
 
-      // 如果找不到帖子，返回 404 Not Found
-      if (!post) {
-          return res.status(404).json({ message: "Post not found" });
-      }
+    // 如果找不到帖子，返回 404 Not Found
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
 
-      // 如果找到帖子，返回 200 OK 和帖子数据
-      res.status(200).json(post);
-
+    // 如果找到帖子，返回 200 OK 和帖子数据
+    res.status(200).json(post);
   } catch (error) {
-      console.error("Error fetching post by ID:", error);
+    console.error("Error fetching post by ID:", error);
 
-      // 如果 ID 格式无效 (例如，不是有效的 ObjectId)，Mongoose 会抛出 CastError
-      if (error.name === 'CastError') {
-          return res.status(400).json({ message: "Invalid post ID format" });
-      }
+    // 如果 ID 格式无效 (例如，不是有效的 ObjectId)，Mongoose 会抛出 CastError
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid post ID format" });
+    }
 
-      // 其他服务器错误，返回 500 Internal Server Error
-      res.status(500).json({
-          error: error.message || "Failed to fetch post",
-      });
+    // 其他服务器错误，返回 500 Internal Server Error
+    res.status(500).json({
+      error: error.message || "Failed to fetch post",
+    });
   }
 });
-
 
 app.get("/api/tags", async (req, res) => {
   try {

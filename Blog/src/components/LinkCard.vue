@@ -72,7 +72,7 @@ $def-anim: all 380ms cubic-bezier(0, 1.5, 1, 1);
     cursor: pointer;
 
     aspect-ratio: 1/0.9;
-    border: 3px solid rgba($color: rgb(255, 255, 255), $alpha: 0);
+    border: 4px solid rgba($color: rgb(255, 255, 255), $alpha: 0);
     border-radius: var(--card-corner-radius);
     box-shadow: var(--default-box-shadow);
     overflow: hidden;
@@ -106,6 +106,7 @@ $def-anim: all 380ms cubic-bezier(0, 1.5, 1, 1);
 
         align-self: center;
         text-align: center;
+        white-space: nowrap;
     }
 
     .link-subtitle {
@@ -116,6 +117,7 @@ $def-anim: all 380ms cubic-bezier(0, 1.5, 1, 1);
         opacity: 0;
         scale: 0.8;
         rotate: 8deg;
+        align-self: center;
 
         transition: $def-anim;
 

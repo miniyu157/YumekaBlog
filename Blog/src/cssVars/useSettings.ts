@@ -8,7 +8,7 @@ const useSettingsModel = () => {
   const cardShadow = ref(0.3);
   const bgBlur = ref(0);
   const bgSaturate = ref(80);
-  const bgBrightness = ref(70);
+  const bgBrightness = ref(75);
 
   const updateCssVars = () => {
     utils.setCssVar("--card-corner-radius", `${cardCorner.value}px`);
