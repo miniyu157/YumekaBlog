@@ -15,6 +15,7 @@ coverage
 *.local
 
 /Server/public/backgrounds_pixiv/
+/Temp/
 
 /cypress/videos/
 /cypress/screenshots/

@@ -90,12 +90,12 @@ onMounted(async () => {
                     </FlexCore>
                 </Card>
 
-                <Card class="music-panel">
+                <!-- <Card class="music-panel">
                     <FlexCore gap="8px">
                         <SvgView name="music" :fill="cssVars.primaryForeColor" />
                         <span>放在 ColumnLayout</span>
                     </FlexCore>
-                </Card>
+                </Card> -->
 
                 <Card>
                     <FlexCore direction="column" gap="8px">
