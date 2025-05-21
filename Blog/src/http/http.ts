@@ -1,21 +1,42 @@
 import axios from "axios";
 
-export interface LinkInfoResponse {
+import { createAlova } from "alova";
+import adapterFetch from "alova/fetch";
+
+const alovaInstance = createAlova({
+  requestAdapter: adapterFetch(),
+  responded: (response) => response.json(),
+});
+
+export interface BaseResponse {
+  success: boolean;
+  message: string;
+}
+
+//#region FriendLinks
+export interface FriendLink {
   title?: string;
   subtitle?: string;
   link?: string;
   image?: string;
 }
 
+export interface FriendLinksResponse extends BaseResponse {
+  count: number;
+  links: FriendLink[];
+}
+//#endregion
+
+//#region
+export interface TagsResponse extends BaseResponse {
+  count: number;
+  tags: string[];
+}
+
+//#endregion
 export interface ImageResponse {
   imageUrl: string;
   filename: string;
-}
-
-export interface TagsResponse {
-  success: boolean;
-  count: number;
-  tags: string[];
 }
 
 export interface PostResponse {
@@ -58,23 +79,44 @@ export interface GetPostsParams {
 }
 
 export const ServerIP = "http://localhost:3000";
-const GET_LINK_INFOS_URL = `${ServerIP}/api/getlinkinfos`;
+
+const GET_FRIEND_LINKS = `${ServerIP}/api/friendlinks`;
+const GET_TAGS = `${ServerIP}/api/tags`;
+
+
 const GET_RANDOM_IMAGE_URL = `${ServerIP}/api/random-image?source=pixiv`; // bigknight53 / pixiv
-const GET_ALL_TAG_URL = `${ServerIP}/api/tags`;
 const GET_POST_URL = `${ServerIP}/api/posts`;
 const GET_WEBMETA_URL = `${ServerIP}/api/getwebmeta`;
 
 export const httpget = {
-  getLinkInfos: async () => {
+  getFriendlinks: async () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     try {
-      const response = await axios.get<LinkInfoResponse[]>(GET_LINK_INFOS_URL);
-      return response.data;
-    } catch (error) {
-      throw new Error(`${GET_LINK_INFOS_URL} failed. (${error})`);
+      const response = await alovaInstance.Get<FriendLinksResponse>(GET_FRIEND_LINKS);
+
+      if (!response.success) throw new Error(response.message);
+
+      return response;
+    } catch (error: any) {
+      throw new Error(error.message);
     }
   },
+
+  getTags: async () => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    try {
+      const response = await alovaInstance.Get<TagsResponse>(GET_TAGS);
+
+      if (!response.success) throw new Error(response.message);
+
+      return response;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+
   getRandomImage: async () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     try {
@@ -82,16 +124,6 @@ export const httpget = {
       return `${ServerIP}${response.data.imageUrl}`;
     } catch (error) {
       throw new Error(`${GET_RANDOM_IMAGE_URL} failed. (${error})`);
-    }
-  },
-
-  getAllTags: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    try {
-      const response = await axios.get<TagsResponse>(GET_ALL_TAG_URL);
-      return response.data;
-    } catch (error) {
-      throw new Error(`${GET_ALL_TAG_URL} failed. (${error})`);
     }
   },
 

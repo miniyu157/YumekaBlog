@@ -12,6 +12,7 @@ import FlexCore from '../common/FlexCore.vue';
             <h1 class="title">Hi there 👋</h1>
 
             <span>这是一个由 Vue3 作为框架编写的个人博客网站</span>
+            <span></span>
         </FlexCore>
 
     </Card>

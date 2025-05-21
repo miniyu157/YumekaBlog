@@ -8,7 +8,7 @@ import PostModel from "./models/postModel.js";
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-import linkInfoModel from "./models/linkInfoModel.js";
+import friendLinkModel from "./models/FriendLink.js";
 import webmeta from "./models/webmeta.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -118,8 +118,9 @@ app.post("/api/setwebmeta", async (req, res) => {
 app.get("/api/getwebmeta", async (req, res) => {
   try {
     // 按_id降序排列后取第一个文档（最新添加的）
-    const latestWebmeta = await webmeta.findOne()
-      .sort({ _id: -1 })  // 根据ObjectId的时间戳倒序排列
+    const latestWebmeta = await webmeta
+      .findOne()
+      .sort({ _id: -1 }) // 根据ObjectId的时间戳倒序排列
       .exec();
 
     if (!latestWebmeta) {
@@ -130,20 +131,7 @@ app.get("/api/getwebmeta", async (req, res) => {
   } catch (error) {
     console.error("Error getting webmeta:", error);
     res.status(500).json({
-      error: error.message || "Failed to retrieve webmeta"
-    });
-  }
-});
-
-
-app.get("/api/getlinkinfos", async (req, res) => {
-  try {
-    const links = await linkInfoModel.find().lean();
-    res.status(200).json(links);
-  } catch (error) {
-    console.error("Error fetching links:", error);
-    res.status(500).json({
-      error: error.message || "Failed to fetch friend links",
+      error: error.message || "Failed to retrieve webmeta",
     });
   }
 });
@@ -234,26 +222,48 @@ app.get("/api/posts/:id", async (req, res) => {
   }
 });
 
+app.get("/api/friendlinks", async (req, res) => {
+  try {
+    const links = await friendLinkModel.find().lean();
+
+    res.status(200).json({
+      success: true,
+      message: `请求成功`,
+      count: links.length,
+      links: links,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: `服务器错误，请稍后重试`,
+    });
+  }
+});
+
 app.get("/api/tags", async (req, res) => {
   try {
-    // 使用 Mongoose 的 distinct 方法获取所有唯一标签
     const tags = await PostModel.distinct("tags");
-
-    // 过滤掉可能存在的空值（如果有的话）
     const filteredTags = tags.filter((tag) => tag && tag.trim() !== "");
 
     res.status(200).json({
       success: true,
+      message: `请求成功`,
       count: filteredTags.length,
       tags: filteredTags,
     });
   } catch (error) {
-    console.error("Error fetching tags:", error);
     res.status(500).json({
       success: false,
-      error: "Failed to fetch tags",
+      message: `服务器错误，请稍后重试`,
     });
   }
+});
+
+app.use((req, res, next) => {
+  res.status(404).json({
+    success: false,
+    message: "请求的 API 不存在",
+  });
 });
 
 app.listen(PORT, HOST, () => {

@@ -1,29 +1,29 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import FriendCard from '../common/FriendCard.vue';
-import { httpget, ServerIP, type LinkInfoResponse } from '@/http/http';
+import { httpget, ServerIP, type FriendLink, type FriendLinksResponse } from '@/http/http';
 import LoadingTip from '../common/LoadingTip.vue';
 
-const links = ref<LinkInfoResponse[]>();
+const friends = ref<FriendLink[]>();
 
 const loadingTip = ref<[string, string]>([
     '加载朋友列表...',
     '应该会很快的...(应该吧？)'
 ]);
 
-const loadPosts = async () => {
+const loadFriends = async () => {
     try {
-        const response = await httpget.getLinkInfos();
-        links.value = response;
+        const { links: responseLinks } = await httpget.getFriendlinks();
+        friends.value = responseLinks;
 
         // 补全链接前缀
-        links.value = response.map(link => ({
-            ...link,
-            image: `${ServerIP}${link.image}`
+        friends.value = responseLinks.map(responseLinks => ({
+            ...responseLinks,
+            image: `${ServerIP}${responseLinks.image}`
         }));
 
         loadingTip.value = [
-            response.length == 0 ? '朋友列表竟然是空的...(*ﾟーﾟ)' : '',
+            responseLinks.length == 0 ? '朋友列表竟然是空的...(*ﾟーﾟ)' : '',
             '网络很正常，数据库空空'
         ];
 
@@ -32,13 +32,13 @@ const loadPosts = async () => {
 
         loadingTip.value = [
             '与服务器的连接跑丢了呢...(*ﾟーﾟ)',
-            error.message
+            error.message || `未知错误`
         ];
     }
 };
 
 onMounted(() => {
-    loadPosts();
+    loadFriends();
 });
 </script>
 
@@ -47,7 +47,7 @@ onMounted(() => {
         <LoadingTip :texts="loadingTip" />
 
         <div class="main-grid">
-            <FriendCard v-for="(linkInfo, index) in links" :key="index" v-bind="linkInfo" />
+            <FriendCard v-for="(link, index) in friends" :key="index" v-bind="link" />
         </div>
     </div>
 </template>

@@ -29,8 +29,16 @@ $gap-sizes: (
     }
 }
 
-.mar-0a {
+.mar-0auto {
     margin: 0 auto;
+}
+
+.mar-auto0 {
+    margin: auto 0;
+}
+
+.mar-auto {
+    margin: auto;
 }
 
 @each $key in ("left",
@@ -41,5 +49,4 @@ $gap-sizes: (
     .mar-#{$key}-a {
         margin-#{$key}: auto;
     }
-
 }

@@ -11,9 +11,9 @@ import SvgView from './common/SvgView.vue';
 
     <FlexCore class="nav-layout" direction="column">
 
-        <h1 class="mar-0a title">Yumeka の 小窝</h1>
+        <h1 class="mar-0auto title">Yumeka の 小窝</h1>
 
-        <nav class="mar-0a main-nav">
+        <nav class="mar-0auto main-nav">
             <FlexCore gap="12px" class="header-buttons" orientation="row">
                 <h3 class="underline-from-center mar-0">
                     <RouterLink class="router-link" to="/home">首页</RouterLink>

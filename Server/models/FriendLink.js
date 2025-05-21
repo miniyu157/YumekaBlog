@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const linkInfoSchema = new Schema({
+const friendLinkSchema = new Schema({
   title: {
     type: String,
   },
@@ -15,4 +15,4 @@ const linkInfoSchema = new Schema({
   },
 });
 
-export default model("LinkInfo", linkInfoSchema);
+export default model("FriendLink", friendLinkSchema);

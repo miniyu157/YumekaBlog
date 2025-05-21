@@ -10,13 +10,13 @@ import FlexCore from '../common/FlexCore.vue'
             <h1>页面索引 - Yumeka の 小窝</h1>
         </FlexCore>
 
-        <RouterLink class="link router-link" to="/home">首页 (/home)</RouterLink>
-        <RouterLink class="link router-link" to="/blog">博客 (/blog)</RouterLink>
-        <RouterLink class="link router-link" to="/friend">友站 (/friend)</RouterLink>
-        <RouterLink class="link router-link" to="/about">关于 (/about)</RouterLink>
-        <RouterLink class="link router-link" to="/postlist">文章列表 (/postlist)</RouterLink>
-        <RouterLink class="link router-link" to="/blog/postview">文章详情 (/blog/postview)</RouterLink>
-        <RouterLink class="link router-link" to="/:pathMatch(.*)*">404 Not Found (/:pathMatch(.*)*)</RouterLink>
+        <RouterLink class="link router-link" to="/home">✓ 首页 (/home)</RouterLink>
+        <RouterLink class="link router-link" to="/blog">✓ 博客 (/blog)</RouterLink>
+        <RouterLink class="link router-link" to="/friend">✓ 友站 (/friend)</RouterLink>
+        <RouterLink class="link router-link" to="/about">✕ 关于 (/about)</RouterLink>
+        <RouterLink class="link router-link" to="/postlist">✕ 文章列表 (/postlist)</RouterLink>
+        <RouterLink class="link router-link" to="/blog/postview">✓ 文章详情 (/blog/postview)</RouterLink>
+        <RouterLink class="link router-link" to="/:pathMatch(.*)*">✕ 404 Not Found (/:pathMatch(.*)*)</RouterLink>
         <div @click="$router.back" class="back-button">返回</div>
     </FlexCore>
 
@@ -44,7 +44,8 @@ import FlexCore from '../common/FlexCore.vue'
     user-select: none;
 
     &:hover {
-        background: hsl(var(--primary-hue), 80%, 20%);
+        // background: hsl(var(--primary-hue), 80%, 20%); // dark theme
+        background: hsl(var(--primary-hue), 80%, 90%); // light theme
     }
 
     &:active {

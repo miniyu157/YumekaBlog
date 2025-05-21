@@ -18,7 +18,7 @@ const loadingTip = ref<[string, string]>([
 
 const loadTags = async () => {
     try {
-        const data = await httpget.getAllTags();
+        const data = await httpget.getTags();
         tags.value = data;
 
         loadingTip.value = [
