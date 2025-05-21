@@ -23,32 +23,31 @@ const props = defineProps({
 });
 
 const openLink = () => {
-    window.open(props.link, "_blank");
+    if (props.link) {
+        window.open(props.link, "_blank");
+    }
 };
 </script>
 
 <template>
-    <Card class="friend-card">
+    <Card class="friend-card" :title="props.link">
         <FlexCore gap="8px" direction="column">
             <div @click="openLink" class="friend-cover">
+                <FlexCore class="cover-fliter">
+                    <SvgView name="go" class="mar-auto" fill="white" />
+                </FlexCore>
+
                 <img :src="props.image"
                     @error="($event.target as HTMLImageElement).src = 'https://placehold.co/600x400/eee/ccc?text=Image+Not+Found'">
             </div>
 
-            <FlexCore gap="8px" class="info-panel" main-axis="between">
-                <FlexCore gap="8px">
-                    <div class="rectangle"></div>
-                    <FlexCore direction="column">
-                        <h2 @click="openLink" class="title mar-0">{{ props.title }}</h2>
-                        <span class="subtitle">{{ props.subtitle }}</span>
-                    </FlexCore>
+            <FlexCore gap="8px" class="info-panel">
+                <div class="rectangle"></div>
+                <FlexCore direction="column" class="text">
+                    <h2 @click="openLink" class="title mar-0">{{ props.title }}</h2>
+                    <span class="subtitle">{{ props.subtitle }}</span>
                 </FlexCore>
-
-                <!-- <div class="small-icon">
-                    <img src="../../assets/images/avatar.jpg">
-                </div> -->
             </FlexCore>
-
         </FlexCore>
     </Card>
 
@@ -56,11 +55,15 @@ const openLink = () => {
 
 <style lang="scss" scoped>
 .friend-cover {
+    position: relative;
     overflow: hidden;
+    box-sizing: border-box;
+    user-select: none;
+    cursor: pointer;
+
     aspect-ratio: 1/0.55;
     border-radius: var(--big-corner);
     border: 1px solid rgba(109, 109, 109, 0.5);
-    cursor: pointer;
 
     img {
         width: 100%;
@@ -68,20 +71,33 @@ const openLink = () => {
         object-fit: cover;
         object-position: center;
         display: block;
-
-        transition: scale 0.5s ease-in-out;
     }
 
-    &:hover {
-        img {
+    .cover-fliter {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        background-color: rgb(0, 0, 0, 0.5);
+        transition: opacity 0.2s, scale 0.2s;
+        font-size: 20pt;
+        opacity: 0;
+        scale: 1;
+
+        &:hover {
+            opacity: 0.55;
             scale: 1.2;
         }
+    }
+
+    transition: scale 0.1s;
+
+    &:active {
+        scale: 0.95;
     }
 }
 
 .info-panel {
-    position: relative;
-
     .rectangle {
         width: 4px;
         border-radius: var(--infinite-corner);
@@ -97,30 +113,17 @@ const openLink = () => {
         font-size: 0.9em;
     }
 
-    .title,
-    .subtitle {
-        max-width: 180px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+    .text {
+        // 必须设置这两个属性，才能使其截断生效
+        flex: 1;
+        min-width: 0;
 
-    .small-icon {
-        position: absolute;
-        right: 0;
-        height: 100%;
-        max-height: 100%;
-        aspect-ratio: 1;
-        overflow: hidden;
-        border-radius: 50%;
-        border: 1px solid rgba(109, 109, 109, 0.5);
-
-        img {
-            display: block;
+        .title,
+        .subtitle {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 }
