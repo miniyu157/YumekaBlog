@@ -1,0 +1,39 @@
+
+### get random image (pixiv default)
+GET http://localhost:3000/api/random-image?source=pixiv HTTP/1.1
+
+### get random image (bigknight53)
+GET http://localhost:3000/api/random-image?source=bigknight53 HTTP/1.1
+
+### get posts
+GET http://localhost:3000/api/posts?tags=AI,DeepSeek&tagFilterType=and HTTP/1.1
+
+### get post by id
+GET http://localhost:3000/api/posts/67f5e970a4c982631e4842bd HTTP/1.1
+
+### get all tags
+GET http://localhost:3000/api/tags HTTP/1.1
+
+### get linkinfos
+GET http://localhost:3000/api/getlinkinfos HTTP/1.1
+
+### get webmeta
+GET http://localhost:3000/api/getwebmeta HTTP/1.1
+
+
+### set webmeta
+POST http://localhost:3000/api/setwebmeta HTTP/1.1
+content-type: application/json
+
+{
+    "metatitle": "标题",
+    "webtitle": "大标题",
+    "announcement": "公告文本"
+}
+
+### create post
+POST http://localhost:3000/api/create HTTP/1.1
+
+{
+    
+}

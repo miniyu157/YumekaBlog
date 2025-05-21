@@ -1,0 +1,45 @@
+// gap 生成
+$gap-sizes: (
+    "0":0,
+    "4": 4px,
+    "8": 8px,
+    "16": 16px,
+    "24": 24px,
+);
+
+@each $key, $value in $gap-sizes {
+    .gap-#{$key} {
+        gap: $value;
+    }
+
+    .gap-x-#{$key} {
+        column-gap: $value;
+    }
+
+    .gap-y-#{$key} {
+        row-gap: $value;
+    }
+
+    .pad-#{$key} {
+        padding: $value;
+    }
+
+    .mar-#{$key} {
+        margin: $value;
+    }
+}
+
+.mar-0a {
+    margin: 0 auto;
+}
+
+@each $key in ("left",
+    "top",
+    "right",
+    "bottom",
+) {
+    .mar-#{$key}-a {
+        margin-#{$key}: auto;
+    }
+
+}

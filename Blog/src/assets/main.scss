@@ -1,0 +1,176 @@
+@use "./utilities/flex";
+@use "./utilities/sizing";
+@use "./utilities/spacing";
+@use "./utilities/text";
+@use "./utilities/animation";
+@use "./utilities/utils";
+@import url('./fonts.css');
+
+// debug
+%absolute-style {
+    content: '';
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+}
+
+// .router-view {
+//     position: relative;
+
+//     &::after {
+//         @extend %absolute-style;
+//         pointer-events: none;
+
+//         border: 10px solid rgba(140, 0, 255, 0.5) !important;
+//     }
+// }
+
+// .flex-core {
+//     position: relative;
+
+//     &::after {
+//         @extend %absolute-style;
+//         pointer-events: none;
+
+//         border: 3px dashed rgba(255, 0, 0, 0.5);
+//     }
+// }
+
+// * {
+//     position: relative;
+
+//     &::after {
+//         @extend %absolute-style;
+//         pointer-events: none;
+
+//         border: 2px solid rgb(69, 157, 197);
+//     }
+// }
+
+// base style
+body {
+    margin: 0;
+    color: var(--fore-color);
+    backdrop-filter: blur(0); // 消除白色遮罩bug，原因暂未知
+}
+
+body::before {
+    content: '';
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    position: absolute;
+    background: var(--bg-url) fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+body::after {
+    content: '';
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    position: absolute;
+    background-color: var(--back-imag-mask);
+    backdrop-filter: saturate(150%);
+
+    transition: background-color 0.3s;
+}
+
+// styles
+* {
+    outline: none;
+}
+
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    cursor: default;
+}
+
+button {
+    color: currentColor;
+}
+
+input {
+    border: none;
+    color: currentColor;
+
+    &::placeholder {
+        color: currentColor;
+        opacity: 0.5;
+    }
+}
+
+.router-link {
+    text-decoration: none;
+    color: var(--fore-color);
+}
+
+::selection {
+    background: hsla(var(--primary-hue), var(--selection-sl), 0.4);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+
+    background-color: rgb(255, 255, 255);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg,
+            hsl(194, 100%, 80%) 0% 25%,
+            hsl(194, 100%, 60%) 25% 50%,
+            hsl(194, 100%, 80%) 50% 75%,
+            hsl(194, 100%, 60%) 75% 100%);
+    border-radius: 99px;
+}
+
+// button styles
+.but-shadow {
+    box-shadow: var(--but-shadow);
+}
+
+%base-button {
+    user-select: none;
+    cursor: pointer;
+    background-color: var(--but-back);
+    transition: all 0.2s;
+    border: 1px solid var(--primary-but-border);
+
+    &:active {
+        scale: 0.9;
+    }
+}
+
+.def-small-but {
+    @extend %base-button;
+
+    padding: 2px 8px;
+    border-radius: var(--small-corner);
+}
+
+.def-medium-but {
+    @extend %base-button;
+
+    padding: 4px 12px;
+    border-radius: var(--medium-corner);
+}
+
+.def-big-but {
+    @extend %base-button;
+
+    padding: 4px 16px;
+    border-radius: var(--infinite-corner);
+}

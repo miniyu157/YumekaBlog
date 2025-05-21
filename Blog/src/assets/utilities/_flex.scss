@@ -1,0 +1,76 @@
+// 生成 flex-direction 类
+$flex-directions: (
+    "row": row,
+    "column": column
+);
+
+@each $key, $value in $flex-directions {
+    .flex-#{$key} {
+        display: flex;
+        flex-direction: $value;
+    }
+}
+
+// 生成 flex-wrap 类
+$flex-wrap-options: (
+    "wrap": wrap,
+    "nowrap": nowrap,
+    "wrap-reverse": wrap-reverse
+);
+
+@each $key, $value in $flex-wrap-options {
+    .flex-#{$key} {
+        flex-wrap: $value;
+    }
+}
+
+// 生成 align-self 类
+$align-self-options: (
+    "auto": auto,
+    "start": start,
+    "end": end,
+    "center": center,
+    "baseline": baseline,
+    "stretch": stretch,
+    "flex-start": flex-start,
+    "flex-end": flex-end,
+    "self-start": self-start,
+    "self-end": self-end
+);
+
+@each $key, $value in $align-self-options {
+    .a-self-#{$key} {
+        align-self: $value;
+    }
+}
+
+// 生成 justify-content 类
+$justify-options: (
+    "start": flex-start,
+    "end": flex-end,
+    "center": center,
+    "between": space-between,
+    "around": space-around,
+    "evenly": space-evenly
+);
+
+@each $key, $value in $justify-options {
+    .justify-#{$key} {
+        justify-content: $value;
+    }
+}
+
+// 生成 align-items 类
+$align-items-options: (
+    "start": flex-start,
+    "end": flex-end,
+    "center": center,
+    "baseline": baseline,
+    "stretch": stretch
+);
+
+@each $key, $value in $align-items-options {
+    .items-#{$key} {
+        align-items: $value;
+    }
+}

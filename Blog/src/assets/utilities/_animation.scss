@@ -1,0 +1,20 @@
+.underline-from-center {
+    position: relative;
+    padding: 5px;
+}
+
+.underline-from-center::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background: currentColor;
+    transition: all 0.3s;
+    transform: translateX(-50%);
+}
+
+.underline-from-center:hover::after {
+    width: 100%;
+}

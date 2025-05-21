@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "义启星空之翼";
+  src: url("./fonts/义启星空之翼.ttf");
+}
+
+@font-face {
+  font-family: "OPPO-Sans";
+  src: url("./fonts/OPPO Sans 4.0.ttf");
+}
+
+@font-face {
+  font-family: "Pacifico";
+  src: url("./fonts/Pacifico.ttf");
+}
+
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+button,
+input,
+span,
+label,
+textarea {
+  font-family: "OPPO-Sans", sans-serif;
+}

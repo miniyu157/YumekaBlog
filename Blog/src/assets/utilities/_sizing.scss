@@ -1,0 +1,42 @@
+// 基础宽高生成
+$sizes: (
+    "50": 50px,
+    "100": 100px,
+    "200": 200px,
+    "300": 300px,
+    "400": 400px,
+    "500": 500px,
+    "100pct": 100%,
+    "80pct": 80%,
+    "60pct": 60%,
+    "40pct": 40%,
+    "20pct": 20%,
+    "0": 0,
+
+);
+
+@each $key, $value in $sizes {
+    .w-#{$key} {
+        width: $value;
+    }
+
+    .h-#{$key} {
+        height: $value;
+    }
+
+    .min-w-#{$key} {
+        min-width: $value;
+    }
+
+    .max-w-#{$key} {
+        max-width: $value;
+    }
+
+    .min-h-#{$key} {
+        min-height: $value;
+    }
+
+    .max-h-#{$key} {
+        max-height: $value;
+    }
+}
