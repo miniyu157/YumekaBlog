@@ -38,16 +38,18 @@
 //     }
 // }
 
-// * {
-//     position: relative;
+* {
+    // border: 1px solid red;
 
-//     &::after {
-//         @extend %absolute-style;
-//         pointer-events: none;
+    // position: relative;
 
-//         border: 2px solid rgb(69, 157, 197);
-//     }
-// }
+    // &::after {
+    //     @extend %absolute-style;
+    //     pointer-events: none;
+
+    //     border: 2px solid rgb(69, 157, 197);
+    // }
+}
 
 // base style
 body {
@@ -86,6 +88,11 @@ body::after {
 // styles
 * {
     outline: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 span,

@@ -8,6 +8,7 @@ import Card from '../common/Card.vue';
 import SvgView from '../common/SvgView.vue';
 import LoadingTip from '../common/LoadingTip.vue';
 import { cssVars } from '@/utils/cssVars';
+import ThemeToggle from '../common/ThemeToggle.vue';
 
 const postResponse = ref<PostsApiResponse>();
 
@@ -56,12 +57,7 @@ onMounted(() => {
         </Card>
 
         <FlexCore gap="16px" class="menu mar-left-a">
-            <Card @click="cssVars.toggleTheme" class="toggle-theme" padding-size="small" :press-effect="true">
-                <FlexCore gap="8px">
-                    <SvgView :name="cssVars.isDarkTheme.value ? 'sun' : 'moon'" :fill="cssVars.primaryForeColor" />
-                    <span>{{ cssVars.isDarkTheme.value ? '亮色' : '暗色' }}模式</span>
-                </FlexCore>
-            </Card>
+            <ThemeToggle />
 
             <Card class="group-menu" padding-size="small">
                 <FlexCore gap="8px">

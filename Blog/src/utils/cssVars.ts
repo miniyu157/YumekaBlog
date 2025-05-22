@@ -1,13 +1,20 @@
 import { computed, ref, watch, watchEffect } from "vue";
 import { utils } from "../utils/utils.ts";
 
-type ThemeMode = "light" | "dark";
+type ThemeMode = "light" | "dark" | "auto";
 
 const cssVarsModel = () => {
   // 公共状态
   const bgUrl = ref("");
-  const currentTheme = ref<ThemeMode>("light");
-  const isDarkTheme = computed(() => currentTheme.value === "dark");
+  const currentTheme = ref<ThemeMode>("auto");
+
+  const isDarkTheme = computed(() => {
+    if (currentTheme.value === "auto") {
+      return getSystemTheme() == "dark";
+    } else {
+      return currentTheme.value == "dark";
+    }
+  });
 
   // 主题配置
   const themes = {
@@ -31,6 +38,7 @@ const cssVarsModel = () => {
       primaryForeColor: "hsl(var(--primary-hue), 100%, 77%)",
       selectionSL: "100%, 80%",
     },
+    auto: {},
   };
 
   // 公共样式属性
@@ -58,16 +66,18 @@ const cssVarsModel = () => {
 
   // 应用主题
   const applyTheme = (theme: ThemeMode) => {
-    const config = themes[theme];
+    const config = themes[theme === "auto" ? getSystemTheme() : theme];
     Object.assign(themeProps.value, config);
     localStorage.setItem("theme", theme);
   };
 
-  // 切换主题
-  const toggleTheme = () => {
-    currentTheme.value = currentTheme.value === "light" ? "dark" : "light";
+  watch(currentTheme, () => {
     applyTheme(currentTheme.value);
-  };
+  });
+
+  // 获取系统主题
+  const getSystemTheme = (): ThemeMode =>
+    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
   // 设置 CSS 变量
   watchEffect(() => {
@@ -104,7 +114,6 @@ const cssVarsModel = () => {
     bgUrl,
     currentTheme,
     isDarkTheme,
-    toggleTheme,
 
     primaryHue,
     butShadow,

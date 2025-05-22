@@ -1,5 +1,13 @@
 <script setup lang="ts">
+import { cssVars } from '@/utils/cssVars';
 import FlexCore from '../common/FlexCore.vue'
+import { computed } from 'vue';
+import SvgView from '../common/SvgView.vue';
+
+const butBackBinding = computed(() => cssVars.isDarkTheme.value
+    ? 'hsl(var(--primary-hue), 80%, 20%)'
+    : 'hsl(var(--primary-hue), 80%, 90%)'
+);
 </script>
 
 <template>
@@ -44,8 +52,7 @@ import FlexCore from '../common/FlexCore.vue'
     user-select: none;
 
     &:hover {
-        // background: hsl(var(--primary-hue), 80%, 20%); // dark theme
-        background: hsl(var(--primary-hue), 80%, 90%); // light theme
+        background: v-bind(butBackBinding);
     }
 
     &:active {
