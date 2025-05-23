@@ -7,7 +7,6 @@ const cssVarsModel = () => {
   // 公共状态
   const bgUrl = ref("");
   const currentTheme = ref<ThemeMode>("auto");
-
   const isDarkTheme = computed(() => {
     if (currentTheme.value === "auto") {
       return getSystemTheme() == "dark";
@@ -26,6 +25,7 @@ const cssVarsModel = () => {
       tagButBackSL: "100%, 90%",
       iconSL: "100%, 48%",
       primaryForeColor: "hsl(var(--primary-hue), 100%, 70%)",
+      primaryBackColor: "hsl(var(--primary-hue), 80%, 90%)",
       selectionSL: "100%, 60%",
     },
     dark: {
@@ -36,6 +36,7 @@ const cssVarsModel = () => {
       tagButBackSL: "10%, 15%",
       iconSL: "100%, 60%",
       primaryForeColor: "hsl(var(--primary-hue), 100%, 77%)",
+      primaryBackColor: "hsl(var(--primary-hue), 80%, 20%)",
       selectionSL: "100%, 80%",
     },
     auto: {},
@@ -52,7 +53,7 @@ const cssVarsModel = () => {
   const cardHoverShadow = ref("0px 3px 10px 2px rgba(0, 0, 0, 0.3)");
   const butBorderSL = ref("100%, 70%");
   const avatarBoxSL = ref("100%, 60%");
-  const primaryButBorder = ref("hsl(var(--primary-hue), var(--but-border-sl))");
+  const primaryBorderColor = ref("hsl(var(--primary-hue), var(--but-border-sl))");
 
   // 当前主题的样式属性
   const themeProps = ref({ ...themes.light });
@@ -94,7 +95,7 @@ const cssVarsModel = () => {
     utils.setCssVar("--card-hover-shadow", cardHoverShadow.value);
     utils.setCssVar("--but-border-sl", butBorderSL.value);
     utils.setCssVar("--avatar-box-sl", avatarBoxSL.value);
-    utils.setCssVar("--primary-but-border", primaryButBorder.value);
+    utils.setCssVar("--primary-border-color", primaryBorderColor.value);
 
     // 主题相关变量
     utils.setCssVar("--fore-color", themeProps.value.foreColor);
@@ -104,6 +105,7 @@ const cssVarsModel = () => {
     utils.setCssVar("--tag-but-back-sl", themeProps.value.tagButBackSL);
     utils.setCssVar("--icon-sl", themeProps.value.iconSL);
     utils.setCssVar("--primary-fore-color", themeProps.value.primaryForeColor);
+    utils.setCssVar("--primary-back-color", themeProps.value.primaryBackColor);
     utils.setCssVar("--selection-sl", themeProps.value.selectionSL);
   });
 

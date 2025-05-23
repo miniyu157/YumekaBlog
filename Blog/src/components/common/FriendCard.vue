@@ -30,16 +30,16 @@ const openLink = () => {
 </script>
 
 <template>
-    <Card class="friend-card" :title="props.link">
+    <Card class="friend-card">
         <FlexCore gap="8px" direction="column">
-            <div @click="openLink" class="friend-cover">
+            <a :href="props.link" target="_blank" class="friend-cover">
                 <FlexCore class="cover-fliter">
                     <SvgView name="go" class="mar-auto" fill="white" />
                 </FlexCore>
 
                 <img :src="props.image"
                     @error="($event.target as HTMLImageElement).src = 'https://placehold.co/600x400/eee/ccc?text=Image+Not+Found'">
-            </div>
+            </a>
 
             <FlexCore gap="8px" class="info-panel">
                 <div class="rectangle"></div>
@@ -59,7 +59,6 @@ const openLink = () => {
     overflow: hidden;
     box-sizing: border-box;
     user-select: none;
-    cursor: pointer;
 
     aspect-ratio: 1/0.55;
     border-radius: var(--big-corner);

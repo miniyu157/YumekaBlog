@@ -11,7 +11,10 @@ import SvgView from './common/SvgView.vue';
 
     <FlexCore class="nav-layout" direction="column">
 
-        <h1 class="mar-0auto title">Yumeka の 小窝</h1>
+        <FlexCore cross-axis="baseline" gap="1em" class="mar-0auto title-panel">
+            <span class="title">𝓨𝓾𝓶𝓮𝓴𝓪’𝓼</span>
+            <span class="subtitle">𝑳𝒊𝒕𝒕𝒍𝒆 𝑵𝒆𝒔𝒕</span>
+        </FlexCore>
 
         <nav class="mar-0auto main-nav">
             <FlexCore gap="12px" class="header-buttons" orientation="row">
@@ -42,19 +45,32 @@ import SvgView from './common/SvgView.vue';
 <style scoped lang="scss">
 $page-margin: 36vh;
 
-.title {
-    font-family: "义启星空之翼", sans-serif;
-    font-size: 66px;
+.title-panel {
     margin-bottom: 8px;
+    margin-top: calc($page-margin/2);
 
-    margin-top: $page-margin/2;
+    .title {
+        font-weight: bold;
+        font-size: 66pt;
+
+        -webkit-text-stroke: 2px var(--but-back);
+        text-shadow: 2px 4px 4px var(--primary-fore-color);
+    }
+
+    .subtitle {
+        font-weight: bold;
+        font-size: 33pt;
+
+        -webkit-text-stroke: 2px var(--but-back);
+        text-shadow: 2px 4px 4px rgba(255, 0, 0, 0.5);
+    }
 }
 
 .main-nav {
     position: sticky;
     top: 0;
 
-    margin-bottom: ($page-margin/2);
+    margin-bottom: calc($page-margin/2);
 
     z-index: 99; // 防止鼠标悬停 PostCard 的图片时被覆盖，原因未知
 }

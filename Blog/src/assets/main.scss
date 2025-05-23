@@ -38,18 +38,16 @@
 //     }
 // }
 
-* {
-    // border: 1px solid red;
+// * {
+//     position: relative;
 
-    // position: relative;
+//     &::after {
+//         @extend %absolute-style;
+//         pointer-events: none;
 
-    // &::after {
-    //     @extend %absolute-style;
-    //     pointer-events: none;
-
-    //     border: 2px solid rgb(69, 157, 197);
-    // }
-}
+//         border: 2px solid rgb(69, 157, 197);
+//     }
+// }
 
 // base style
 body {
@@ -154,7 +152,7 @@ input {
     cursor: pointer;
     background-color: var(--but-back);
     transition: all 0.2s;
-    border: 1px solid var(--primary-but-border);
+    border: 1px solid var(--primary-border-color);
 
     &:active {
         scale: 0.9;

@@ -2,12 +2,7 @@
 import { cssVars } from '@/utils/cssVars';
 import FlexCore from '../common/FlexCore.vue'
 import { computed } from 'vue';
-import SvgView from '../common/SvgView.vue';
 
-const butBackBinding = computed(() => cssVars.isDarkTheme.value
-    ? 'hsl(var(--primary-hue), 80%, 20%)'
-    : 'hsl(var(--primary-hue), 80%, 90%)'
-);
 </script>
 
 <template>
@@ -21,7 +16,7 @@ const butBackBinding = computed(() => cssVars.isDarkTheme.value
         <RouterLink class="link router-link" to="/home">✓ 首页 (/home)</RouterLink>
         <RouterLink class="link router-link" to="/blog">✓ 博客 (/blog)</RouterLink>
         <RouterLink class="link router-link" to="/friend">✓ 友站 (/friend)</RouterLink>
-        <RouterLink class="link router-link" to="/about">✕ 关于 (/about)</RouterLink>
+        <RouterLink class="link router-link" to="/about">✓ 关于 (/about)</RouterLink>
         <RouterLink class="link router-link" to="/postlist">✕ 文章列表 (/postlist)</RouterLink>
         <RouterLink class="link router-link" to="/blog/postview">✓ 文章详情 (/blog/postview)</RouterLink>
         <RouterLink class="link router-link" to="/:pathMatch(.*)*">✕ 404 Not Found (/:pathMatch(.*)*)</RouterLink>
@@ -45,14 +40,14 @@ const butBackBinding = computed(() => cssVars.isDarkTheme.value
 
 %base-style {
     background: var(--card-back);
-    border: 1px solid var(--primary-but-border);
+    border: 2px solid var(--primary-border-color);
     transition: background 0.2s, scale 0.2s;
     border-radius: var(--medium-corner);
     padding: 4px 16px;
     user-select: none;
 
     &:hover {
-        background: v-bind(butBackBinding);
+        background: var(--primary-back-color);
     }
 
     &:active {
