@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch, watchEffect } from 'vue';
+import { ref } from 'vue';
 import Card from '../common/Card.vue';
 import FlexCore from '../common/FlexCore.vue';
 import SvgView from '../common/SvgView.vue';
@@ -102,12 +102,6 @@ button {
 
   >pre >code{
     visibility: collapse !important;
-  }
-}
-
-@media (max-width: 767px) {
-  .markdown-body {
-    padding: 15px;
   }
 }
 </style>

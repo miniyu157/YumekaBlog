@@ -4,6 +4,13 @@ import Card from './Card.vue';
 import FlexCore from './FlexCore.vue';
 import SvgView from './SvgView.vue';
 
+const props = defineProps({
+    showText: {
+        type: Boolean,
+        default: true
+    }
+})
+
 const toggle = () => {
     if (cssVars.currentTheme.value === "light") {
         cssVars.currentTheme.value = "dark";
@@ -19,7 +26,9 @@ const toggle = () => {
     <Card @click="toggle" class="theme-toggle" padding-size="small" :press-effect="true">
         <FlexCore gap="8px">
             <SvgView :name="cssVars.currentTheme.value" :fill="cssVars.primaryForeColor" />
-            <span>{{ { light: '亮色模式', dark: '暗色模式', auto: '跟随系统' }[cssVars.currentTheme.value] }}</span>
+            <span v-show="props.showText">
+                {{ { light: '亮色模式', dark: '暗色模式', auto: '跟随系统' }[cssVars.currentTheme.value] }}
+            </span>
         </FlexCore>
     </Card>
 </template>

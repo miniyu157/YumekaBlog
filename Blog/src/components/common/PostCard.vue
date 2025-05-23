@@ -87,7 +87,7 @@ const openPostView = () => {
 
     .title {
         cursor: pointer;
-        transition: color 0.15s linear;
+        transition: color 0.1s ease-in-out;
 
         &:hover {
             color: var(--primary-fore-color);

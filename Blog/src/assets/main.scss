@@ -2,7 +2,6 @@
 @use "./utilities/sizing";
 @use "./utilities/spacing";
 @use "./utilities/text";
-@use "./utilities/animation";
 @use "./utilities/utils";
 @import url('./fonts.css');
 
@@ -47,6 +46,10 @@
 
 //         border: 2px solid rgb(69, 157, 197);
 //     }
+// }
+
+// * {
+//     border: 1px solid red;
 // }
 
 // base style
