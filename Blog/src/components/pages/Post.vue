@@ -1,28 +1,42 @@
 <script setup lang="ts">
 import { httpget, type PostResponse } from '@/http/http';
 import { onMounted, ref } from 'vue';
-
-import { useRoute, useRouter } from 'vue-router';
-import Card from '../common/Card.vue';
 import FlexCore from '../common/FlexCore.vue';
 import { utils } from '@/utils/utils';
 import TagButton from '../common/TagButton.vue';
 import SvgView from '../common/SvgView.vue';
+import PostContainer from '../common/PostContainer.vue';
+import { useRoute } from 'vue-router';
+import LoadingTip from '../common/LoadingTip.vue';
+import MarkdownRender from '../common/MarkdownRender.vue';
 
-const route = useRoute();
-const id = route.query.id;
 const postData = ref<PostResponse>();
-
-const tip = ref('加载中...');
+const params = history.state.params;
+const loadingTip = ref<[string, string]>([
+    '加载文章详情...',
+    '应该会很快的...(应该吧？)'
+]);
 
 const loadPost = async () => {
-    try {
-        const response = await httpget.getPostById(String(id));
-        postData.value = response;
-    } catch (error: any) {
-        tip.value = `拉取文章失败(${error})`;
+    if (params) {
+        postData.value = JSON.parse(params);
+    } else {
+        try {
+            const route = useRoute();
+            const id = route.query.id;
+            const response = await httpget.getPostById(String(id));
+
+            postData.value = response;
+        } catch (error: any) {
+            console.log(error);
+
+            loadingTip.value = [
+                '与服务器的连接跑丢了呢...(*ﾟーﾟ)',
+                error.message
+            ];
+        }
     }
-}
+};
 
 onMounted(() => {
     loadPost();
@@ -31,32 +45,27 @@ onMounted(() => {
 
 <template>
 
-    <Card v-if="postData">
-        <FlexCore direction="column" gap="8px">
+    <PostContainer>
+
+        <FlexCore v-if="postData" direction="column" gap="16px">
             <div class="title-panel">
-                <span class="title">{{ postData?.title }}</span>
+                <span class="title">{{ postData?.title || '无标题文章' }}</span>
             </div>
 
             <div class="img-panel">
-                <img :src="postData?.imageUrl">
-
-                <button @click="$router.back" class="back-button def-medium-but a-self-start">
-                    <FlexCore gap="4px">
-                        <SvgView name="back" scale="0.8" />
-                        <span>返回</span>
-                    </FlexCore>
-                </button>
+                <img :src="postData?.imageUrl"
+                    @error="($event.target as HTMLImageElement).src = 'https://placehold.co/600x400/eee/ccc?text=fail'">
             </div>
 
             <FlexCore main-axis="between" cross-axis="center">
-                <span class="timespan small-text">发布于 {{ utils.formatDatetime(postData?.createdAt) }}</span>
+                <span class="timespan small-text">发布于 {{ utils.formatDatetime(postData?.createdAt) || '未知时间' }}</span>
 
                 <FlexCore direction="row" gap="8px">
                     <TagButton v-for="tag in postData?.tags" :text="tag" :key="tag" />
                 </FlexCore>
             </FlexCore>
 
-            <p class="content mar-0">{{ postData?.content }}</p>
+            <MarkdownRender class="content" :render-text="postData?.content || '文章内容竟然是空的(*ﾟーﾟ)'" />
 
             <FlexCore gap="8px" direction="row" cross-axis="center">
                 <button class="def-medium-but">
@@ -78,9 +87,10 @@ onMounted(() => {
                 </FlexCore>
             </FlexCore>
         </FlexCore>
-    </Card>
 
-    <span v-else>{{ tip }}</span>
+        <LoadingTip v-else :texts="loadingTip" />
+    </PostContainer>
+
 </template>
 
 <style scoped lang="scss">
@@ -104,7 +114,6 @@ onMounted(() => {
     border-radius: 4px;
 }
 
-
 .title-panel>.title {
     position: relative;
     font-size: 35pt;
@@ -113,7 +122,6 @@ onMounted(() => {
 }
 
 .img-panel {
-    position: relative;
     border: 1px solid rgba(109, 109, 109, 0.5);
     border-radius: var(--big-corner);
     overflow: hidden;
@@ -126,15 +134,5 @@ onMounted(() => {
 
         object-fit: cover;
     }
-
-    .back-button {
-        position: absolute;
-        top: 0;
-        margin: 8px;
-    }
-}
-
-.content {
-    font-size: 14pt;
 }
 </style>

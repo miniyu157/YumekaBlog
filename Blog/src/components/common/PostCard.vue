@@ -5,13 +5,13 @@ import FlexCore from './FlexCore.vue';
 import { type PostResponse } from '../../http/http';
 import TagButton from './TagButton.vue';
 import SvgView from './SvgView.vue';
-import { onMounted } from 'vue';
 import { utils } from '@/utils/utils';
+import { routeUtils } from '@/router';
 
 const props = defineProps<PostResponse>();
 
 const openPostView = () => {
-    utils.openNewPost(props._id);
+    routeUtils.openNewPost(props);
 }
 </script>
 
@@ -20,13 +20,14 @@ const openPostView = () => {
     <Card class="post-card" padding-size="no">
         <div class="main-grid">
             <div class="bg">
-                <img @click="openPostView" :src="props.imageUrl">
+                <img @click="openPostView" :src="props.imageUrl"
+                    @error="($event.target as HTMLImageElement).src = 'https://placehold.co/600x400/eee/ccc?text=fail'">
             </div>
 
             <FlexCore direction="column" class="cont pad-8" main-axis="between">
                 <div>
-                    <span class="timespan small-text">发布于 {{ utils.formatDatetime(props.createdAt) }}</span>
-                    <h3 @click="openPostView" class="title text-truncate mar-0">{{ props.title }}</h3>
+                    <span class="timespan small-text">发布于 {{ utils.formatDatetime(props.createdAt) || '未知时间' }}</span>
+                    <h3 @click="openPostView" class="title text-truncate mar-0">{{ props.title || '无标题文章' }}</h3>
                 </div>
 
                 <div>

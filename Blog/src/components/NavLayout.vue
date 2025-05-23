@@ -54,7 +54,7 @@ $page-margin: 36vh;
         font-size: 66pt;
 
         -webkit-text-stroke: 2px var(--but-back);
-        text-shadow: 2px 4px 4px var(--primary-fore-color);
+        text-shadow: 2px 4px 4px hsla(224, 100%, 50%, 0.5);
     }
 
     .subtitle {

@@ -26,7 +26,7 @@ const toggle = () => {
     <Card @click="toggle" class="theme-toggle" padding-size="small" :press-effect="true">
         <FlexCore gap="8px">
             <SvgView :name="cssVars.currentTheme.value" :fill="cssVars.primaryForeColor" />
-            <span v-show="props.showText">
+            <span v-if="props.showText">
                 {{ { light: '亮色模式', dark: '暗色模式', auto: '跟随系统' }[cssVars.currentTheme.value] }}
             </span>
         </FlexCore>

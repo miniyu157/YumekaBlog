@@ -20,7 +20,10 @@ export const utils = {
     const day = date.getUTCDate().toString().padStart(2, "0");
     const hours = date.getUTCHours().toString().padStart(2, "0");
     const minutes = date.getUTCMinutes().toString().padStart(2, "0");
-    return `${year}/${month}/${day} ${hours}:${minutes}`;
+
+    const format = `${year}/${month}/${day} ${hours}:${minutes}`;
+
+    return format.toLowerCase().includes("nan") ? "" : format;
   },
 
   formatNumber: (num: number) => {

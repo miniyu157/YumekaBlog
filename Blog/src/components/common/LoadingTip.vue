@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-    <FlexCore class="loading-tip" v-show="props.texts[0] != ''" gap="4px">
+    <FlexCore class="loading-tip" v-if="props.texts[0] != ''" gap="4px">
         <div class="rectangle"></div>
         <FlexCore direction="column">
             <span>{{ props.texts[0] }}</span>

@@ -12,8 +12,8 @@
 
 ## 预览 📸
 
-![BlogHome](./assets/BlogHome.png)
+![bloghome](./assets/bloghome.png)
 
-![Friend](./assets/Friend.png)
+![postview](./assets/postview.png)
 
-![Friend_Dark](./assets/Friend_Dark.png)
+![friend](./assets/friend.png)

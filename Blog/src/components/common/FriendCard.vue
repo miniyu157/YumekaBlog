@@ -21,12 +21,6 @@ const props = defineProps({
         default: 'https://placehold.co/600x400/eee/ccc?text=No+Image'
     }
 });
-
-const openLink = () => {
-    if (props.link) {
-        window.open(props.link, "_blank");
-    }
-};
 </script>
 
 <template>
@@ -44,7 +38,9 @@ const openLink = () => {
             <FlexCore gap="8px" class="info-panel">
                 <div class="rectangle"></div>
                 <FlexCore direction="column" class="text">
-                    <h2 @click="openLink" class="title mar-0">{{ props.title }}</h2>
+                    <h2 class="title mar-0">
+                        <a :href="props.link" target="_blank">{{ props.title }}</a>
+                    </h2>
                     <span class="subtitle">{{ props.subtitle }}</span>
                 </FlexCore>
             </FlexCore>
@@ -105,7 +101,6 @@ const openLink = () => {
 
     .title {
         color: var(--primary-fore-color);
-        cursor: pointer;
     }
 
     .subtitle {
