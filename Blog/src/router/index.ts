@@ -7,12 +7,12 @@ import Friend from "@/components/pages/Friend.vue";
 import Home from "@/components/pages/Home.vue";
 import Post from "@/components/pages/Post.vue";
 import PostList from "@/components/pages/PostList.vue";
-import type { PostResponse } from "@/http/http";
+import type { PostData, PostResponse } from "@/http/http";
 
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from "vue-router";
 
 export const routeUtils = {
-  openNewPost: (parms: PostResponse) => {
+  openNewPost: (parms: PostData) => {
     let params = JSON.stringify(parms);
     router.push({
       path: `/blog/postview`,

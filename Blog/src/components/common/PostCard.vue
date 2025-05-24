@@ -2,13 +2,13 @@
 import Card from './Card.vue';
 import FlexCore from './FlexCore.vue';
 
-import { type PostResponse } from '../../http/http';
+import { type PostData, type PostResponse } from '../../http/http';
 import TagButton from './TagButton.vue';
 import SvgView from './SvgView.vue';
 import { utils } from '@/utils/utils';
 import { routeUtils } from '@/router';
 
-const props = defineProps<PostResponse>();
+const props = defineProps<PostData>();
 
 const openPostView = () => {
     routeUtils.openNewPost(props);
@@ -33,13 +33,13 @@ const openPostView = () => {
                 <div>
                     <FlexCore class="postmeta small-text">
                         <SvgView name="heat" fill="hsl(10, var(--icon-sl))" />
-                        <span>{{ utils.formatNumber(props.heat) }}热度</span>
+                        <span>{{ utils.formatNumber(props.heat || 0) }}热度</span>
 
                         <SvgView name="comment" scale="0.9" fill="hsl(190, var(--icon-sl))" />
-                        <span>{{ utils.formatNumber(props.comments) }}评论</span>
+                        <span>{{ utils.formatNumber(props.comments || 0) }}评论</span>
 
                         <SvgView name="like" fill="hsl(50, var(--icon-sl))" />
-                        <span>{{ utils.formatNumber(props.likes) }}赞</span>
+                        <span>{{ utils.formatNumber(props.likes || 0) }}赞</span>
                     </FlexCore>
 
                     <FlexCore direction="row" gap="8px">

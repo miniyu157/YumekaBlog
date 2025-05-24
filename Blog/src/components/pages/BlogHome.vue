@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import PostCard from '../common/PostCard.vue';
 
-import { httpget, type PostsApiResponse } from '../../http/http';
+import { httpget, type PostData, type PostsResponse } from '../../http/http';
 import { onMounted, ref } from 'vue';
 import FlexCore from '../common/FlexCore.vue';
 import Card from '../common/Card.vue';
@@ -10,7 +10,7 @@ import LoadingTip from '../common/LoadingTip.vue';
 import { cssVars } from '@/utils/cssVars';
 import ThemeToggle from '../common/ThemeToggle.vue';
 
-const postResponse = ref<PostsApiResponse>();
+const posts = ref<PostData[]>();
 
 const loadingTip = ref<[string, string]>([
     '加载文章列表...',
@@ -21,9 +21,10 @@ const loadPosts = async () => {
     try {
         const response = await httpget.getPosts({
             limit: 6,
-            sort: '-createdAt'
+            sort: '-createdAt',
         });
-        postResponse.value = response;
+
+        posts.value = response.data;
 
         loadingTip.value = [
             response.pagination.total == 0 ? '文章列表竟然是空的...(*ﾟーﾟ)' : '',
@@ -56,9 +57,7 @@ onMounted(() => {
             </FlexCore>
         </Card>
 
-        <FlexCore gap="16px" class="menu mar-left-a">
-            <ThemeToggle />
-
+        <div class="menu mar-left-a">
             <Card class="group-menu" padding-size="small">
                 <FlexCore gap="8px">
                     <FlexCore gap="4px">
@@ -74,12 +73,12 @@ onMounted(() => {
                     </FlexCore>
                 </FlexCore>
             </Card>
-        </FlexCore>
+        </div>
 
         <LoadingTip :texts="loadingTip" />
 
         <div class="main-grid">
-            <PostCard v-for="post in postResponse?.data" v-bind="post" />
+            <PostCard v-for="post in posts" v-bind="post" :key="post._id" />
         </div>
 
     </FlexCore>

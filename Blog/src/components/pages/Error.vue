@@ -3,6 +3,7 @@ import FlexCore from '../common/FlexCore.vue';
 </script>
 
 <template>
+    
     <FlexCore gap="1em" class="container" direction="column">
         <span class="t1">🐰✨</span>
         <span class="t2">哎呀～小可爱你迷路了嘛(´•ω•̥`)</span>

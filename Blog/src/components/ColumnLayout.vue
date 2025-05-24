@@ -9,7 +9,7 @@ import { onMounted, ref } from 'vue';
 import SvgView from './common/SvgView.vue';
 import LoadingTip from './common/LoadingTip.vue';
 
-const tags = ref<TagsResponse>();
+const tags = ref<string[]>();
 
 const loadingTip = ref<[string, string]>([
     '加载标签列表...',
@@ -18,11 +18,11 @@ const loadingTip = ref<[string, string]>([
 
 const loadTags = async () => {
     try {
-        const data = await httpget.getTags();
+        const { data } = await httpget.getTags();
         tags.value = data;
 
         loadingTip.value = [
-            data.count == 0 ? '标签列表竟然是空的...(*ﾟーﾟ)' : '',
+            data.length == 0 ? '标签列表竟然是空的...(*ﾟーﾟ)' : '',
             '网络很正常，数据库空空'
         ];
 
@@ -31,7 +31,7 @@ const loadTags = async () => {
 
         loadingTip.value = [
             '与服务器的连接跑丢了呢...(*ﾟーﾟ)',
-            error.message
+            error.message || `未知错误`
         ];
     }
 };
@@ -49,7 +49,7 @@ onMounted(async () => {
 
 <template>
 
-    <FlexCore gap="16px" direction="column">
+    <div class="column-layout">
 
         <div class="main-grid">
             <FlexCore direction="column" gap="16px">
@@ -67,11 +67,11 @@ onMounted(async () => {
                             <span>标签</span>
                             <span>浏览</span>
                             <span>{{ postsCount }}</span>
-                            <span>{{ tags?.count || 0 }}</span>
+                            <span>{{ tags?.length || 0 }}</span>
                             <span>{{ 0 }}</span>
                         </div>
 
-                        <button class="def-big-but but-shadow w-60pct">全部文章</button>
+                        <button @click="$router.push('postlist')" class="def-big-but but-shadow w-60pct">全部文章</button>
                     </FlexCore>
                 </Card>
 
@@ -86,16 +86,9 @@ onMounted(async () => {
                 <Card>
                     <FlexCore class="tags-panel" flex-wrap="wrap" gap="8px">
                         <LoadingTip :texts="loadingTip" />
-                        <TagButton v-for="tag in tags?.tags" :text="tag" :key="tag" />
+                        <TagButton v-for="tag in tags" :text="tag" :key="tag" />
                     </FlexCore>
                 </Card>
-
-                <!-- <Card class="music-panel">
-                    <FlexCore gap="8px">
-                        <SvgView name="music" :fill="cssVars.primaryForeColor" />
-                        <span>放在 ColumnLayout</span>
-                    </FlexCore>
-                </Card> -->
 
                 <Card>
                     <FlexCore direction="column" gap="8px">
@@ -109,7 +102,7 @@ onMounted(async () => {
             <RVContainer class="a-self-start" />
         </div>
 
-    </FlexCore>
+    </div>
 
 </template>
 
@@ -117,7 +110,7 @@ onMounted(async () => {
 .main-grid {
     display: grid;
     grid-template-columns: 22fr 78fr;
-    gap: 16px;
+    gap: 2em;
 }
 
 @media (max-width: 1100px) {

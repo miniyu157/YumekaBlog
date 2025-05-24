@@ -3,13 +3,13 @@ import fs from "fs";
 import path from "path";
 import os from "os";
 import cors from "cors";
-import connectDB from "./db.js";
-import PostModel from "./models/postModel.js";
+import { connect } from "mongoose";
+
+import PostDataModel from "./models/PostData.js";
+import friendLinkModel from "./models/FriendLink.js";
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-import friendLinkModel from "./models/FriendLink.js";
-import webmeta from "./models/webmeta.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -27,6 +27,19 @@ const getLocalIPs = () => {
   return ips;
 };
 
+const connectDB = async () => {
+  try {
+    await connect("mongodb://localhost:27017/blog")
+      .then(() => console.log("\nConnected to MongoDB..."))
+      .catch((err) => console.error("Could not connect to MongoDB:", err));
+
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    process.exit(1);
+  }
+};
+
 const app = express();
 const PORT = 3000;
 const HOST = "0.0.0.0";
@@ -35,191 +48,153 @@ connectDB();
 
 app.use(cors());
 
-// app.use(
-//   cors({
-//     origin: [process.env.FRONTEND_URL, "http://localhost:5173"],
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//   })
-// );
-
 app.use(express.json());
 
-app.use("/images", express.static(path.join(__dirname, "public", "backgrounds_pixiv")));
+app.use("/images", express.static(path.join(__dirname, "public", "backgrounds")));
 
-app.use("/images", express.static(path.join(__dirname, "public", "backgrounds_bigknight53")));
-
-app.use("/images", express.static(path.join(__dirname, "public", "friend")));
+app.use("/images", express.static(path.join(__dirname, "public", "friends")));
 
 app.use("/images", express.static(path.join(__dirname, "public", "posts")));
 
 app.get("/api/random-image", (req, res) => {
   try {
-    const source = req.query.source || "pixiv";
-    const imageDir = path.join(__dirname, "public", `backgrounds_${source}`);
+    const group = req.query.group || "1";
+    const imageDir = path.join(__dirname, "public", "backgrounds", group);
     const files = fs.readdirSync(imageDir);
 
     if (files.length === 0) {
-      return res.status(404).json({ error: "No images found" });
+      return res.status(404).json({
+        success: false,
+        message: `找不到图片`,
+      });
     }
 
     const randomFile = files[Math.floor(Math.random() * files.length)];
-    res.json({
-      imageUrl: `/images/${randomFile}`,
+
+    res.status(200).json({
+      success: true,
+      message: `请求成功`,
+      imageUrl: `/images/${group}/${randomFile}`,
       filename: randomFile,
     });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-app.post("/api/create", async (req, res) => {
-  try {
-    const { title, imageUrl, content, heat, comments, likes, tags } = req.body;
-
-    const newPost = new PostModel({
-      title,
-      imageUrl,
-      content,
-      heat,
-      comments,
-      likes,
-      tags,
-    });
-
-    const savedPost = await newPost.save();
-    res.status(201).json(savedPost);
-  } catch (error) {
-    console.error("Error creating post:", error);
-    res.status(400).json({
-      error: error.message || "Failed to create post",
-    });
-  }
-});
-
-app.post("/api/setwebmeta", async (req, res) => {
-  try {
-    const { metatitle, webtitle, announcement } = req.body;
-
-    const newWebmeta = new webmeta({
-      metatitle,
-      webtitle,
-      announcement,
-    });
-
-    const savedWebmeta = await newWebmeta.save();
-    res.status(201).json(savedWebmeta);
-  } catch (error) {
-    console.error("Error seting webmeta:", error);
-    res.status(400).json({
-      error: error.message || "Failed to set webmeta",
-    });
-  }
-});
-
-app.get("/api/getwebmeta", async (req, res) => {
-  try {
-    // 按_id降序排列后取第一个文档（最新添加的）
-    const latestWebmeta = await webmeta
-      .findOne()
-      .sort({ _id: -1 }) // 根据ObjectId的时间戳倒序排列
-      .exec();
-
-    if (!latestWebmeta) {
-      return res.status(404).json({ error: "No webmeta found" });
-    }
-
-    res.status(200).json(latestWebmeta);
-  } catch (error) {
-    console.error("Error getting webmeta:", error);
     res.status(500).json({
-      error: error.message || "Failed to retrieve webmeta",
+      success: false,
+      message: `服务器错误，请稍后重试`,
     });
   }
 });
 
 app.get("/api/posts", async (req, res) => {
   try {
-    // 分页参数
-    const page = parseInt(req.query.page) || 1;
-    let limit = parseInt(req.query.limit) || 10;
-    limit = Math.min(limit, 100);
+    // 分页参数校验
+    let page = parseInt(req.query.page, 10) || 1;
+    page = Math.max(1, page); // 确保不小于1
 
-    // 排序参数
+    let limit = parseInt(req.query.limit, 10) || 10;
+    limit = Math.min(Math.max(1, limit), 100); // 限制在1-100之间
+
+    // 排序参数校验
     const sortBy = req.query.sort || "-createdAt";
 
     // 过滤参数
     const filters = {};
 
-    // 按标签过滤（新增AND/OR逻辑）
+    // 标签过滤逻辑增强
     if (req.query.tags) {
-      const tags = req.query.tags.split(",");
-      const filterType = (req.query.tagFilterType || "OR").toUpperCase(); // 默认OR
+      const tags = req.query.tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag !== "");
 
-      // 根据过滤类型使用不同的操作符
-      filters.tags =
-        filterType === "AND"
-          ? { $all: tags } // 必须包含所有标签
-          : { $in: tags }; // 包含任意标签
+      if (tags.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: "标签参数格式错误",
+        });
+      }
+
+      const filterType = (req.query.tagFilterType || "OR").toUpperCase();
+      if (!["AND", "OR"].includes(filterType)) {
+        return res.status(400).json({
+          success: false,
+          message: "tagFilterType 参数必须为 AND 或 OR",
+        });
+      }
+
+      filters.tags = filterType === "AND" ? { $all: tags } : { $in: tags };
     }
 
-    // 按标题搜索
+    // 搜索关键词处理
     if (req.query.search) {
-      filters.title = { $regex: req.query.search, $options: "i" };
+      const searchTerm = req.query.search.trim();
+      if (searchTerm) {
+        filters.title = {
+          $regex: searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+          $options: "i",
+        };
+      }
     }
 
     // 数据库查询
     const [posts, total] = await Promise.all([
-      PostModel.find(filters)
+      PostDataModel.find(filters)
+        .select("-__v")
         .skip((page - 1) * limit)
         .limit(limit)
-        .sort(sortBy),
-      PostModel.countDocuments(filters),
+        .sort(sortBy)
+        .lean(),
+      PostDataModel.countDocuments(filters),
     ]);
 
     res.status(200).json({
+      success: true,
+      message: "请求成功",
       data: posts,
       pagination: {
         page,
         limit,
         total,
         totalPages: Math.ceil(total / limit),
+        hasNext: page < Math.ceil(total / limit),
       },
     });
   } catch (error) {
     res.status(500).json({
-      error: error.message || "Failed to fetch posts",
+      success: false,
+      message: error.message || "服务器错误，请稍后重试",
     });
   }
 });
 
 app.get("/api/posts/:id", async (req, res) => {
   try {
-    // 从 URL 参数中获取帖子 ID
-    const postId = req.params.id;
+    const id = req.params.id;
+    const post = await PostDataModel.findById(id).select("-__v");
 
-    // 使用 Mongoose 的 findById 方法查找帖子
-    // .select('-__v') 是可选的，用于从结果中排除 Mongoose 的版本键
-    const post = await PostModel.findById(postId).select("-__v");
-
-    // 如果找不到帖子，返回 404 Not Found
     if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+      return res.status(404).json({
+        success: false,
+        message: "404 Not Found",
+      });
     }
 
-    // 如果找到帖子，返回 200 OK 和帖子数据
-    res.status(200).json(post);
+    res.status(200).json({
+      success: true,
+      message: `请求成功`,
+      data: post,
+    });
   } catch (error) {
-    console.error("Error fetching post by ID:", error);
-
-    // 如果 ID 格式无效 (例如，不是有效的 ObjectId)，Mongoose 会抛出 CastError
     if (error.name === "CastError") {
-      return res.status(400).json({ message: "Invalid post ID format" });
+      return res.status(400).json({
+        success: false,
+        message: "无效的文章ID",
+      });
     }
 
-    // 其他服务器错误，返回 500 Internal Server Error
     res.status(500).json({
-      error: error.message || "Failed to fetch post",
+      success: false,
+      message: `服务器错误，请稍后重试`,
     });
   }
 });
@@ -232,7 +207,7 @@ app.get("/api/friendlinks", async (req, res) => {
       success: true,
       message: `请求成功`,
       count: links.length,
-      links: links,
+      data: links,
     });
   } catch (error) {
     res.status(500).json({
@@ -244,14 +219,14 @@ app.get("/api/friendlinks", async (req, res) => {
 
 app.get("/api/tags", async (req, res) => {
   try {
-    const tags = await PostModel.distinct("tags");
+    const tags = await PostDataModel.distinct("tags");
     const filteredTags = tags.filter((tag) => tag && tag.trim() !== "");
 
     res.status(200).json({
       success: true,
       message: `请求成功`,
       count: filteredTags.length,
-      tags: filteredTags,
+      data: filteredTags,
     });
   } catch (error) {
     res.status(500).json({
@@ -269,6 +244,8 @@ app.use((req, res, next) => {
 });
 
 app.listen(PORT, HOST, () => {
+  console.log("Server start\n");
+
   const localIPs = getLocalIPs();
   console.log(`  ➜  Local:   http://localhost:${PORT}/`);
 

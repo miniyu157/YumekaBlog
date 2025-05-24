@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import FriendCard from '../common/FriendCard.vue';
-import { httpget, ServerIP, type FriendLink, type FriendLinksResponse } from '@/http/http';
+import { httpget, ServerIP, type FriendData, type FriendLinksResponse } from '@/http/http';
 import LoadingTip from '../common/LoadingTip.vue';
 
-const friends = ref<FriendLink[]>();
+const friends = ref<FriendData[]>();
 
 const loadingTip = ref<[string, string]>([
     '加载朋友列表...',
@@ -13,20 +13,19 @@ const loadingTip = ref<[string, string]>([
 
 const loadFriends = async () => {
     try {
-        const { links: responseLinks } = await httpget.getFriendlinks();
-        friends.value = responseLinks;
-
-        // 补全链接前缀
-        friends.value = responseLinks.map(responseLinks => ({
-            ...responseLinks,
-            image: `${ServerIP}${responseLinks.image}`
-        }));
+        const { data: links } = await httpget.getFriendlinks();
+        friends.value = links;
 
         loadingTip.value = [
-            responseLinks.length == 0 ? '朋友列表竟然是空的...(*ﾟーﾟ)' : '',
+            links.length == 0 ? '朋友列表竟然是空的...(*ﾟーﾟ)' : '',
             '网络很正常，数据库空空'
         ];
 
+        // 补全链接前缀
+        friends.value = links.map(link => ({
+            ...link,
+            image: `${ServerIP}${link.image}`
+        }));
     } catch (error: any) {
         console.log(error);
 

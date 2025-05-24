@@ -3,8 +3,6 @@ import { onMounted, ref } from 'vue';
 import { cssVars } from './utils/cssVars';
 import RVContainer from './components/common/RVContainer.vue';
 import { httpget } from './http/http';
-import FlexCore from './components/common/FlexCore.vue';
-
 
 const isBgLoaded = ref(false);
 

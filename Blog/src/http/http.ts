@@ -13,7 +13,7 @@ export interface BaseResponse {
   message: string;
 }
 
-export interface FriendLink {
+export interface FriendData {
   title?: string;
   subtitle?: string;
   link?: string;
@@ -22,36 +22,29 @@ export interface FriendLink {
 
 export interface FriendLinksResponse extends BaseResponse {
   count: number;
-  links: FriendLink[];
+  data: FriendData[];
 }
 
 export interface TagsResponse extends BaseResponse {
   count: number;
-  tags: string[];
+  data: string[];
 }
 
-export interface ImageResponse {
-  imageUrl: string;
-  filename: string;
-}
-
-export interface PostResponse {
+export interface PostData {
   _id: string;
-  title: string;
-  imageUrl: string;
-  content: string;
-  heat: number;
-  comments: number;
-  likes: number;
-  tags: string[];
-  createdAt: string;
-  updatedAt: string;
+  title?: string;
+  imageUrl?: string;
+  content?: string;
+  heat?: number;
+  comments?: number;
+  likes?: number;
+  tags?: string[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
-export interface WebmetaResponse {
-  metatitle: string;
-  webtitle: string;
-  announcement: string;
+export interface PostResponse extends BaseResponse {
+  data: PostData;
 }
 
 export interface Pagination {
@@ -61,40 +54,112 @@ export interface Pagination {
   totalPages: number;
 }
 
-export interface PostsApiResponse {
-  data: PostResponse[];
-  pagination: Pagination;
-}
-
 export interface GetPostsParams {
   page?: number;
   limit?: number;
   sort?: string;
   tags?: string[];
+  tagFilterType?: "AND" | "OR";
   search?: string;
+}
+
+export interface PostsResponse extends BaseResponse {
+  data: PostData[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasNext: boolean;
+  };
+}
+
+export interface ImageResponse extends BaseResponse {
+  imageUrl: string;
+  filename: string;
 }
 
 export const ServerIP = "http://localhost:3000";
 
+const GET_RANDOM_IMAGE_URL = `${ServerIP}/api/random-image`;
+const GET_POST_URL = `${ServerIP}/api/posts`;
 const GET_FRIEND_LINKS = `${ServerIP}/api/friendlinks`;
 const GET_TAGS = `${ServerIP}/api/tags`;
 
-const GET_RANDOM_IMAGE_URL = `${ServerIP}/api/random-image?source=pixiv`; // bigknight53 / pixiv
-const GET_POST_URL = `${ServerIP}/api/posts`;
-const GET_WEBMETA_URL = `${ServerIP}/api/getwebmeta`;
-
 export const httpget = {
+  getRandomImage: async () => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    try {
+      const response = await alovaInstance.Get<ImageResponse>(GET_RANDOM_IMAGE_URL);
+      if (!response.success) throw new Error(response.message);
+
+      return `${ServerIP}${response.imageUrl}`;
+    } catch (error: any) {
+      throw new Error(error.message || "获取文章列表失败，请检查网络连接");
+    }
+  },
+
+  getPosts: async (params: GetPostsParams) => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    try {
+      // 构建查询参数
+      const queryParams = new URLSearchParams({
+        page: params.page?.toString() || "1",
+        limit: params.limit?.toString() || "10",
+        sort: params.sort || "-createdAt",
+        ...(params.search && { search: params.search }),
+        ...(params.tags && { tags: params.tags.join(",") }),
+        ...(params.tagFilterType && { tagFilterType: params.tagFilterType }),
+      });
+
+      const response = await alovaInstance.Get<PostsResponse>(`${GET_POST_URL}?${queryParams}`);
+
+      if (!response.success) throw new Error(response.message);
+
+      // 处理图片路径
+      const processedData = response.data.map((post) => ({
+        ...post,
+        imageUrl: post.imageUrl?.startsWith("/") ? `${ServerIP}${post.imageUrl}` : post.imageUrl,
+      }));
+
+      return {
+        ...response,
+        data: processedData,
+      };
+    } catch (error: any) {
+      throw new Error(error.message || "获取文章列表失败，请检查网络连接");
+    }
+  },
+
+  getPostById: async (id: string) => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    try {
+      const fulllink = `${GET_POST_URL}/${id}`;
+      const response = await alovaInstance.Get<PostResponse>(fulllink);
+      if (!response.success) throw new Error(response.message);
+
+      if (response.data.imageUrl?.startsWith("/")) {
+        response.data.imageUrl = `${ServerIP}${response.data.imageUrl}`;
+      }
+
+      return response;
+    } catch (error: any) {
+      throw new Error(error.message || "获取文章失败，请检查网络连接");
+    }
+  },
+
   getFriendlinks: async () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     try {
       const response = await alovaInstance.Get<FriendLinksResponse>(GET_FRIEND_LINKS);
-
       if (!response.success) throw new Error(response.message);
-
       return response;
     } catch (error: any) {
-      throw new Error(error.message);
+      throw new Error(error.message || "获取朋友列表失败，请检查网络连接");
     }
   },
 
@@ -103,72 +168,10 @@ export const httpget = {
 
     try {
       const response = await alovaInstance.Get<TagsResponse>(GET_TAGS);
-
       if (!response.success) throw new Error(response.message);
-
       return response;
     } catch (error: any) {
-      throw new Error(error.message);
-    }
-  },
-
-  getRandomImage: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    try {
-      const response = await axios.get<ImageResponse>(GET_RANDOM_IMAGE_URL);
-      return `${ServerIP}${response.data.imageUrl}`;
-    } catch (error) {
-      throw new Error(`${GET_RANDOM_IMAGE_URL} failed. (${error})`);
-    }
-  },
-
-  getPostById: async (id: string) => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const fulllink = `${GET_POST_URL}/${id}`;
-
-    try {
-      const response = await axios.get<PostResponse>(fulllink);
-
-      if (response.data.imageUrl.startsWith("/")) {
-        response.data.imageUrl = `${ServerIP}${response.data.imageUrl}`;
-      }
-      return response.data;
-    } catch (error) {
-      throw new Error(`${fulllink} failed. (${error})`);
-    }
-  },
-
-  getPosts: async (params: GetPostsParams) => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    try {
-      const response = await axios.get<PostsApiResponse>(GET_POST_URL, {
-        params: params,
-        paramsSerializer: { indexes: null },
-      });
-      // 处理imageUrl，补全前缀
-      const modifiedData = response.data.data.map((post) => ({
-        ...post,
-        imageUrl: post.imageUrl.startsWith("/") ? `${ServerIP}${post.imageUrl}` : post.imageUrl,
-      }));
-      return {
-        ...response.data,
-        data: modifiedData,
-      };
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(`获取文章失败: ${error.response?.data?.error || error.message}`);
-      }
-      throw new Error(`获取文章失败: ${error instanceof Error ? error.message : String(error)}`);
-    }
-  },
-
-  getWebmeta: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    try {
-      const response = await axios.get<WebmetaResponse>(GET_WEBMETA_URL);
-      return response.data;
-    } catch (error) {
-      throw new Error(`${GET_WEBMETA_URL} failed. (${error})`);
+      throw new Error(error.message || "获取标签列表失败，请检查网络连接");
     }
   },
 };

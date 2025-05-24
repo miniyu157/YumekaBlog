@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { httpget, type PostResponse } from '@/http/http';
+import { httpget, type PostData, type PostResponse } from '@/http/http';
 import { onMounted, ref } from 'vue';
 import FlexCore from '../common/FlexCore.vue';
 import { utils } from '@/utils/utils';
@@ -10,7 +10,7 @@ import { useRoute } from 'vue-router';
 import LoadingTip from '../common/LoadingTip.vue';
 import MarkdownRender from '../common/MarkdownRender.vue';
 
-const postData = ref<PostResponse>();
+const postData = ref<PostData>();
 const params = history.state.params;
 const loadingTip = ref<[string, string]>([
     '加载文章详情...',
@@ -24,9 +24,9 @@ const loadPost = async () => {
         try {
             const route = useRoute();
             const id = route.query.id;
-            const response = await httpget.getPostById(String(id));
+            const { data } = await httpget.getPostById(String(id));
 
-            postData.value = response;
+            postData.value = data;
         } catch (error: any) {
             console.log(error);
 
@@ -71,19 +71,19 @@ onMounted(() => {
                 <button class="def-medium-but">
                     <FlexCore gap="4px">
                         <SvgView name="like" />
-                        <span>{{ postData.heat }}</span>
+                        <span>{{ postData.heat || 0 }}</span>
                     </FlexCore>
                 </button>
                 <button class="def-medium-but">
                     <FlexCore gap="4px">
                         <SvgView name="comment" />
-                        <span>{{ postData.comments }}</span>
+                        <span>{{ postData.comments || 0 }}</span>
                     </FlexCore>
                 </button>
 
                 <FlexCore class="mar-left-a" gap="4px">
                     <SvgView name="heat" />
-                    <span>{{ postData.heat }}</span>
+                    <span>{{ postData.heat || 0 }}</span>
                 </FlexCore>
             </FlexCore>
         </FlexCore>

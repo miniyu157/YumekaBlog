@@ -13,7 +13,11 @@ export const utils = {
     router.push(`/blog/postview?id=${id}`);
   },
 
-  formatDatetime: (originalDatetime: string): string => {
+  formatDatetime: (originalDatetime?: string): string => {
+    if (!originalDatetime) {
+      return "";
+    }
+
     const date = new Date(originalDatetime);
     const year = date.getUTCFullYear().toString().slice(-2);
     const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
