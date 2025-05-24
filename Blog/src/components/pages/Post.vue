@@ -49,41 +49,41 @@ onMounted(() => {
 
         <FlexCore v-if="postData" direction="column" gap="16px">
             <div class="title-panel">
-                <span class="title">{{ postData?.title || '无标题文章' }}</span>
+                <span class="title">{{ postData.title || '无标题文章' }}</span>
             </div>
 
             <div class="img-panel">
-                <img :src="postData?.imageUrl"
+                <img v-if="postData.imageUrl" :src="postData.imageUrl"
                     @error="($event.target as HTMLImageElement).src = 'https://placehold.co/600x400/eee/ccc?text=fail'">
             </div>
 
             <FlexCore main-axis="between" cross-axis="center">
-                <span class="timespan small-text">发布于 {{ utils.formatDatetime(postData?.createdAt) || '未知时间' }}</span>
+                <span class="timespan small-text">发布于 {{ utils.formatDatetime(postData.createdAt) || '未知时间' }}</span>
 
                 <FlexCore direction="row" gap="8px">
-                    <TagButton v-for="tag in postData?.tags" :text="tag" :key="tag" />
+                    <TagButton v-for="tag in postData.tags" :text="tag" :key="tag" />
                 </FlexCore>
             </FlexCore>
 
-            <MarkdownRender class="content" :render-text="postData?.content || '文章内容竟然是空的(*ﾟーﾟ)'" />
+            <MarkdownRender class="content" :render-text="postData.content || '文章内容竟然是空的(*ﾟーﾟ)'" />
 
             <FlexCore gap="8px" direction="row" cross-axis="center">
                 <button class="def-medium-but">
                     <FlexCore gap="4px">
                         <SvgView name="like" />
-                        <span>{{ postData?.heat }}</span>
+                        <span>{{ postData.heat }}</span>
                     </FlexCore>
                 </button>
                 <button class="def-medium-but">
                     <FlexCore gap="4px">
                         <SvgView name="comment" />
-                        <span>{{ postData?.comments }}</span>
+                        <span>{{ postData.comments }}</span>
                     </FlexCore>
                 </button>
 
                 <FlexCore class="mar-left-a" gap="4px">
                     <SvgView name="heat" />
-                    <span>{{ postData?.heat }}</span>
+                    <span>{{ postData.heat }}</span>
                 </FlexCore>
             </FlexCore>
         </FlexCore>

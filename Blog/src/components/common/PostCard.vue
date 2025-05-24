@@ -20,7 +20,7 @@ const openPostView = () => {
     <Card class="post-card" padding-size="no">
         <div class="main-grid">
             <div class="bg">
-                <img @click="openPostView" :src="props.imageUrl"
+                <img v-if="props.imageUrl" @click="openPostView" :src="props.imageUrl"
                     @error="($event.target as HTMLImageElement).src = 'https://placehold.co/600x400/eee/ccc?text=fail'">
             </div>
 

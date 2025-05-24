@@ -51,6 +51,8 @@ app.use("/images", express.static(path.join(__dirname, "public", "backgrounds_bi
 
 app.use("/images", express.static(path.join(__dirname, "public", "friend")));
 
+app.use("/images", express.static(path.join(__dirname, "public", "posts")));
+
 app.get("/api/random-image", (req, res) => {
   try {
     const source = req.query.source || "pixiv";
@@ -262,7 +264,7 @@ app.get("/api/tags", async (req, res) => {
 app.use((req, res, next) => {
   res.status(404).json({
     success: false,
-    message: "请求的 API 不存在",
+    message: "404 Not Found",
   });
 });
 

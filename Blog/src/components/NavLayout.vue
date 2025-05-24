@@ -6,6 +6,16 @@ import Card from './common/Card.vue';
 import SvgView from './common/SvgView.vue';
 import ThemeToggle from './common/ThemeToggle.vue';
 
+
+
+const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth', // 平滑滚动
+    });
+};
+
 </script>
 
 <template>
@@ -18,7 +28,7 @@ import ThemeToggle from './common/ThemeToggle.vue';
         </FlexCore>
 
         <nav class="main-nav">
-            <FlexCore gap="16px">
+            <FlexCore gap="12px">
                 <Card class="links-panel" padding-size="small">
                     <FlexCore gap="8px">
                         <SvgView name="go" :fill="cssVars.primaryForeColor" />
@@ -30,6 +40,10 @@ import ThemeToggle from './common/ThemeToggle.vue';
                 </Card>
 
                 <ThemeToggle :show-text="false" />
+
+                <Card @click="scrollToTop" :press-effect="true" padding-size="small">
+                    <SvgView name="rocket" :fill="cssVars.primaryForeColor" />
+                </Card>
             </FlexCore>
         </nav>
 
@@ -46,7 +60,7 @@ import ThemeToggle from './common/ThemeToggle.vue';
 $page-margin: 36vh;
 
 .title-panel {
-    margin-bottom: 16px;
+    margin-bottom: 2em;
     margin-top: calc($page-margin/2);
 
     .title {

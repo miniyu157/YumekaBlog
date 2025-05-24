@@ -4,16 +4,17 @@ const postSchema = new Schema(
   {
     title: {
       type: String,
-      default: "untitle",
+      default: "",
       trim: true,
     },
     imageUrl: {
       type: String,
-      default: "https://placehold.co/600x400/eee/ccc?text=No+Image",
+      default: "",
+      trim: true,
     },
     content: {
       type: String,
-      default: "no content",
+      default: "",
     },
     heat: {
       type: Number,

@@ -14,8 +14,8 @@ dist-ssr
 coverage
 *.local
 
-/Server/public/backgrounds_pixiv/
 /Temp/
+/Server/public/
 
 /cypress/videos/
 /cypress/screenshots/

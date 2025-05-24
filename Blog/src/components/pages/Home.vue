@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { cssVars } from '@/utils/cssVars';
 import FlexCore from '../common/FlexCore.vue'
-import { computed } from 'vue';
 
 </script>
 
@@ -19,7 +17,7 @@ import { computed } from 'vue';
         <RouterLink class="link router-link" to="/about">✓ 关于 (/about)</RouterLink>
         <RouterLink class="link router-link" to="/postlist">✕ 文章列表 (/postlist)</RouterLink>
         <RouterLink class="link router-link" to="/blog/postview">✓ 文章详情 (/blog/postview)</RouterLink>
-        <RouterLink class="link router-link" to="/:pathMatch(.*)*">✕ 404 Not Found (/:pathMatch(.*)*)</RouterLink>
+        <RouterLink class="link router-link" to="/:pathMatch(.*)*">✓ 404 Not Found (/:pathMatch(.*)*)</RouterLink>
         <div @click="$router.back" class="back-button">返回</div>
     </FlexCore>
 

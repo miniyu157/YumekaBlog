@@ -13,7 +13,6 @@ export interface BaseResponse {
   message: string;
 }
 
-//#region FriendLinks
 export interface FriendLink {
   title?: string;
   subtitle?: string;
@@ -25,15 +24,12 @@ export interface FriendLinksResponse extends BaseResponse {
   count: number;
   links: FriendLink[];
 }
-//#endregion
 
-//#region
 export interface TagsResponse extends BaseResponse {
   count: number;
   tags: string[];
 }
 
-//#endregion
 export interface ImageResponse {
   imageUrl: string;
   filename: string;
@@ -82,7 +78,6 @@ export const ServerIP = "http://localhost:3000";
 
 const GET_FRIEND_LINKS = `${ServerIP}/api/friendlinks`;
 const GET_TAGS = `${ServerIP}/api/tags`;
-
 
 const GET_RANDOM_IMAGE_URL = `${ServerIP}/api/random-image?source=pixiv`; // bigknight53 / pixiv
 const GET_POST_URL = `${ServerIP}/api/posts`;
@@ -133,6 +128,10 @@ export const httpget = {
 
     try {
       const response = await axios.get<PostResponse>(fulllink);
+
+      if (response.data.imageUrl.startsWith("/")) {
+        response.data.imageUrl = `${ServerIP}${response.data.imageUrl}`;
+      }
       return response.data;
     } catch (error) {
       throw new Error(`${fulllink} failed. (${error})`);
@@ -146,7 +145,15 @@ export const httpget = {
         params: params,
         paramsSerializer: { indexes: null },
       });
-      return response.data;
+      // 处理imageUrl，补全前缀
+      const modifiedData = response.data.data.map((post) => ({
+        ...post,
+        imageUrl: post.imageUrl.startsWith("/") ? `${ServerIP}${post.imageUrl}` : post.imageUrl,
+      }));
+      return {
+        ...response.data,
+        data: modifiedData,
+      };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(`获取文章失败: ${error.response?.data?.error || error.message}`);
